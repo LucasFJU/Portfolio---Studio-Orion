@@ -1,0 +1,6 @@
+{
+  "summary": "Plano arquitetural detalhado para expansão avançada do editor visual da Hero no estilo Wix: lista de camadas com reordenação e adição/remoção de blocos, substituição completa do fundo por Vídeo em loop ou Imagem estática (além do shader WebGL), e edição responsiva com overrides dedicados para Mobile e Desktop salvos diretamente no código.",
+  "updatedAt": "2026-10-06T18:15:06.151403297Z",
+  "requestFeedback": true,
+  "userFacing": true
+}

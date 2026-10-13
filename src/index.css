@@ -1,0 +1,296 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Paleta Editorial Contemporânea */
+    /* Fundo principal: #090A0C */
+    --background: 220 14% 4%;
+    /* Texto principal em fundo escuro: #F5F5F2 */
+    --foreground: 60 14% 95%;
+
+    /* Fundo secundário (grafite): #141518 */
+    --card: 225 9% 9%;
+    --card-foreground: 60 14% 95%;
+
+    --popover: 225 9% 9%;
+    --popover-foreground: 60 14% 95%;
+
+    /* Laranja da identidade atual (#FF4001) */
+    --primary: 15 100% 50%;
+    --primary-foreground: 60 14% 98%;
+
+    /* Superfícies escuras: #1B1C20 */
+    --secondary: 228 8% 12%;
+    --secondary-foreground: 60 14% 95%;
+
+    --muted: 228 8% 12%;
+    /* Texto secundário com contraste confortável */
+    --muted-foreground: 220 6% 68%;
+
+    --accent: 15 100% 50%;
+    --accent-foreground: 60 14% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 60 14% 98%;
+
+    /* Divisórias discretas */
+    --border: 225 7% 16%;
+    --input: 225 7% 16%;
+    --ring: 15 100% 50%;
+
+    --radius: 0.5rem;
+
+    /* Tokens de superfície clara (Off-white #F0EEE8) */
+    --surface-light: 45 20% 93%;
+    --surface-light-foreground: 220 14% 4%;
+    --surface-light-muted: 220 8% 34%;
+    --surface-light-border: 42 12% 82%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    background-color: #090A0C;
+    overflow-x: clip;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased selection:bg-primary selection:text-white;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    overflow-x: clip;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-[-0.025em];
+  }
+}
+
+@keyframes cta-orb-primary {
+  0%, 100% {
+    transform: translate3d(0%, 0%, 0) scale(1);
+    opacity: 0.55;
+  }
+  33% {
+    transform: translate3d(-18%, 14%, 0) scale(1.14);
+    opacity: 0.75;
+  }
+  66% {
+    transform: translate3d(12%, -12%, 0) scale(0.94);
+    opacity: 0.48;
+  }
+}
+
+@keyframes cta-orb-secondary {
+  0%, 100% {
+    transform: translate3d(0%, 0%, 0) scale(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translate3d(22%, -16%, 0) scale(1.18);
+    opacity: 0.6;
+  }
+}
+
+@keyframes cta-beam-sweep {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(200%);
+    opacity: 0;
+  }
+}
+
+@keyframes cta-border-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@layer components {
+  /* Container editorial central (1240px max, margens fluidas 24px mobile / 48-64px desktop) */
+  .container-editorial {
+    @apply max-w-[1240px] mx-auto px-6 sm:px-10 lg:px-16;
+  }
+
+  /* Espaçamento entre seções (56-72px mobile / 96-120px desktop) */
+  .sec-pad {
+    @apply py-14 sm:py-20 lg:py-28;
+  }
+
+  /* Indicador editorial de seção */
+  .section-label {
+    @apply inline-flex items-center gap-2 text-[13px] md:text-[14px] font-medium text-muted-foreground tracking-normal;
+  }
+
+  .label-num {
+    @apply font-mono text-primary font-medium tabular-nums;
+  }
+
+  /* Botão principal padronizado */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2.5 rounded-lg bg-primary text-primary-foreground px-6 py-3.5 text-[15px] font-medium transition-colors duration-200 hover:bg-[#ff551a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+
+  /* Botão secundário padronizado */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2.5 rounded-lg border border-border bg-secondary/40 text-foreground px-6 py-3.5 text-[15px] font-medium transition-colors duration-200 hover:border-foreground/30 hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+
+  .btn-pill {
+    @apply rounded-lg;
+  }
+
+  .nav-link-animated {
+    @apply relative text-[14px] font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 py-1;
+  }
+
+  .nav-link-animated.active {
+    @apply text-foreground;
+  }
+
+  .animate-cta-orb-primary {
+    animation: cta-orb-primary 9s ease-in-out infinite;
+  }
+
+  .animate-cta-orb-secondary {
+    animation: cta-orb-secondary 12s ease-in-out infinite;
+  }
+
+  .animate-cta-beam {
+    animation: cta-beam-sweep 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  .animate-cta-border-spin {
+    animation: cta-border-spin 10s linear infinite;
+  }
+
+  /* Marquee contínuo para depoimentos */
+  .animate-marquee-left {
+    animation: marquee-left 42s linear infinite;
+    will-change: transform;
+  }
+
+  .animate-marquee-right {
+    animation: marquee-right 42s linear infinite;
+    will-change: transform;
+  }
+
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  .mask-fade-edges {
+    mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 8%, rgba(0,0,0,1) 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 8%, rgba(0,0,0,1) 92%, transparent 100%);
+  }
+
+  /* Máscara ultra suave estendida para o mural de projetos (dissolução profunda a partir do centro) */
+  .mask-fade-edges-deep {
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.04) 5%,
+      rgba(0, 0, 0, 0.18) 12%,
+      rgba(0, 0, 0, 0.45) 20%,
+      rgba(0, 0, 0, 0.78) 28%,
+      rgba(0, 0, 0, 1) 36%,
+      rgba(0, 0, 0, 1) 64%,
+      rgba(0, 0, 0, 0.78) 72%,
+      rgba(0, 0, 0, 0.45) 80%,
+      rgba(0, 0, 0, 0.18) 88%,
+      rgba(0, 0, 0, 0.04) 95%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.04) 5%,
+      rgba(0, 0, 0, 0.18) 12%,
+      rgba(0, 0, 0, 0.45) 20%,
+      rgba(0, 0, 0, 0.78) 28%,
+      rgba(0, 0, 0, 1) 36%,
+      rgba(0, 0, 0, 1) 64%,
+      rgba(0, 0, 0, 0.78) 72%,
+      rgba(0, 0, 0, 0.45) 80%,
+      rgba(0, 0, 0, 0.18) 88%,
+      rgba(0, 0, 0, 0.04) 95%,
+      transparent 100%
+    );
+  }
+}
+
+@keyframes marquee-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Atmospheric Studio Ambient Lighting Keyframes (Red / Flame / Warm Peach) */
+@keyframes ambient-glow-pulse-left {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translate3d(24px, 16px, 0) scale(1.08);
+    opacity: 0.95;
+  }
+}
+
+@keyframes ambient-glow-pulse-right {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.65;
+  }
+  50% {
+    transform: translate3d(-18px, 22px, 0) scale(1.06);
+    opacity: 0.78;
+  }
+}
+
+.animate-ambient-left {
+  animation: ambient-glow-pulse-left 14s ease-in-out infinite;
+}
+
+.animate-ambient-right {
+  animation: ambient-glow-pulse-right 18s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ambient-left,
+  .animate-ambient-right {
+    animation: none !important;
+  }
+}
+

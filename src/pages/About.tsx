@@ -1,0 +1,875 @@
+import { useRef, useState, useEffect, type MouseEvent } from "react";
+import { Link } from "react-router-dom";
+import {
+  ArrowRight,
+  Layers,
+  Compass,
+  Sparkles,
+  Wrench,
+  ArrowUpRight,
+} from "lucide-react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useInView,
+  useReducedMotion,
+} from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import CTASection from "@/components/CTASection";
+import PageMeta from "@/components/PageMeta";
+import { useContactDrawer } from "@/components/ContactDrawer";
+
+import lucasHeroWebp from "@/assets/lucas-hero.webp";
+import lucasHeroPng from "@/assets/lucas-hero.png";
+
+const DEFAULT_BIO = [
+  "Sou designer e diretor criativo com mais de 13 anos de experiência ajudando empresas e profissionais a estruturarem sua presença visual com clareza, critério e consistência.",
+  "Ao longo da minha trajetória, concluí mais de 2.500 projetos para mais de 500 marcas no Brasil e no exterior — passando por sistemas de identidade visual, direção criativa contínua para redes sociais e criação de sites e interfaces digitais.",
+  "Meu trabalho parte sempre do entendimento real do negócio: quem é o cliente, qual valor precisa ser percebido e como o design pode tornar a marca mais forte, confiável e preparada para crescer.",
+];
+
+const TRAJECTORY_ITEMS = [
+  {
+    period: "2013 — 2016",
+    phase: "Fundamentos & Prática Visual",
+    role: "Design Gráfico & Direção de Arte",
+    description:
+      "Início da atuação profissional desenvolvendo peças gráficas, materiais promocionais, composição tipográfica e identidade para negócios locais, consolidando domínio técnico de produção visual.",
+    highlights: ["Composição Tipográfica", "Produção Gráfica", "Identidade Local"],
+    metric: "Primeiros 300+ projetos",
+  },
+  {
+    period: "2017 — 2020",
+    phase: "Expansão & Posicionamento de Marcas",
+    role: "Especialista em Identidade Visual & Social Media",
+    description:
+      "Ampliação do atendimento para empresas de diferentes regiões do país, estruturando marcas do zero e liderando a direção visual estratégica de perfis comerciais em crescimento.",
+    highlights: ["Sistemas de Marca", "Direção para Social Media", "Atendimento Nacional"],
+    metric: "Mais de 200 marcas",
+  },
+  {
+    period: "2021 — Presente",
+    phase: "Direção Criativa & Ecossistemas Digitais",
+    role: "Designer Sênior & Diretor Criativo Independente",
+    description:
+      "Mais de 2.500 projetos entregues para mais de 500 clientes no Brasil e no exterior — integrando identidade visual, conteúdo estratégico para redes sociais e interfaces web de alta conversão.",
+    highlights: ["Marcas Globais", "UI/UX & Sites", "Direção Criativa Integrada"],
+    metric: "2.500+ entregas acumuladas",
+  },
+];
+
+const WORK_METHOD_ITEMS = [
+  {
+    num: "01",
+    tag: "Alinhamento",
+    title: "Contato direto, sem intermediários",
+    description:
+      "Você conversa e alinha cada etapa diretamente comigo, do diagnóstico inicial à entrega final. Isso elimina ruídos, acelera decisões e garante fidelidade ao que sua empresa precisa.",
+    detail: "Reuniões objetivas e comunicação ágil via WhatsApp ou e-mail.",
+  },
+  {
+    num: "02",
+    tag: "Estratégia",
+    title: "Critério visual com foco comercial",
+    description:
+      "Cada escolha tipográfica, cromática ou de layout responde a um objetivo claro: transmitir profissionalismo imediato, facilitar a leitura e ajudar o cliente a decidir.",
+    detail: "Design pensado para gerar percepção de valor e conversão.",
+  },
+  {
+    num: "03",
+    tag: "Previsibilidade",
+    title: "Processo enxuto e previsível",
+    description:
+      "Etapas organizadas com cronograma definido, apresentação aplicada em cenários reais de uso e rodadas estruturadas de refinamento para aprovação com segurança.",
+    detail: "Prazos claros desde o primeiro dia da proposta comercial.",
+  },
+  {
+    num: "04",
+    tag: "Autonomia",
+    title: "Entrega pronta para o dia a dia",
+    description:
+      "Você recebe todos os arquivos finais abertos e fechados, guias práticos de aplicação, matrizes editáveis e páginas publicadas prontas para operar.",
+    detail: "Organização técnica para que sua equipe use tudo sem dificuldade.",
+  },
+];
+
+const CAPABILITY_ROWS = [
+  {
+    num: "01",
+    icon: Compass,
+    category: "Identidade & Marca",
+    summary: "Posicionamento, criação e redesign de sistemas visuais completos.",
+    skills: [
+      "Logotipo & Símbolo",
+      "Rebranding",
+      "Tipografia & Cores",
+      "Manual de Marca",
+      "Papelaria & Embalagens",
+    ],
+  },
+  {
+    num: "02",
+    icon: Sparkles,
+    category: "Direção para Redes Sociais",
+    summary: "Comunicação visual estratégica para fortalecer autoridade e vendas.",
+    skills: [
+      "Direção de Arte para Feed",
+      "Carrosséis Estratégicos",
+      "Key Visuals de Campanha",
+      "Templates Editáveis",
+      "Padronização de Perfil",
+    ],
+  },
+  {
+    num: "03",
+    icon: Layers,
+    category: "Sites & Interfaces (UI/UX)",
+    summary: "Ambientes digitais rápidos, responsivos e desenhados para conversão.",
+    skills: [
+      "Sites Institucionais",
+      "Landing Pages",
+      "Wireframes & Arquitetura",
+      "UI Design no Figma",
+      "Implementação Responsiva",
+    ],
+  },
+  {
+    num: "04",
+    icon: Wrench,
+    category: "Ferramentas & Tecnologias",
+    summary: "Domínio técnico do conceito criativo à entrega final documentada.",
+    skills: [
+      "Adobe Illustrator",
+      "Adobe Photoshop",
+      "Adobe InDesign",
+      "Figma & Design Systems",
+      "React & Tailwind CSS",
+    ],
+  },
+];
+
+// Animated Counter Component triggered on scroll into view
+const AnimatedStatCounter = ({
+  rawValue,
+  label,
+}: {
+  rawValue: string;
+  label: string;
+}) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-40px" });
+  const shouldReduceMotion = useReducedMotion();
+  const [displayValue, setDisplayValue] = useState(rawValue);
+
+  useEffect(() => {
+    if (!isInView || shouldReduceMotion) {
+      setDisplayValue(rawValue);
+      return;
+    }
+
+    const match = rawValue.match(/^([\d.]+)(.*)$/);
+    if (!match) {
+      setDisplayValue(rawValue);
+      return;
+    }
+
+    const numericString = match[1].replace(/\./g, "");
+    const suffix = match[2] || "";
+    const hasThousandDot = match[1].includes(".");
+    const targetNum = parseInt(numericString, 10);
+
+    if (isNaN(targetNum) || targetNum <= 0) {
+      setDisplayValue(rawValue);
+      return;
+    }
+
+    let startTimestamp: number | null = null;
+    const duration = 1200;
+
+    const step = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(eased * targetNum);
+
+      const formatted = hasThousandDot
+        ? current.toLocaleString("pt-BR")
+        : String(current);
+      setDisplayValue(`${formatted}${suffix}`);
+
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        setDisplayValue(rawValue);
+      }
+    };
+
+    const raf = window.requestAnimationFrame(step);
+    return () => window.cancelAnimationFrame(raf);
+  }, [isInView, rawValue, shouldReduceMotion]);
+
+  return (
+    <div
+      ref={ref}
+      className="group relative rounded-2xl border border-border/80 bg-[#141518]/75 p-5 sm:p-6 transition-all duration-300 hover:border-primary/45 hover:-translate-y-0.5"
+    >
+      <div className="font-display text-[28px] sm:text-[38px] font-semibold text-foreground leading-none mb-2 tabular-nums group-hover:text-primary transition-colors">
+        {displayValue}
+      </div>
+      <div className="text-[13px] text-muted-foreground">{label}</div>
+    </div>
+  );
+};
+
+// Interactive Spotlight Card for "03. Forma de Trabalhar"
+const SpotlightMethodCard = ({
+  item,
+  index,
+  isActive,
+  onActivate,
+}: {
+  item: (typeof WORK_METHOD_ITEMS)[0];
+  index: number;
+  isActive: boolean;
+  onActivate: () => void;
+}) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    const rect = cardRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
+  return (
+    <motion.div
+      ref={cardRef}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.4, delay: index * 0.07 }}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => {
+        setIsHovered(true);
+        onActivate();
+      }}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={onActivate}
+      className={`group relative cursor-pointer rounded-2xl border p-7 sm:p-9 overflow-hidden transition-all duration-300 ${
+        isActive
+          ? "border-primary/55 bg-background shadow-[0_20px_50px_-24px_rgba(255,64,1,0.3)] -translate-y-1"
+          : "border-border bg-background/60 hover:border-primary/35"
+      }`}
+    >
+      {/* Interactive Cursor Spotlight */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -inset-px transition-opacity duration-300"
+        style={{
+          opacity: isHovered || isActive ? 1 : 0,
+          background: `radial-gradient(420px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255, 64, 1, 0.14), transparent 70%)`,
+        }}
+      />
+
+      <div className="relative z-10 flex flex-col justify-between h-full">
+        <div>
+          <div className="flex items-center justify-between gap-3 mb-5">
+            <span
+              className={`font-mono text-sm font-semibold px-3 py-1 rounded-full border transition-colors ${
+                isActive
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "bg-primary/10 text-primary border-primary/25"
+              }`}
+            >
+              {item.num}
+            </span>
+            <span className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+              {item.tag}
+            </span>
+          </div>
+
+          <h3 className="font-display text-[22px] sm:text-[25px] font-medium text-foreground mb-3 group-hover:text-primary transition-colors">
+            {item.title}
+          </h3>
+
+          <p className="text-muted-foreground text-[15px] sm:text-[16px] leading-[1.68]">
+            {item.description}
+          </p>
+        </div>
+
+        <div className="mt-6 pt-4 border-t border-border/70 flex items-center justify-between gap-2 text-xs font-mono text-foreground/80">
+          <span>{item.detail}</span>
+          <span
+            className={`w-2 h-2 rounded-full transition-colors ${
+              isActive ? "bg-primary animate-pulse" : "bg-white/20"
+            }`}
+          />
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+const About = () => {
+  const { openContactDrawer } = useContactDrawer();
+  const shouldReduceMotion = useReducedMotion();
+
+  // Interactive 3D Parallax state for the portrait stage
+  const portraitStageRef = useRef<HTMLDivElement>(null);
+  const [portraitTilt, setPortraitTilt] = useState({ x: 0, y: 0 });
+  const [activeTrajectoryIdx, setActiveTrajectoryIdx] = useState(2);
+  const [activeMethodIdx, setActiveMethodIdx] = useState(0);
+  const [activeCapabilityIdx, setActiveCapabilityIdx] = useState<number>(0);
+
+  // Scroll-linked timeline progress
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: timelineProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start 0.75", "end 0.6"],
+  });
+  const timelineHeight = useTransform(timelineProgress, [0, 1], ["0%", "100%"]);
+
+  const handlePortraitMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (shouldReduceMotion) return;
+    const rect = portraitStageRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const normX = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
+    const normY = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
+    setPortraitTilt({
+      x: Math.max(-1, Math.min(1, normX)),
+      y: Math.max(-1, Math.min(1, normY)),
+    });
+  };
+
+  const handlePortraitMouseLeave = () => {
+    setPortraitTilt({ x: 0, y: 0 });
+  };
+
+  const { data: settings } = useQuery({
+    queryKey: ["site-settings-public"],
+    staleTime: 5 * 60 * 1000,
+    queryFn: async () => {
+      const { data } = await supabase.from("site_settings" as any).select("*");
+      return (data as any[]) || [];
+    },
+  });
+
+  const getSetting = (key: string, fallback = "") =>
+    settings?.find((s: any) => s.key === key)?.value || fallback;
+
+  const customTitle = getSetting(
+    "about_title",
+    "Design com direção clara, critério visual e foco no negócio."
+  );
+  const photoUrl = getSetting("about_photo_url");
+  const rawParagraphs = getSetting("about_paragraphs");
+  const customDescription = getSetting("about_description");
+
+  const bioParagraphs: string[] = (() => {
+    if (customDescription && customDescription.trim()) {
+      return customDescription
+        .split(/\n\s*\n/)
+        .map((p) => p.trim())
+        .filter(Boolean);
+    }
+    if (!rawParagraphs) return DEFAULT_BIO;
+    try {
+      const parsed = JSON.parse(rawParagraphs);
+      return Array.isArray(parsed) && parsed.length > 0 ? parsed : DEFAULT_BIO;
+    } catch {
+      return DEFAULT_BIO;
+    }
+  })();
+
+  const stats = [
+    { value: getSetting("stat_projects", "2.500+"), label: "Projetos entregues" },
+    { value: getSetting("stat_clients", "500+"), label: "Marcas atendidas" },
+    { value: getSetting("stat_experience", "13+ anos"), label: "Anos de atuação" },
+  ];
+
+  return (
+    <div className="min-h-screen bg-background">
+      <PageMeta
+        title="Sobre — Lucas Evangelista"
+        description="Conheça a trajetória profissional, forma de trabalhar, ferramentas e capacidades de Lucas Evangelista."
+      />
+      <Navbar />
+
+      <main className="pt-[108px] md:pt-[124px]">
+        {/* Top Page Header (matching /projetos and /servicos structure) */}
+        <section className="container-editorial pb-12 md:pb-16 border-b border-border">
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45 }}
+          >
+            <div className="section-label mb-3">
+              <span className="label-num">01.</span> Sobre &amp; Posicionamento
+            </div>
+
+            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+              <h1
+                className="font-display text-foreground font-medium max-w-2xl"
+                style={{ fontSize: "clamp(34px, 5vw, 56px)", lineHeight: 1.04 }}
+              >
+                {customTitle}
+              </h1>
+
+              <p className="text-muted-foreground text-[16px] md:text-[17px] leading-[1.6] max-w-[44ch]">
+                Mais de uma década criando identidades visuais, direção criativa para redes sociais e
+                interfaces digitais para marcas que buscam crescer com consistência.
+              </p>
+            </div>
+          </motion.div>
+        </section>
+
+        {/* Biography + Centered Orbital Portrait Section */}
+        <section className="container-editorial py-16 md:py-24 border-b border-border overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-center">
+            {/* Left (6 Columns): Portrait Centered Precisely Inside the Orbital Circle */}
+            <div
+              ref={portraitStageRef}
+              onMouseMove={handlePortraitMouseMove}
+              onMouseLeave={handlePortraitMouseLeave}
+              className="lg:col-span-6 relative flex flex-col items-center justify-center select-none"
+            >
+              {/* Symmetrical Square Stage where Circle and Portrait Optical Center Match */}
+              <div className="relative w-[340px] sm:w-[460px] lg:w-[520px] h-[420px] sm:h-[540px] lg:h-[600px] flex items-center justify-center">
+                {/* Centered Warm Spotlight Aura */}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 m-auto w-[320px] sm:w-[420px] h-[320px] sm:h-[420px] rounded-full blur-[90px] opacity-70 transition-transform duration-300 ease-out"
+                  style={{
+                    transform: `translate3d(${portraitTilt.x * 20}px, ${portraitTilt.y * 20}px, 0)`,
+                    background:
+                      "radial-gradient(circle, rgba(255,64,1,0.44) 0%, rgba(255,115,0,0.12) 55%, transparent 75%)",
+                  }}
+                />
+
+                {/* Outer Rotating Dashed Circle — Dead-Center on Stage */}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 m-auto w-[320px] sm:w-[430px] lg:w-[470px] h-[320px] sm:h-[430px] lg:h-[470px] rounded-full border border-dashed border-primary/35 transition-transform duration-300 ease-out"
+                  style={{
+                    transform: `translate3d(${portraitTilt.x * -12}px, ${
+                      portraitTilt.y * -12
+                    }px, 0)`,
+                  }}
+                >
+                  <div className="w-full h-full rounded-full animate-[spin_46s_linear_infinite]">
+                    <span className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-primary shadow-[0_0_16px_#FF4001]" />
+                  </div>
+                </div>
+
+                {/* Inner Counter-Rotating Circle — Dead-Center on Stage */}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 m-auto w-[270px] sm:w-[365px] lg:w-[400px] h-[270px] sm:h-[365px] lg:h-[400px] rounded-full border border-white/[0.11] transition-transform duration-300 ease-out"
+                  style={{
+                    transform: `translate3d(${portraitTilt.x * -6}px, ${portraitTilt.y * -6}px, 0)`,
+                  }}
+                >
+                  <div className="w-full h-full rounded-full animate-[spin_34s_linear_infinite_reverse]">
+                    <span className="absolute bottom-5 right-8 w-2 h-2 rounded-full bg-white/40" />
+                  </div>
+                </div>
+
+                {/* Cutout Portrait Optically Centered on the Circle (compensating for the iPad on the left of the PNG) */}
+                <div
+                  className="relative z-10 w-full h-full flex items-end justify-center overflow-hidden rounded-b-[220px] transition-transform duration-300 ease-out"
+                  style={{
+                    transform: `translate3d(${portraitTilt.x * 10}px, ${portraitTilt.y * 8}px, 0)`,
+                    maskImage:
+                      "radial-gradient(ellipse 92% 95% at 50% 45%, #000 68%, rgba(0,0,0,0.5) 86%, transparent 100%)",
+                    WebkitMaskImage:
+                      "radial-gradient(ellipse 92% 95% at 50% 45%, #000 68%, rgba(0,0,0,0.5) 86%, transparent 100%)",
+                  }}
+                >
+                  {photoUrl ? (
+                    <img
+                      src={photoUrl}
+                      alt="Lucas Evangelista"
+                      width={620}
+                      height={760}
+                      className="w-auto h-[400px] sm:h-[510px] lg:h-[570px] max-w-none object-contain drop-shadow-[0_28px_60px_rgba(0,0,0,0.9)]"
+                    />
+                  ) : (
+                    <picture className="flex justify-center">
+                      <source srcSet={lucasHeroWebp} type="image/webp" />
+                      <img
+                        src={lucasHeroPng}
+                        alt="Lucas Evangelista"
+                        width={620}
+                        height={760}
+                        className="w-auto h-[400px] sm:h-[510px] lg:h-[570px] max-w-none object-contain -translate-x-[7%] sm:-translate-x-[8%] drop-shadow-[0_28px_60px_rgba(0,0,0,0.9)]"
+                      />
+                    </picture>
+                  )}
+                </div>
+              </div>
+
+              {/* Floating Editorial Signature Pill Centered Below the Circle */}
+              <div
+                className="relative z-20 -mt-5 mx-auto w-full max-w-[340px] rounded-full border border-white/15 bg-[#141518]/95 backdrop-blur-xl px-6 py-3.5 flex items-center justify-between shadow-[0_20px_50px_rgba(0,0,0,0.75)] transition-transform duration-300 ease-out"
+                style={{
+                  transform: `translate3d(${portraitTilt.x * 5}px, ${portraitTilt.y * 5}px, 0)`,
+                }}
+              >
+                <div>
+                  <div className="font-display text-[16px] font-semibold text-foreground leading-tight">
+                    Lucas Evangelista
+                  </div>
+                  <div className="text-[12px] text-muted-foreground">
+                    Designer &amp; Diretor Criativo
+                  </div>
+                </div>
+                <span className="font-mono text-[11px] font-semibold text-primary bg-primary/15 border border-primary/30 rounded-full px-3 py-1">
+                  13+ ANOS
+                </span>
+              </div>
+            </div>
+
+            {/* Right (6 Columns): First-Person Biography & Interactive Counter Metrics */}
+            <div className="lg:col-span-6">
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45 }}
+              >
+                <div className="inline-flex items-center gap-2 font-mono text-xs text-primary uppercase tracking-wider mb-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  <span>Biografia &amp; Visão</span>
+                </div>
+
+                <h2
+                  className="font-display text-foreground font-medium mb-6"
+                  style={{ fontSize: "clamp(30px, 4vw, 46px)", lineHeight: 1.06 }}
+                >
+                  Prazer, sou o Lucas.
+                </h2>
+
+                <div className="space-y-5 text-muted-foreground text-[16px] md:text-[18px] leading-[1.72] max-w-[60ch]">
+                  {bioParagraphs.map((paragraph, idx) => (
+                    <motion.p
+                      key={idx}
+                      initial={{ opacity: 0, y: 12 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: idx * 0.08 }}
+                    >
+                      {paragraph}
+                    </motion.p>
+                  ))}
+                </div>
+
+                {/* Interactive Animated Counter Metrics */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-10">
+                  {stats.map((st) => (
+                    <AnimatedStatCounter
+                      key={st.label}
+                      rawValue={st.value}
+                      label={st.label}
+                    />
+                  ))}
+                </div>
+
+                <div className="flex flex-wrap items-center gap-4">
+                  <button
+                    type="button"
+                    onClick={() => openContactDrawer()}
+                    className="btn-primary group"
+                  >
+                    <span>Conversar sobre um projeto</span>
+                    <ArrowRight
+                      size={16}
+                      className="transition-transform duration-200 group-hover:translate-x-1"
+                    />
+                  </button>
+
+                  <Link to="/projetos" className="btn-ghost group">
+                    <span>Ver projetos selecionados</span>
+                    <ArrowUpRight
+                      size={15}
+                      className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    />
+                  </Link>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* 02. Trajetória Profissional — Interactive Scroll-Linked Timeline */}
+        <section className="container-editorial sec-pad border-b border-border">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+            <div className="lg:col-span-5 lg:sticky lg:top-[116px]">
+              <div className="section-label mb-3">
+                <span className="label-num">02.</span> Trajetória profissional
+              </div>
+              <h2
+                className="font-display text-foreground font-medium mb-4"
+                style={{ fontSize: "clamp(28px, 3.8vw, 44px)", lineHeight: 1.08 }}
+              >
+                Mais de 13 anos de evolução contínua na prática do design.
+              </h2>
+              <p className="text-muted-foreground text-[16px] leading-[1.65] max-w-[40ch] mb-8">
+                Uma caminhada construída projeto a projeto, unindo bagagem estética, domínio técnico
+                e visão comercial para empresas de diferentes portes.
+              </p>
+
+              {/* Quick Interactive Era Selector */}
+              <div className="hidden lg:flex flex-col gap-2 border-l border-border pl-4">
+                {TRAJECTORY_ITEMS.map((item, idx) => {
+                  const active = activeTrajectoryIdx === idx;
+                  return (
+                    <button
+                      key={item.period}
+                      type="button"
+                      onClick={() => setActiveTrajectoryIdx(idx)}
+                      className={`text-left py-1.5 transition-colors flex items-center gap-3 ${
+                        active
+                          ? "text-primary font-medium"
+                          : "text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      <span
+                        className={`w-2 h-2 rounded-full transition-all ${
+                          active ? "bg-primary scale-125" : "bg-border"
+                        }`}
+                      />
+                      <span className="font-mono text-xs tabular-nums">{item.period}</span>
+                      <span className="text-xs truncate">— {item.phase}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Interactive Timeline Runway */}
+            <div ref={timelineRef} className="lg:col-span-7 relative pl-6 sm:pl-10">
+              {/* Vertical Background Track + Scroll-Animated Orange Beam */}
+              <div
+                aria-hidden="true"
+                className="absolute left-0 top-3 bottom-3 w-[2px] bg-border overflow-hidden rounded-full"
+              >
+                <motion.div
+                  style={{ height: timelineHeight }}
+                  className="w-full bg-gradient-to-b from-primary via-primary to-orange-400"
+                />
+              </div>
+
+              <div className="space-y-6">
+                {TRAJECTORY_ITEMS.map((item, idx) => {
+                  const isActive = activeTrajectoryIdx === idx;
+                  return (
+                    <motion.div
+                      key={item.period}
+                      initial={{ opacity: 0, x: 16 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, margin: "-40px" }}
+                      transition={{ duration: 0.4, delay: idx * 0.08 }}
+                      onMouseEnter={() => setActiveTrajectoryIdx(idx)}
+                      onClick={() => setActiveTrajectoryIdx(idx)}
+                      className={`group relative cursor-pointer rounded-2xl border p-6 sm:p-8 transition-all duration-300 ${
+                        isActive
+                          ? "border-primary/50 bg-[#141518] shadow-[0_18px_45px_-22px_rgba(255,64,1,0.28)]"
+                          : "border-border bg-[#141518]/50 hover:border-foreground/25 hover:bg-[#141518]"
+                      }`}
+                    >
+                      {/* Timeline Node Dot */}
+                      <span
+                        aria-hidden="true"
+                        className={`absolute -left-[29px] sm:-left-[45px] top-8 w-3.5 h-3.5 rounded-full border-2 transition-all duration-300 ${
+                          isActive
+                            ? "bg-primary border-primary shadow-[0_0_14px_#FF4001] scale-125"
+                            : "bg-background border-muted-foreground/50 group-hover:border-primary"
+                        }`}
+                      />
+
+                      <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                        <span
+                          className={`font-mono text-[13px] font-semibold rounded-full px-3.5 py-1 border transition-colors ${
+                            isActive
+                              ? "bg-primary text-primary-foreground border-primary"
+                              : "text-primary bg-primary/10 border-primary/20"
+                          }`}
+                        >
+                          {item.period}
+                        </span>
+                        <span className="text-[12px] font-mono text-muted-foreground">
+                          {item.metric}
+                        </span>
+                      </div>
+
+                      <h3 className="font-display text-[22px] sm:text-[26px] font-medium text-foreground mb-1.5 group-hover:text-primary transition-colors">
+                        {item.phase}
+                      </h3>
+                      <p className="text-xs font-mono text-primary/90 mb-3">{item.role}</p>
+
+                      <p className="text-muted-foreground text-[15px] sm:text-[16px] leading-[1.68] mb-5">
+                        {item.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2 pt-4 border-t border-border/70">
+                        {item.highlights.map((tag) => (
+                          <span
+                            key={tag}
+                            className="text-[11px] font-mono text-foreground/85 bg-background/80 border border-border rounded-lg px-2.5 py-1"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 03. Forma de Trabalhar — Interactive Cursor Spotlight Cards */}
+        <section className="bg-[#141518] sec-pad border-b border-border">
+          <div className="container-editorial">
+            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12 md:mb-14">
+              <div>
+                <div className="section-label mb-3">
+                  <span className="label-num">03.</span> Forma de trabalhar
+                </div>
+                <h2
+                  className="font-display text-foreground font-medium"
+                  style={{ fontSize: "clamp(28px, 3.8vw, 44px)", lineHeight: 1.08 }}
+                >
+                  Estrutura enxuta, direta e focada em resultado.
+                </h2>
+              </div>
+
+              <p className="text-muted-foreground text-[16px] leading-[1.6] max-w-[44ch]">
+                Sem burocracia de grandes agências: um fluxo de trabalho claro para decisões seguras
+                e entregas de alto nível.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+              {WORK_METHOD_ITEMS.map((item, idx) => (
+                <SpotlightMethodCard
+                  key={item.num}
+                  item={item}
+                  index={idx}
+                  isActive={activeMethodIdx === idx}
+                  onActivate={() => setActiveMethodIdx(idx)}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 04. Ferramentas e Capacidades — Compact Editorial Horizontal Index */}
+        <section className="container-editorial py-16 md:py-20 border-b border-border">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-10">
+            <div>
+              <div className="section-label mb-2.5">
+                <span className="label-num">04.</span> Ferramentas &amp; Capacidades
+              </div>
+              <h2
+                className="font-display text-foreground font-medium"
+                style={{ fontSize: "clamp(24px, 3.2vw, 36px)", lineHeight: 1.1 }}
+              >
+                Domínio técnico e entregáveis de ponta a ponta.
+              </h2>
+            </div>
+
+            <p className="text-muted-foreground text-[14px] md:text-[15px] max-w-[42ch]">
+              Passe o cursor ou toque em cada frente para destacar as competências e ferramentas utilizadas.
+            </p>
+          </div>
+
+          {/* Sleek Compact Architectural Rows instead of heavy 2x2 boxes */}
+          <div className="divide-y divide-border border-y border-border">
+            {CAPABILITY_ROWS.map((row, idx) => {
+              const IconComponent = row.icon;
+              const isActive = activeCapabilityIdx === idx;
+
+              return (
+                <div
+                  key={row.num}
+                  onMouseEnter={() => setActiveCapabilityIdx(idx)}
+                  onClick={() => setActiveCapabilityIdx(idx)}
+                  className={`group cursor-pointer py-5 sm:py-6 px-4 sm:px-6 -mx-4 sm:-mx-6 rounded-2xl transition-all duration-300 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-center ${
+                    isActive ? "bg-[#141518]" : "hover:bg-[#141518]/60"
+                  }`}
+                >
+                  {/* Left: Number + Icon + Title */}
+                  <div className="lg:col-span-5 flex items-center gap-4">
+                    <span
+                      className={`font-mono text-xs tabular-nums transition-colors ${
+                        isActive ? "text-primary font-semibold" : "text-muted-foreground"
+                      }`}
+                    >
+                      {row.num}
+                    </span>
+
+                    <div
+                      className={`w-9 h-9 rounded-xl border flex items-center justify-center shrink-0 transition-all duration-300 ${
+                        isActive
+                          ? "bg-primary text-primary-foreground border-primary shadow-[0_0_20px_rgba(255,64,1,0.35)]"
+                          : "bg-background border-border text-muted-foreground group-hover:text-foreground"
+                      }`}
+                    >
+                      <IconComponent size={16} />
+                    </div>
+
+                    <div>
+                      <h3
+                        className={`font-display text-[18px] sm:text-[20px] font-medium transition-colors ${
+                          isActive ? "text-primary" : "text-foreground"
+                        }`}
+                      >
+                        {row.category}
+                      </h3>
+                      <p className="text-xs text-muted-foreground hidden sm:block mt-0.5">
+                        {row.summary}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Right: Compact Inline Skill Pills */}
+                  <div className="lg:col-span-7 flex flex-wrap items-center lg:justify-end gap-2">
+                    {row.skills.map((skill) => (
+                      <span
+                        key={skill}
+                        className={`text-[12px] sm:text-[13px] px-3 py-1.5 rounded-full border transition-all duration-200 ${
+                          isActive
+                            ? "bg-background border-primary/35 text-foreground"
+                            : "bg-background/50 border-border text-muted-foreground group-hover:text-foreground/85"
+                        }`}
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        <CTASection />
+      </main>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default About;

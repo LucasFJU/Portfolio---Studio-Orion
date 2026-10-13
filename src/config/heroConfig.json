@@ -1,0 +1,113 @@
+{
+  "background": {
+    "type": "shader",
+    "imageUrl": "",
+    "videoUrl": "",
+    "overlayOpacity": 65
+  },
+  "layout": {
+    "columnDistribution": "7-5",
+    "textAlignment": "left",
+    "paddingY": "normal",
+    "order": "text-first"
+  },
+  "layers": [
+    {
+      "id": "kicker",
+      "visibleDesktop": true,
+      "visibleMobile": true
+    },
+    {
+      "id": "headline",
+      "visibleDesktop": true,
+      "visibleMobile": true
+    },
+    {
+      "id": "subtitle",
+      "visibleDesktop": true,
+      "visibleMobile": true
+    },
+    {
+      "id": "actions",
+      "visibleDesktop": true,
+      "visibleMobile": true
+    },
+    {
+      "id": "metrics",
+      "visibleDesktop": true,
+      "visibleMobile": true
+    },
+    {
+      "id": "media",
+      "visibleDesktop": true,
+      "visibleMobile": true
+    }
+  ],
+  "customElements": [],
+  "mobileOverrides": {
+    "enabled": false,
+    "textAlignment": "center",
+    "headlineFontSize": "normal",
+    "imageAspectRatio": "1/1",
+    "hideMetrics": false,
+    "hideSocial": false,
+    "hideKicker": false
+  },
+  "kicker": {
+    "enabled": true,
+    "statusText": "Disponível para novos projetos",
+    "subText": "Brand Identity, Social Media & Web Design",
+    "pulseDot": true
+  },
+  "typography": {
+    "headlineLine1": "Design estratégico",
+    "headlineHighlight1": "posiciona",
+    "headlineLine2": "sua marca e",
+    "headlineHighlight2": "converte",
+    "headlineEnd": "",
+    "subtitle": "Ajudo empresas e profissionais a venderem mais com identidades visuais memoráveis, estratégia para redes sociais e sites criados para gerar autoridade e atrair clientes.",
+    "headlineFontSize": "normal"
+  },
+  "media": {
+    "imageUrl": "",
+    "imagePreset": "lucas-hero-jpg",
+    "aspectRatio": "16/10",
+    "borderRadius": "rounded-3xl",
+    "glowEffect": true,
+    "badgeEnabled": true,
+    "badgeText": "Disponível para projetos",
+    "badgeStatus": "emerald",
+    "cardFooterEnabled": true,
+    "cardFooterTitle": "Lucas Evangelista",
+    "cardFooterRole": "13+ anos",
+    "cardFooterSubtitle": "Brand Identity · Social Media · Web Interfaces",
+    "cardGuaranteeText": "Processo estratégico ponta a ponta"
+  },
+  "actions": {
+    "primaryText": "Solicitar Orçamento",
+    "primaryAction": "drawer",
+    "showSecondary": true,
+    "secondaryText": "Ver Projetos",
+    "secondaryLink": "/projetos"
+  },
+  "metrics": {
+    "enabled": true,
+    "statProjects": "2.500+",
+    "statProjectsLabel": "Projetos",
+    "statClients": "500+",
+    "statClientsLabel": "Clientes",
+    "statExperience": "13+ anos",
+    "statExperienceLabel": "Experiência"
+  },
+  "social": {
+    "enabled": true,
+    "showInstagram": true,
+    "showBehance": true,
+    "showLinkedin": true,
+    "showDribbble": true,
+    "customInstagram": "",
+    "customBehance": "",
+    "customLinkedin": "",
+    "customDribbble": ""
+  }
+}
