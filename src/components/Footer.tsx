@@ -49,7 +49,7 @@ const Footer = ({ embedded = false }: FooterProps) => {
               to="/"
               className="font-display text-[20px] font-semibold text-foreground tracking-tight"
             >
-              Lucas Evangelista
+              Studio Orion
             </Link>
             <p className="text-[14px] text-muted-foreground mt-1.5 max-w-[42ch]">
               Identidade visual, design para redes sociais e sites.
@@ -92,7 +92,7 @@ const Footer = ({ embedded = false }: FooterProps) => {
           </div>
 
           <div className="flex items-center gap-4">
-            <span>© {new Date().getFullYear()} Lucas Evangelista.</span>
+            <span>© {new Date().getFullYear()} Studio Orion.</span>
             {user && (
               <Link to="/admin" className="text-primary hover:underline">
                 Painel Admin

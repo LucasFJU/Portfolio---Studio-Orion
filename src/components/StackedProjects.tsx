@@ -270,25 +270,22 @@ const StackedProjects = () => {
       {/* Sticky viewport stage with safe top padding so fixed Navbar never overlaps */}
       <div className="lg:sticky lg:top-0 lg:h-screen flex flex-col justify-center py-12 lg:pt-[88px] lg:pb-6 overflow-hidden">
         <div className="container-editorial w-full">
-          {/* Compact Single-Row Header on Desktop so it never wraps or collides on smaller laptops */}
+          {/* Shared editorial heading: label, title and supporting copy stay in one column. */}
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-6 lg:mb-7">
-            <div>
-              <div className="section-label mb-1.5">
-                <span className="label-num">01.</span> Portfólio em destaque
-              </div>
+            <div className="min-w-0">
+              <p className="mb-5 text-xs tracking-wide text-muted-foreground">
+                <span className="mr-3 font-mono text-primary">01.</span>Portfólio em destaque
+              </p>
 
               <ScrollRevealTitle
                 as="h2"
                 text="Projetos selecionados."
-                className="font-display font-medium tracking-[-0.025em]"
-                style={{ fontSize: "clamp(28px, 3.4vw, 44px)", lineHeight: 1.06 }}
+                className="text-[36px] font-medium leading-[1.1] tracking-[-0.04em] sm:text-[48px] lg:text-[56px]"
               />
+              <p className="mt-4 max-w-[44ch] text-[15px] leading-relaxed text-muted-foreground">Role para navegar pelos cases em destaque.</p>
             </div>
 
             <div className="flex flex-wrap lg:flex-nowrap items-center gap-3 sm:gap-4 shrink-0">
-              <p className="text-muted-foreground text-[13px] leading-[1.45] max-w-[28ch] hidden xl:block">
-                Role para navegar pelos cases em destaque.
-              </p>
 
               {totalCards > 1 && (
                 <div className="hidden lg:flex items-center gap-2 rounded-full border border-border bg-[#141518] p-1.5 pl-3.5 shrink-0">
@@ -350,9 +347,9 @@ const StackedProjects = () => {
 
           {/* Stage Area — Adaptive height via clamp() so 13" laptops and 27" monitors both fit 100% cleanly */}
           {isLoading ? (
-            <div className="h-[380px] lg:h-[clamp(340px,calc(100vh-220px),440px)] bg-card rounded-2xl border border-border animate-pulse" />
+            <div className="h-[380px] lg:h-[clamp(300px,calc(100vh-330px),440px)] bg-card rounded-2xl border border-border animate-pulse" />
           ) : totalCards > 0 ? (
-            <div className="relative pt-5 lg:h-[clamp(360px,calc(100vh-200px),465px)] space-y-8 lg:space-y-0">
+            <div className="relative pt-5 lg:h-[clamp(320px,calc(100vh-310px),465px)] space-y-8 lg:space-y-0">
               {displayedProjects.map((project, index) => {
                 const caseData = parseCaseStudy(project);
                 const categoryLabel = formatCategoryLabel(project.categoria);
@@ -381,7 +378,7 @@ const StackedProjects = () => {
                         to={`/projetos/${project.id}`}
                         className="group grid grid-cols-1 lg:grid-cols-12 items-stretch focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                       >
-                        <div className="lg:col-span-7 aspect-[16/10] lg:aspect-auto lg:h-[clamp(340px,calc(100vh-225px),440px)] bg-secondary relative overflow-hidden">
+                        <div className="lg:col-span-7 aspect-[16/10] lg:aspect-auto lg:h-[clamp(300px,calc(100vh-335px),440px)] bg-secondary relative overflow-hidden">
                           {project.imagem_capa ? (
                             <img
                               src={project.imagem_capa}
@@ -390,7 +387,7 @@ const StackedProjects = () => {
                               height={560}
                               loading={index === 0 ? "eager" : "lazy"}
                               decoding="async"
-                              className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                              className="w-full h-full object-cover"
                             />
                           ) : (
                             <div className="w-full h-full bg-secondary flex items-center justify-center text-muted-foreground font-display text-lg">
@@ -405,7 +402,7 @@ const StackedProjects = () => {
                           )}
                         </div>
 
-                        <div className="lg:col-span-5 p-6 sm:p-8 lg:p-9 xl:p-10 flex flex-col justify-between bg-[#141518] lg:h-[clamp(340px,calc(100vh-225px),440px)]">
+                        <div className="lg:col-span-5 p-6 sm:p-8 lg:p-6 xl:p-8 flex flex-col justify-between bg-[#141518] lg:h-[clamp(300px,calc(100vh-335px),440px)]">
                           <div>
                             <div className="flex items-center justify-between gap-3 text-[12px] sm:text-[13px] text-muted-foreground mb-3">
                               <span className="text-primary font-medium">{categoryLabel}</span>

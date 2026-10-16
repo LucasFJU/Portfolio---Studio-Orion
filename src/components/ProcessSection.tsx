@@ -2,6 +2,7 @@ import { useRef, useState, useLayoutEffect } from "react";
 import { gsap, ScrollTrigger, createEditorialScrollContext } from "@/lib/gsap";
 import { ScrollRevealTitle } from "./ScrollRevealTitle";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
+import "./home-surfaces.css";
 
 export const PROCESS_STEPS = [
   {
@@ -49,9 +50,10 @@ export const PROCESS_STEPS = [
 interface ProcessSectionProps {
   detailed?: boolean;
   sectionNumber?: string;
+  theme?: "dark" | "orange";
 }
 
-const ProcessSection = ({ detailed = false, sectionNumber = "04." }: ProcessSectionProps) => {
+const ProcessSection = ({ detailed = false, sectionNumber = "04.", theme = "dark" }: ProcessSectionProps) => {
   const sectionRef = useRef<HTMLElement>(null);
   const stepsRef = useRef<(HTMLDivElement | null)[]>([]);
   const progressFillRef = useRef<HTMLDivElement>(null);
@@ -60,11 +62,13 @@ const ProcessSection = ({ detailed = false, sectionNumber = "04." }: ProcessSect
   useLayoutEffect(() => {
     if (!sectionRef.current) return;
 
-    const mm = createEditorialScrollContext(({ isDesktopMotion }) => {
+    const mm = createEditorialScrollContext(({ isDesktopMotion, reduceMotion }) => {
       const steps = stepsRef.current.filter(Boolean) as HTMLDivElement[];
       if (!steps.length) return;
 
-      if (progressFillRef.current) {
+      if (progressFillRef.current && reduceMotion) {
+        gsap.set(progressFillRef.current, { scaleY: 1 });
+      } else if (progressFillRef.current) {
         gsap.fromTo(
           progressFillRef.current,
           { scaleY: 0 },
@@ -82,10 +86,10 @@ const ProcessSection = ({ detailed = false, sectionNumber = "04." }: ProcessSect
       }
 
       steps.forEach((stepEl, index) => {
-        if (isDesktopMotion) {
+        if (isDesktopMotion && !reduceMotion) {
           gsap.fromTo(
             stepEl,
-            { opacity: 0.35, y: 18 },
+            { opacity: theme === "orange" ? 1 : 0.35, y: 18 },
             {
               opacity: 1,
               y: 0,
@@ -112,12 +116,13 @@ const ProcessSection = ({ detailed = false, sectionNumber = "04." }: ProcessSect
     }, sectionRef);
 
     return () => mm.revert();
-  }, []);
+  }, [theme]);
 
   return (
     <section
       ref={sectionRef}
-      className="bg-[#141518] sec-pad border-b border-border"
+      className={`sec-pad ${theme === "orange" ? "home-surface-orange" : "bg-[#141518] border-b border-border"}`}
+      data-theme={theme}
       aria-labelledby="process-heading"
     >
       <div className="container-editorial">
@@ -130,13 +135,17 @@ const ProcessSection = ({ detailed = false, sectionNumber = "04." }: ProcessSect
               </div>
 
               <div className="mb-4">
-                <ScrollRevealTitle
+                {theme === "orange" ? (
+                  <h2 id="process-heading" className="font-display font-medium" style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.08 }}>
+                    Do primeiro contato à entrega.
+                  </h2>
+                ) : <ScrollRevealTitle
                   as="h2"
                   id="process-heading"
                   text="Do primeiro contato à entrega."
                   className="font-display font-medium"
                   style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.08 }}
-                />
+                />}
               </div>
 
               <p className="text-muted-foreground text-[16px] leading-[1.6] max-w-[38ch] mb-6">
@@ -149,7 +158,7 @@ const ProcessSection = ({ detailed = false, sectionNumber = "04." }: ProcessSect
                   <div
                     key={step.num}
                     className={`h-1.5 rounded-full transition-all duration-300 ${
-                      activeStep === idx ? "w-8 bg-primary" : "w-2 bg-white/15"
+                      activeStep === idx ? "w-8 bg-primary" : "w-2 bg-white/15 process-inactive-indicator"
                     }`}
                   />
                 ))}

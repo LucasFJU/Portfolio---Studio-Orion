@@ -8,6 +8,7 @@ export interface HeroSharedProps {
   behanceUrl: string;
   linkedinUrl: string;
   dribbbleUrl: string;
+  whatsappNumber?: string;
   openContactDrawer: () => void;
   isComparisonMode?: boolean;
   onSelectThisVariant?: () => void;

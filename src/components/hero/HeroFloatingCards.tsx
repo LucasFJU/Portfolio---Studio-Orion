@@ -3,6 +3,8 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Instagram, Linkedin, Dribbble, Check, Sparkles, TrendingUp } from "lucide-react";
 import demoBrandIdentity from "@/assets/demo-brand-identity.jpg";
 import demoSocialMedia from "@/assets/demo-social-media.jpg";
+import lucasHeroWebp from "@/assets/lucas-hero.webp";
+import lucasHeroPng from "@/assets/lucas-hero.png";
 import { DynamicStudioBackground } from "./DynamicStudioBackground";
 import type { HeroSharedProps } from "./types";
 

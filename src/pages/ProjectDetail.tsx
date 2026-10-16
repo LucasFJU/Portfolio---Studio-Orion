@@ -226,7 +226,7 @@ const ProjectDetail = () => {
           </div>
 
           {/* 1. CABEÇALHO DO ESTUDO DE CASO (Idêntico ao layout de referência) */}
-          <header className="mb-10 md:mb-14">
+          <header data-orion-reveal className="mb-10 md:mb-14">
             {/* Linha de Badges e Metadados Editoriais */}
             <div className="flex flex-wrap items-center gap-2.5 text-xs text-muted-foreground mb-4">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary/80 border border-border text-foreground font-medium">
@@ -335,9 +335,9 @@ const ProjectDetail = () => {
             {/* COLUNA PRINCIPAL (Narrativa Estruturada + Galeria de Desdobramentos) */}
             <div className="lg:col-span-8 space-y-10 md:space-y-14 min-w-0">
               {/* Contexto do Projeto */}
-              <section>
+              <section className="orion-surface-light orion-narrative" data-orion-reveal>
                 <div className="section-label mb-3 text-xs uppercase tracking-wider font-mono">
-                  <span className="label-num text-[#EF4444]">01.</span> Contexto do Projeto
+                  <span className="label-num text-primary">01.</span> Contexto do Projeto
                 </div>
                 <p className="text-foreground text-[18px] sm:text-[20px] md:text-[22px] font-medium leading-[1.55]">
                   {caseData.resumo}
@@ -345,8 +345,8 @@ const ProjectDetail = () => {
               </section>
 
               {/* Card 02: O Desafio */}
-              <section className="rounded-2xl border border-border/80 bg-card/40 p-6 sm:p-8 backdrop-blur-sm shadow-md">
-                <div className="text-[13px] font-mono text-[#EF4444] font-medium mb-3 flex items-center gap-2">
+              <section className="orion-surface-light orion-narrative" data-orion-reveal>
+                <div className="text-[13px] font-mono text-primary font-medium mb-3 flex items-center gap-2">
                   <span>02.</span>
                   <span>O Desafio</span>
                 </div>
@@ -356,8 +356,8 @@ const ProjectDetail = () => {
               </section>
 
               {/* Card 03: Direção Criativa & Solução */}
-              <section className="rounded-2xl border border-border/80 bg-card/40 p-6 sm:p-8 backdrop-blur-sm shadow-md">
-                <div className="text-[13px] font-mono text-[#EF4444] font-medium mb-3 flex items-center gap-2">
+              <section className="orion-surface-light orion-narrative" data-orion-reveal>
+                <div className="text-[13px] font-mono text-primary font-medium mb-3 flex items-center gap-2">
                   <span>03.</span>
                   <span>Direção Criativa & Solução</span>
                 </div>
@@ -367,9 +367,9 @@ const ProjectDetail = () => {
               </section>
 
               {/* Card 04: Resultados Comprovados */}
-              <section className="rounded-2xl border border-border/80 bg-card/40 p-6 sm:p-8 backdrop-blur-sm shadow-md">
+              <section className="orion-surface-light orion-narrative" data-orion-reveal>
                 <div className="flex items-center justify-between gap-2 mb-3">
-                  <div className="text-[13px] font-mono text-[#EF4444] font-medium flex items-center gap-2">
+                  <div className="text-[13px] font-mono text-primary font-medium flex items-center gap-2">
                     <span>04.</span>
                     <span>Resultados Comprovados</span>
                   </div>
@@ -389,7 +389,7 @@ const ProjectDetail = () => {
                   <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
                     <div>
                       <div className="section-label mb-2 text-xs uppercase tracking-wider font-mono">
-                        <span className="label-num text-[#EF4444]">Galeria.</span> Desdobramentos Visuais
+                        <span className="label-num text-primary">Galeria.</span> Desdobramentos Visuais
                       </div>
                       <h2 className="font-display text-[24px] sm:text-[28px] font-medium text-foreground">
                         Aplicações da marca.
@@ -660,7 +660,7 @@ const ProjectDetail = () => {
 
           {/* 5. NAVEGAÇÃO ENTRE ESTUDOS DE CASO (Anterior / Próximo) */}
           {nextProject && nextProject.id !== project.id && (
-            <section className="pt-16 mt-16 md:mt-24 border-t border-border">
+            <section className="orion-surface-soft orion-narrative mt-16 md:mt-24" data-orion-reveal>
               <div className="flex items-center justify-between gap-4 mb-6">
                 <span className="section-label text-xs uppercase tracking-wider font-mono">
                   <span className="label-num text-primary">05.</span> Continue explorando o portfólio

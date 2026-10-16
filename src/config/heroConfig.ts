@@ -1,6 +1,6 @@
 import defaultHeroData from "./heroConfig.json";
 import lucasHeroJpg from "@/assets/lucas-hero.jpg";
-import lucasHeroPng from "@/assets/lucas-hero.png";
+import lucasHeroPng from "@/assets/lucas-hero-seated-v2.png";
 import profilePhotoNew from "@/assets/profile-photo-new.png";
 import demoBrandIdentity from "@/assets/demo-brand-identity.jpg";
 import demoWebDesign from "@/assets/demo-web-design.jpg";

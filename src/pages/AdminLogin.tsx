@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("admin@lucasevangelista.design");
-  const [password, setPassword] = useState("admin123");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const backendUnavailable = import.meta.env.PROD && !isSupabaseConfigured;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,6 +36,11 @@ const AdminLogin = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (backendUnavailable) {
+      setError(true);
+      toast.error("O painel ainda não está conectado ao Supabase.");
+      return;
+    }
     setLoading(true);
     setError(false);
     const { error: err } = await supabase.auth.signInWithPassword({ email, password });
@@ -49,7 +55,7 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col justify-between px-6 py-10">
+    <div className="min-h-screen bg-background flex flex-col justify-between py-10">
       <div className="container-editorial w-full">
         <Link
           to="/"
@@ -60,7 +66,7 @@ const AdminLogin = () => {
         </Link>
       </div>
 
-      <div className="w-full max-w-[440px] mx-auto my-auto py-10">
+      <div className="w-full max-w-[488px] px-6 mx-auto my-auto py-10">
         <div className="rounded-2xl border border-border bg-[#141518] p-8 sm:p-10">
           <div className="section-label mb-3">
             <span className="label-num">01.</span> Área restrita
@@ -72,6 +78,12 @@ const AdminLogin = () => {
           <p className="text-[14px] text-muted-foreground leading-relaxed mb-8">
             Gestão de projetos selecionados, estudos de caso, configurações e propostas comerciais.
           </p>
+
+          {backendUnavailable && (
+            <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg px-4 py-3 text-[13px] text-amber-200 mb-5">
+              O painel administrativo está indisponível até que o projeto Supabase seja conectado.
+            </div>
+          )}
 
           {error && (
             <div className="bg-destructive/10 border border-destructive/30 rounded-lg px-4 py-3 text-[13px] text-destructive mb-5">

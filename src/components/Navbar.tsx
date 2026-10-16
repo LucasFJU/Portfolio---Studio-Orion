@@ -58,6 +58,7 @@ const Navbar = () => {
 
   return (
     <header
+      onFocusCapture={() => setHiddenOnScrollDown(false)}
       className={`fixed top-3 md:top-4 left-0 right-0 z-50 px-4 sm:px-6 transition-all duration-300 ease-out ${
         hiddenOnScrollDown && !mobileOpen
           ? "-translate-y-[130%] opacity-0 pointer-events-none"
@@ -68,7 +69,7 @@ const Navbar = () => {
         className={`mx-auto rounded-full border transition-all duration-300 flex items-center justify-between ${
           scrolled
             ? "max-w-[780px] h-[52px] md:h-[54px] px-4 md:px-6 bg-[#090A0C]/92 backdrop-blur-xl border-white/[0.12] shadow-[0_12px_36px_rgba(0,0,0,0.7)]"
-            : "max-w-[1160px] h-[58px] md:h-[64px] px-5 md:px-7 bg-[#0B0C0E]/80 backdrop-blur-md border-white/[0.08]"
+            : "max-w-[1280px] h-[58px] md:h-[72px] px-5 md:px-7 bg-[#0B0C0E]/90 backdrop-blur-md border-white/[0.08]"
         }`}
       >
         {/* Brand Wordmark — Condenses subtly when scrolled */}
@@ -78,17 +79,17 @@ const Navbar = () => {
         >
           <span className="w-2 h-2 rounded-full bg-primary shrink-0" />
           <span className={scrolled ? "hidden sm:inline" : "inline"}>
-            Lucas Evangelista
+            Studio <span className="text-primary">Orion</span>
           </span>
           <span className={scrolled ? "inline sm:hidden font-mono text-sm" : "hidden"}>
-            LE
+            Orion
           </span>
         </Link>
 
         {/* Center Navigation Links */}
         <nav
           aria-label="Navegação principal"
-          className={`hidden md:flex items-center transition-all duration-300 ${
+          className={`hidden lg:flex items-center transition-all duration-300 ${
             scrolled ? "gap-5" : "gap-7"
           }`}
         >
@@ -113,7 +114,7 @@ const Navbar = () => {
         </nav>
 
         {/* Right Primary Action */}
-        <div className="hidden md:flex items-center shrink-0">
+        <div className="hidden lg:flex items-center shrink-0">
           <button
             type="button"
             onClick={() => openContactDrawer()}
@@ -127,7 +128,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Right Controls: Compact CTA + Menu Toggle */}
-        <div className="flex md:hidden items-center gap-2">
+        <div className="flex lg:hidden items-center gap-2">
           <button
             type="button"
             onClick={() => openContactDrawer()}
@@ -158,7 +159,7 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden max-w-[1160px] mx-auto mt-2 rounded-3xl bg-[#0E1014]/95 backdrop-blur-xl border border-white/[0.1] overflow-hidden shadow-2xl"
+            className="lg:hidden max-w-[1280px] mx-auto mt-2 rounded-3xl bg-[#0E1014]/95 backdrop-blur-xl border border-white/[0.1] overflow-hidden shadow-2xl"
           >
             <div className="px-6 py-5 flex flex-col gap-1">
               {navLinks.map((link) => {

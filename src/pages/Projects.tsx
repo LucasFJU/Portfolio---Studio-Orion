@@ -1,3 +1,4 @@
+import SectionTransition from "@/components/SectionTransition";
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -85,9 +86,9 @@ const Projects = () => {
       <Navbar />
 
       <main className="pt-[108px] md:pt-[124px]">
-        <section className="container-editorial pb-16 md:pb-24">
+        <section className="container-editorial">
           {/* Header */}
-          <div className="pb-10 md:pb-12 border-b border-border mb-10 md:mb-12">
+          <div data-orion-reveal className="pb-10 md:pb-12">
             <div className="section-label mb-3">
               <span className="label-num">01.</span> Portfólio completo
             </div>
@@ -143,6 +144,10 @@ const Projects = () => {
             </div>
           </div>
 
+        </section>
+        <SectionTransition sourceColor="#090A0C" destinationColor="#FFFAFA" />
+        <section className="orion-surface-light sec-pad">
+          <div className="container-editorial">
           {/* Projects Vertical Stream (Uma em baixo da outra com staggered reveal) */}
           {isLoading ? (
             <div className="flex flex-col gap-8 md:gap-12">
@@ -169,11 +174,11 @@ const Projects = () => {
               {filteredProjects.map((p, index) => (
                 <motion.div
                   key={p.id}
-                  initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
+                  initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 22 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-40px" }}
                   transition={{
-                    duration: 0.65,
+                    duration: 0.55,
                     ease: [0.22, 1, 0.36, 1],
                     delay: shouldReduceMotion ? 0 : Math.min((index % 3) * 0.12, 0.36),
                   }}
@@ -199,8 +204,9 @@ const Projects = () => {
               </button>
             </div>
           )}
+          </div>
         </section>
-
+        <SectionTransition sourceColor="#FFFAFA" destinationColor="#090A0C" direction="rise-left" />
         <CTASection />
       </main>
 

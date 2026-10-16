@@ -366,7 +366,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Editorial Metrics Strip */}
-        <div className="rounded-2xl border border-border bg-[#141518] p-6 sm:p-8 mb-8">
+        <div data-orion-summary className="rounded-2xl border border-border bg-[#141518] p-6 sm:p-8 mb-8">
           <div className="grid grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-6">
             {[
               { n: totalProjects, l: "Total de cases", sub: "Cadastrados no banco" },

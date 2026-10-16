@@ -84,7 +84,7 @@ const AdminTestimonials = () => {
         .select("*")
         .order("ordem", { ascending: true });
       if (error) throw error;
-      return (data as TestimonialItem[]) || [];
+      return (data as unknown as TestimonialItem[]) || [];
     },
     enabled: !!user,
   });
@@ -246,7 +246,7 @@ const AdminTestimonials = () => {
     <div className="min-h-screen bg-[#07080A] text-foreground pb-24">
       <AdminNavbar />
 
-      <main className="max-w-[1180px] mx-auto px-4 md:px-6 pt-28">
+      <main className="container-editorial pt-28">
         {/* Top Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-8 border-b border-white/[0.08] mb-8">
           <div>

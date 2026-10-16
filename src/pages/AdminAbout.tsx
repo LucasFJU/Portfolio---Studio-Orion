@@ -104,7 +104,7 @@ const AdminAbout = () => {
     <div className="min-h-screen bg-background">
       <AdminNavbar />
 
-      <main className="container-editorial max-w-[960px] pt-[104px] md:pt-[116px] pb-24">
+      <main className="container-editorial pt-[104px] md:pt-[116px] pb-24">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 pb-8 border-b border-border">
           <div>
             <div className="section-label mb-3">

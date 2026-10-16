@@ -103,7 +103,7 @@ const AdminSettings = () => {
     <div className="min-h-screen bg-background">
       <AdminNavbar />
 
-      <main className="container-editorial max-w-[960px] pt-[104px] md:pt-[116px] pb-24">
+      <main className="container-editorial pt-[104px] md:pt-[116px] pb-24">
         <div className="mb-10 pb-8 border-b border-border">
           <div className="section-label mb-3">
             <span className="label-num">04.</span> Preferências globais

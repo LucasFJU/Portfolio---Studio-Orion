@@ -65,7 +65,7 @@ export const ContactDrawerProvider = ({ children }: { children: ReactNode }) => 
             </SheetDescription>
           </SheetHeader>
 
-          <ContactForm defaultService={options.defaultService} compact />
+          <ContactForm initialService={options.defaultService} compact />
 
           <div className="mt-6 pt-5 border-t border-border flex items-center justify-between text-xs text-muted-foreground">
             <span>Prefere a página completa?</span>

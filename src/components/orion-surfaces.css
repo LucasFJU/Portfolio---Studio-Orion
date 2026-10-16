@@ -1,0 +1,148 @@
+/* Complete, locally scoped themes. Nested dark cards retain their own tokens. */
+.orion-surface-dark, .orion-surface-soft {
+  --background: 220 14% 4%; --foreground: 60 14% 95%;
+  --card: 225 9% 9%; --card-foreground: 60 14% 95%;
+  --popover: 225 9% 9%; --popover-foreground: 60 14% 95%;
+  --secondary: 228 8% 12%; --secondary-foreground: 60 14% 95%;
+  --muted: 228 8% 12%; --muted-foreground: 220 6% 68%;
+  --primary: 15 100% 50%; --primary-foreground: 60 14% 98%;
+  --accent: 15 100% 50%; --accent-foreground: 60 14% 98%;
+  --border: 225 7% 20%; --input: 225 7% 20%; --ring: 15 100% 50%;
+  background-color: #090A0C; color: hsl(var(--foreground));
+}
+.orion-surface-soft { background-color: #141518; }
+.orion-surface-light {
+  --background: 0 100% 99%; --foreground: 220 14% 4%;
+  --card: 0 0% 100%; --card-foreground: 220 14% 4%;
+  --popover: 0 0% 100%; --popover-foreground: 220 14% 4%;
+  --secondary: 0 12% 94%; --secondary-foreground: 220 14% 4%;
+  --muted: 0 12% 94%; --muted-foreground: 220 6% 34%;
+  --primary: 15 95% 35%; --primary-foreground: 0 0% 100%;
+  --accent: 15 95% 35%; --accent-foreground: 0 0% 100%;
+  --border: 0 8% 80%; --input: 0 8% 72%; --ring: 15 95% 35%;
+  background-color: #FFFAFA; color: hsl(var(--foreground));
+}
+.orion-surface-light .btn-primary { background: #090A0C; border-color: #090A0C; color: #fffafa; }
+.orion-surface-light .btn-primary:hover { background: #292b30; }
+.orion-surface-light .btn-primary svg { color: #ff7748; }
+.orion-surface-light :is(.orion-surface-dark, .orion-surface-soft) .btn-primary { background: #ff4001; border-color: #ff4001; color: #fff; }
+.orion-surface-light :is(.orion-surface-dark, .orion-surface-soft) .btn-primary:hover { background: #d93600; }
+.orion-surface-light :is(.orion-surface-dark, .orion-surface-soft) .btn-primary svg { color: #fff; }
+[data-orion-area] { --orion-shell: 1280px; --orion-gutter: 24px; }
+@media (min-width: 640px) { [data-orion-area] { --orion-gutter: 40px; } }
+[data-orion-area] :is(.container-editorial, .orion-content-container, .orion-shell) {
+  width: 100%; max-width: var(--orion-shell); margin-inline: auto; padding-inline: var(--orion-gutter);
+}
+[data-orion-area="admin"] > .orion-editorial-grid { opacity: .05; z-index: 0; }
+[data-orion-area="admin"] > .orion-route-content { position: relative; z-index: 1; }
+[data-orion-area="admin"] > .orion-route-content > div { background-color: transparent; }
+[data-orion-area="admin"] .orion-route-content > div > header.fixed,
+.orion-proposal-page > header { padding-inline: var(--orion-gutter); }
+[data-orion-area="admin"] main { min-width: 0; }
+[data-orion-area="admin"] h1:not(.orion-hero-title) { font-size: clamp(28px, 3.3vw, 44px); line-height: 1.1; }
+[data-orion-area="admin"] :is(input, textarea, select) { min-width: 0; }
+[data-orion-page]:not([data-orion-page="/"]) .orion-route-content h1:not(.orion-hero-title) { overflow-wrap: anywhere; }
+.orion-reveal-ready { opacity: 0; transform: translateY(22px); transition: opacity .55s cubic-bezier(.22,1,.36,1), transform .55s cubic-bezier(.22,1,.36,1); }
+.orion-reveal-ready.orion-reveal-visible, .orion-reveal-ready:focus-within { opacity: 1; transform: none; }
+.orion-narrative { padding: clamp(24px, 4vw, 40px); border-radius: 16px; }
+.orion-proposal-author { display: grid; gap: 48px; align-items: center; margin-bottom: 0; }
+.orion-proposal-cover { min-height: 100svh; display: flex; align-items: center; padding-block: 116px 56px; background: #000; }
+.orion-proposal-cover-effect { position: absolute; z-index: 0; inset: 0; pointer-events: none; opacity: .75; mask-image: linear-gradient(90deg, #0005 0%, #0002 20%, transparent 38%, #0008 65%, #000 100%), linear-gradient(to bottom, transparent, #000 26%, #000 74%, transparent); mask-composite: intersect; }
+.orion-proposal-cover-effect .gradient-blinds-container { position: absolute; inset: 0; }
+.orion-proposal-cover-photo { position: absolute; z-index: 2; top: 80px; right: max(0px, calc((100% - 1280px) / 2)); bottom: -70px; height: calc(100% + 70px); width: auto; max-width: none; object-fit: contain; object-position: bottom right; pointer-events: none; filter: drop-shadow(0 0 12px #ff40011a); }
+.orion-proposal-cover-content { position: relative; z-index: 3; width: 100%; }
+.orion-proposal-cover-kicker { margin-bottom: 28px; }
+.orion-proposal-cover-title { max-width: 1080px; font-size: clamp(76px, 9vw, 128px); line-height: .92; letter-spacing: -.065em; }
+.orion-proposal-cover-title > span { display: block; }
+.orion-proposal-cover-title > span + span { color: #ff4001; }
+.orion-proposal-cover-client { max-width: 48ch; margin-top: 28px; color: hsl(var(--muted-foreground)); font-size: 18px; line-height: 1.35; }
+.orion-proposal-cover-client strong { color: hsl(var(--foreground)); font-weight: 500; }
+.orion-proposal-cover-meta { display: inline-flex; align-items: center; gap: 10px; margin-top: 22px; padding: 8px 12px; border: 1px solid hsl(var(--border)); border-radius: 999px; background: #090a0ca8; color: hsl(var(--muted-foreground)); font-size: 12px; }
+.orion-proposal-cover-meta-dot { width: 4px; height: 4px; border-radius: 50%; background: #ff7040; }
+.orion-proposal-objective { padding-block: 48px 56px; }
+.orion-proposal-objective h2 { max-width: 780px; font-size: clamp(30px, 4.2vw, 48px); line-height: 1.08; font-weight: 500; letter-spacing: -.035em; }
+.orion-proposal-objective p { max-width: 72ch; margin-top: 22px; color: hsl(var(--muted-foreground)); font-size: 16px; line-height: 1.7; }
+.orion-proposal-authority { padding-block: clamp(44px, 6vw, 76px); }
+.orion-proposal-author .orion-portrait-scene { width: min(100%, 560px); height: auto; max-width: 560px; aspect-ratio: 1194 / 1600; margin-inline: auto; }
+.orion-proposal-author .orion-portrait-scene .orion-about-portrait { width: auto; height: 100%; max-width: 100%; left: 50%; bottom: 0; object-fit: contain; transform: translate(calc(-50% + var(--portrait-x)), var(--portrait-y)); }
+.orion-proposal-portrait .orion-portrait-halo { opacity: .7; }
+.orion-proposal-author-copy { order: -1; }
+.orion-proposal-stack { position: relative; isolation: isolate; }
+.orion-proposal-stack-panel { position: relative; }
+.orion-proposal-stack[data-scroll-mode="stack"] .orion-proposal-stack-panel { position: sticky; top: var(--proposal-panel-top, 96px); min-height: calc(100svh - var(--proposal-panel-offset, 112px) - 16px); }
+.orion-proposal-author h2 { font-size: clamp(32px, 4vw, 52px); line-height: 1.1; margin-bottom: 24px; }
+.orion-proposal-author p { max-width: 52ch; font-size: 17px; line-height: 1.7; color: hsl(var(--muted-foreground)); }
+@media (min-width: 1024px) {
+  .orion-proposal-cover { min-height: clamp(680px, 82svh, 860px); padding-block: 150px 72px; }
+  .orion-proposal-cover-effect { opacity: .82; }
+  .orion-proposal-cover-client { margin-top: 32px; font-size: 15px; }
+  .orion-proposal-cover-meta { margin-top: 26px; }
+  .orion-proposal-objective { padding-block: 72px 84px; }
+  .orion-proposal-objective p { font-size: 18px; }
+  .orion-proposal-authority { padding-block: 72px; }
+  .orion-proposal-author { grid-template-columns: 1fr 1fr; }
+  .orion-proposal-author-copy { order: initial; }
+}
+.orion-proposal-page { overflow-wrap: anywhere; }
+.orion-proposal-page :is(section, footer) { scroll-margin-top: 100px; }
+.orion-proposal-page > header { color: #f5f5f2; }
+.orion-proposal-page > header nav > div:nth-child(2) { gap: 16px; }
+.orion-proposal-page > section.orion-surface-light .orion-legacy-dark { border-radius: 16px; }
+@media (min-width: 640px) and (max-width: 1023px) {
+  .orion-proposal-cover { min-height: max(640px, 100svh); align-items: flex-start; padding-block: 156px 48px; }
+  .orion-proposal-cover-photo { top: auto; right: -8%; bottom: -3%; height: 62%; max-height: 500px; }
+  .orion-proposal-cover-content { max-width: 68%; }
+  .orion-proposal-cover-title { font-size: clamp(58px, 7.8vw, 80px); }
+  .orion-proposal-cover-client { max-width: 36ch; font-size: 15px; }
+}
+@media (max-width: 639px) {
+  .orion-proposal-cover { min-height: max(760px, 100svh); align-items: flex-start; padding-block: clamp(128px, 15svh, 152px) 48px; }
+  .orion-proposal-cover-effect { opacity: .78; }
+  .orion-proposal-cover-photo { top: auto; left: 50%; right: auto; bottom: -8%; height: 56%; max-height: 500px; transform: translateX(-62%); }
+  .orion-proposal-cover-content { text-align: center; }
+  .orion-proposal-cover-kicker { justify-content: center; margin-bottom: 24px; }
+  .orion-proposal-cover-title { margin-inline: auto; font-size: clamp(52px, 17vw, 70px); line-height: .94; }
+  .orion-proposal-cover-title > span + span { white-space: nowrap; }
+  .orion-proposal-cover-client { margin: 20px auto 0; font-size: 17px; }
+  .orion-proposal-cover-meta { margin-top: 18px; flex-wrap: wrap; }
+  .orion-proposal-objective { padding-block: 42px 48px; }
+  .orion-proposal-objective p { margin-top: 16px; font-size: 15px; }
+  .orion-proposal-authority { padding-block: 44px; }
+  .orion-proposal-author { gap: 24px; margin-bottom: 0; }
+}
+@media (max-height: 600px) {
+  .orion-proposal-cover { min-height: 0; padding-block: 104px 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .orion-proposal-stack[data-scroll-mode="stack"] .orion-proposal-stack-panel { position: relative; top: auto; min-height: 0; }
+  [data-orion-area] .orion-reveal-ready { opacity: 1; transform: none; transition: none; }
+  [data-orion-area]:not([data-orion-page="/"]) :is(main, .orion-proposal-page) [style*="opacity"] { opacity: 1 !important; }
+  [data-orion-area]:not([data-orion-page="/"]) :is(main, .orion-proposal-page) [style*="transform"] { transform: none !important; }
+}
+@media print {
+  [data-orion-area="proposal"], .orion-proposal-page, .orion-proposal-page * {
+    color: #111 !important; background: transparent !important; box-shadow: none !important;
+    text-shadow: none !important; filter: none !important; opacity: 1 !important;
+    transform: none !important; transition: none !important; animation: none !important;
+  }
+  [data-orion-area="proposal"] { background: #fff !important; }
+  .orion-proposal-page { --border: 0 0% 75%; --muted-foreground: 0 0% 25%; }
+  .orion-proposal-page > header, .orion-proposal-page [role="dialog"],
+  .orion-proposal-page .orion-proposal-cover-effect,
+  .orion-proposal-page .orion-portrait-tags, .orion-proposal-page .orion-portrait-halo,
+  .orion-proposal-page .orion-portrait-ring, .orion-proposal-page .orion-section-transition,
+  .orion-proposal-page .orion-section-glow { display: none !important; }
+  .orion-proposal-page .orion-shell { max-width: none; padding-inline: 0; padding-block: 16px !important; }
+  .orion-proposal-stack-panel { position: relative !important; top: auto !important; min-height: 0 !important; }
+  .orion-proposal-page > section { padding-block: 24px !important; }
+  .orion-proposal-page .orion-proposal-author { grid-template-columns: 1fr 1.3fr; gap: 24px; break-inside: avoid; }
+  .orion-proposal-page .orion-proposal-author-copy { order: initial; }
+  .orion-proposal-page .orion-portrait-scene { height: 280px; }
+  .orion-proposal-page .orion-about-portrait { height: 100%; position: relative; left: auto; width: auto; max-width: 100%; margin-inline: auto; }
+  .orion-proposal-page :is(h1,h2,h3) { break-after: avoid; }
+  .orion-proposal-page :is(p,li) { orphans: 3; widows: 3; }
+  .orion-proposal-page :is(button, a[href^="https://wa.me"]) { display: none !important; }
+  .orion-proposal-page button[data-proposal-payment] { display: block !important; break-inside: avoid; }
+  .orion-proposal-page [data-proposal-payment] { border-color: #aaa !important; }
+  [data-orion-area="proposal"] > .orion-route-content { transform: none !important; opacity: 1 !important; }
+}

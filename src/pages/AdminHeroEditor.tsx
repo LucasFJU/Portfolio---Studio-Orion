@@ -345,9 +345,9 @@ export default function AdminHeroEditor() {
     <ContactDrawerProvider>
       <div className="min-h-screen bg-[#070809] text-foreground flex flex-col overflow-hidden select-none">
         {/* Top Control Bar (Wix/WordPress Style) */}
-        <header className="h-14 border-b border-white/[0.08] bg-[#0C0D10]/95 backdrop-blur-md px-4 flex items-center justify-between shrink-0 z-40">
+        <header className="min-h-14 lg:h-14 border-b border-white/[0.08] bg-[#0C0D10]/95 backdrop-blur-md px-6 sm:px-10 py-3 lg:py-0 flex flex-wrap items-center justify-between gap-3 shrink-0 z-40">
           {/* Left: Brand & Breadcrumb */}
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3 min-w-0">
             <Link
               to="/admin"
               className="text-muted-foreground hover:text-foreground text-xs font-mono flex items-center gap-1.5 px-2 py-1 rounded hover:bg-white/[0.05] transition-colors"
@@ -480,9 +480,9 @@ export default function AdminHeroEditor() {
         </header>
 
         {/* Main Workspace (Split View) */}
-        <div className="flex-1 flex overflow-hidden">
+        <div className="flex-1 flex flex-col lg:flex-row min-w-0">
           {/* Left Sidebar: Advanced Wix-like Inspector (380px) */}
-          <aside className="w-[380px] shrink-0 border-r border-white/[0.08] bg-[#0E1014] flex flex-col z-30">
+          <aside className="w-full lg:w-[380px] shrink-0 border-r border-white/[0.08] bg-[#141518] flex flex-col z-30">
             {/* Category Nav Tabs */}
             <div className="flex items-center gap-1 p-2 border-b border-white/[0.06] bg-[#0A0B0D] overflow-x-auto no-scrollbar">
               {tabs.map((tab) => {
@@ -1417,7 +1417,7 @@ export default function AdminHeroEditor() {
           </aside>
 
           {/* Center Stage: Interactive Live Preview Canvas */}
-          <main className="flex-1 bg-[#050506] overflow-y-auto relative flex flex-col items-center p-4 sm:p-6 lg:p-8">
+          <main className="min-w-0 flex-1 bg-[#090A0C] overflow-y-auto relative flex flex-col items-center p-6 sm:p-10">
             {/* Viewport Frame Container */}
             <div
               className={`transition-all duration-300 w-full flex flex-col rounded-2xl border border-white/[0.12] bg-black shadow-[0_20px_60px_rgba(0,0,0,0.8)] overflow-hidden ${
@@ -1445,7 +1445,7 @@ export default function AdminHeroEditor() {
               </div>
 
               {/* Live Render of Hero */}
-              <div className="w-full relative bg-black">
+              <div data-orion-static className="w-full relative bg-black">
                 <HeroSplitEditorial
                   statProjects={config.metrics.statProjects}
                   statClients={config.metrics.statClients}

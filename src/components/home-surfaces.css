@@ -1,0 +1,41 @@
+.home-surface-light {
+  --background: 45 20% 93%;
+  --foreground: 220 14% 4%;
+  --muted-foreground: 220 6% 34%;
+  --border: 40 12% 79%;
+  --primary: 15 92% 34%;
+  background: #FFFAFA;
+  color: #090A0C;
+}
+
+.orion-services[data-theme="light"] { background: #FFFAFA; }
+.home-surface-light .orion-action-primary {
+  background: #090A0C;
+  border-color: #090A0C;
+  color: #F0EEE8;
+}
+.home-surface-light .orion-action-primary:hover { background: #292B30; border-color: #292B30; }
+.home-surface-light .orion-action-primary svg { color: #FF7748; }
+.home-surface-light .orion-action:focus-visible { outline-color: #090A0C; }
+
+.home-surface-orange {
+  --background: 15 100% 50%;
+  --foreground: 220 14% 4%;
+  --muted-foreground: 220 14% 8%;
+  --border: 15 75% 36%;
+  --primary: 220 14% 4%;
+  background: #FF4001;
+  color: #090A0C;
+}
+.home-surface-orange .process-inactive-indicator { background: #090A0C40; }
+
+.orion-section-transition {
+  position: relative;
+  height: 12px;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+@media (min-width: 1024px) {
+  .orion-section-transition { height: 32px; }
+}

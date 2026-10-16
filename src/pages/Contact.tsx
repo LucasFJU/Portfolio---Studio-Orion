@@ -1,3 +1,4 @@
+import SectionTransition from "@/components/SectionTransition";
 import { useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -37,11 +38,8 @@ const Contact = () => {
       />
       <Navbar />
 
-      <main className="pt-[108px] md:pt-[124px] pb-20 md:pb-28">
-        <div className="container-editorial">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            {/* Left Info Column */}
-            <div className="lg:col-span-5">
+      <main className="pt-[108px] md:pt-[124px]">
+        <header data-orion-reveal className="container-editorial pb-12 md:pb-16">
               <div className="section-label mb-3">
                 <span className="label-num">01.</span> Contato e orçamento
               </div>
@@ -58,7 +56,14 @@ const Contact = () => {
                 diretamente por e-mail.
               </p>
 
-              <div className="space-y-6 pt-8 border-t border-border">
+        </header>
+        <SectionTransition sourceColor="#090A0C" destinationColor="#FFFAFA" />
+        <section className="orion-surface-light sec-pad">
+        <div className="container-editorial">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            {/* Left Info Column */}
+            <div className="lg:col-span-5">
+              <div className="space-y-6 pt-8 border-t border-border" data-orion-reveal>
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-lg bg-secondary border border-border flex items-center justify-center text-primary shrink-0">
                     <Mail size={18} />
@@ -109,12 +114,14 @@ const Contact = () => {
 
             {/* Right Form Column */}
             <div className="lg:col-span-7">
-              <div className="rounded-2xl border border-border bg-card p-6 sm:p-9 lg:p-11">
+              <div className="orion-surface-dark relative z-30 rounded-2xl border border-border p-6 sm:p-9 lg:p-11">
                 <ContactForm initialService={initialService} />
               </div>
             </div>
           </div>
         </div>
+        </section>
+        <SectionTransition sourceColor="#FFFAFA" destinationColor="#090A0C" direction="rise-left" />
       </main>
 
       <Footer />

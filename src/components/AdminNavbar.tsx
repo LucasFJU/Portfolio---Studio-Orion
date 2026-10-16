@@ -5,7 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 
-const AdminNavbar = () => {
+type AdminNavbarProps = {
+  primaryAction?: { label: string; to: string };
+};
+
+const AdminNavbar = ({ primaryAction }: AdminNavbarProps) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { signOut } = useAuth();
@@ -75,7 +79,7 @@ const AdminNavbar = () => {
     <header className="fixed top-3 left-0 right-0 z-50 px-4 md:px-6">
       <nav
         aria-label="Navegação administrativa"
-        className="max-w-[1180px] mx-auto flex items-center justify-between rounded-full border border-foreground/[0.08] bg-[#090A0C]/90 backdrop-blur-xl px-5 md:px-6 h-[54px] shadow-[0_10px_30px_rgba(0,0,0,0.6)]"
+        className="max-w-[1200px] mx-auto flex items-center justify-between rounded-full border border-foreground/[0.08] bg-[#090A0C]/90 backdrop-blur-xl px-5 md:px-6 h-[54px] shadow-[0_10px_30px_rgba(0,0,0,0.6)]"
       >
         {/* Zone 1: Brand identity */}
         <div className="flex items-center gap-2.5">
@@ -122,6 +126,14 @@ const AdminNavbar = () => {
 
         {/* Zone 3: Actions + Mobile Drawer Toggle */}
         <div className="flex items-center gap-3">
+          {primaryAction && (
+            <Link
+              to={primaryAction.to}
+              className="hidden sm:inline-flex btn-primary !min-h-9 !px-3.5 !py-2 !text-xs"
+            >
+              {primaryAction.label}
+            </Link>
+          )}
           <Link
             to="/"
             className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
@@ -150,7 +162,7 @@ const AdminNavbar = () => {
 
       {/* Clean Single Dropdown on Mobile (only when opened) */}
       {mobileMenuOpen && (
-        <div className="md:hidden mt-2 max-w-[1180px] mx-auto rounded-2xl border border-foreground/[0.1] bg-[#0E1014]/95 backdrop-blur-xl p-4 shadow-2xl space-y-1">
+        <div className="md:hidden mt-2 max-w-[1200px] mx-auto rounded-2xl border border-foreground/[0.1] bg-[#0E1014]/95 backdrop-blur-xl p-4 shadow-2xl space-y-1">
           {links.map((item) => {
             const active = item.match(pathname);
             return (

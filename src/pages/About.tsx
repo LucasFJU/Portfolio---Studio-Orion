@@ -1,3 +1,5 @@
+import SectionGlow from "@/components/SectionGlow";
+import SectionTransition from "@/components/SectionTransition";
 import { useRef, useState, useEffect, type MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -23,8 +25,7 @@ import CTASection from "@/components/CTASection";
 import PageMeta from "@/components/PageMeta";
 import { useContactDrawer } from "@/components/ContactDrawer";
 
-import lucasHeroWebp from "@/assets/lucas-hero.webp";
-import lucasHeroPng from "@/assets/lucas-hero.png";
+import AboutPortrait from "@/components/AboutPortrait";
 
 const DEFAULT_BIO = [
   "Sou designer e diretor criativo com mais de 13 anos de experiência ajudando empresas e profissionais a estruturarem sua presença visual com clareza, critério e consistência.",
@@ -320,12 +321,8 @@ const SpotlightMethodCard = ({
 };
 
 const About = () => {
-  const { openContactDrawer } = useContactDrawer();
   const shouldReduceMotion = useReducedMotion();
-
-  // Interactive 3D Parallax state for the portrait stage
-  const portraitStageRef = useRef<HTMLDivElement>(null);
-  const [portraitTilt, setPortraitTilt] = useState({ x: 0, y: 0 });
+  const { openContactDrawer } = useContactDrawer();
   const [activeTrajectoryIdx, setActiveTrajectoryIdx] = useState(2);
   const [activeMethodIdx, setActiveMethodIdx] = useState(0);
   const [activeCapabilityIdx, setActiveCapabilityIdx] = useState<number>(0);
@@ -337,22 +334,6 @@ const About = () => {
     offset: ["start 0.75", "end 0.6"],
   });
   const timelineHeight = useTransform(timelineProgress, [0, 1], ["0%", "100%"]);
-
-  const handlePortraitMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (shouldReduceMotion) return;
-    const rect = portraitStageRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    const normX = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
-    const normY = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
-    setPortraitTilt({
-      x: Math.max(-1, Math.min(1, normX)),
-      y: Math.max(-1, Math.min(1, normY)),
-    });
-  };
-
-  const handlePortraitMouseLeave = () => {
-    setPortraitTilt({ x: 0, y: 0 });
-  };
 
   const { data: settings } = useQuery({
     queryKey: ["site-settings-public"],
@@ -433,96 +414,17 @@ const About = () => {
         </section>
 
         {/* Biography + Centered Orbital Portrait Section */}
-        <section className="container-editorial py-16 md:py-24 border-b border-border overflow-hidden">
+        <section className="container-editorial py-16 md:py-24 overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-center">
             {/* Left (6 Columns): Portrait Centered Precisely Inside the Orbital Circle */}
             <div
-              ref={portraitStageRef}
-              onMouseMove={handlePortraitMouseMove}
-              onMouseLeave={handlePortraitMouseLeave}
-              className="lg:col-span-6 relative flex flex-col items-center justify-center select-none"
+                className="order-2 lg:order-1 lg:col-span-6 relative flex flex-col items-center justify-center select-none"
             >
-              {/* Symmetrical Square Stage where Circle and Portrait Optical Center Match */}
-              <div className="relative w-[340px] sm:w-[460px] lg:w-[520px] h-[420px] sm:h-[540px] lg:h-[600px] flex items-center justify-center">
-                {/* Centered Warm Spotlight Aura */}
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 m-auto w-[320px] sm:w-[420px] h-[320px] sm:h-[420px] rounded-full blur-[90px] opacity-70 transition-transform duration-300 ease-out"
-                  style={{
-                    transform: `translate3d(${portraitTilt.x * 20}px, ${portraitTilt.y * 20}px, 0)`,
-                    background:
-                      "radial-gradient(circle, rgba(255,64,1,0.44) 0%, rgba(255,115,0,0.12) 55%, transparent 75%)",
-                  }}
-                />
-
-                {/* Outer Rotating Dashed Circle — Dead-Center on Stage */}
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 m-auto w-[320px] sm:w-[430px] lg:w-[470px] h-[320px] sm:h-[430px] lg:h-[470px] rounded-full border border-dashed border-primary/35 transition-transform duration-300 ease-out"
-                  style={{
-                    transform: `translate3d(${portraitTilt.x * -12}px, ${
-                      portraitTilt.y * -12
-                    }px, 0)`,
-                  }}
-                >
-                  <div className="w-full h-full rounded-full animate-[spin_46s_linear_infinite]">
-                    <span className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-primary shadow-[0_0_16px_#FF4001]" />
-                  </div>
-                </div>
-
-                {/* Inner Counter-Rotating Circle — Dead-Center on Stage */}
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 m-auto w-[270px] sm:w-[365px] lg:w-[400px] h-[270px] sm:h-[365px] lg:h-[400px] rounded-full border border-white/[0.11] transition-transform duration-300 ease-out"
-                  style={{
-                    transform: `translate3d(${portraitTilt.x * -6}px, ${portraitTilt.y * -6}px, 0)`,
-                  }}
-                >
-                  <div className="w-full h-full rounded-full animate-[spin_34s_linear_infinite_reverse]">
-                    <span className="absolute bottom-5 right-8 w-2 h-2 rounded-full bg-white/40" />
-                  </div>
-                </div>
-
-                {/* Cutout Portrait Optically Centered on the Circle (compensating for the iPad on the left of the PNG) */}
-                <div
-                  className="relative z-10 w-full h-full flex items-end justify-center overflow-hidden rounded-b-[220px] transition-transform duration-300 ease-out"
-                  style={{
-                    transform: `translate3d(${portraitTilt.x * 10}px, ${portraitTilt.y * 8}px, 0)`,
-                    maskImage:
-                      "radial-gradient(ellipse 92% 95% at 50% 45%, #000 68%, rgba(0,0,0,0.5) 86%, transparent 100%)",
-                    WebkitMaskImage:
-                      "radial-gradient(ellipse 92% 95% at 50% 45%, #000 68%, rgba(0,0,0,0.5) 86%, transparent 100%)",
-                  }}
-                >
-                  {photoUrl ? (
-                    <img
-                      src={photoUrl}
-                      alt="Lucas Evangelista"
-                      width={620}
-                      height={760}
-                      className="w-auto h-[400px] sm:h-[510px] lg:h-[570px] max-w-none object-contain drop-shadow-[0_28px_60px_rgba(0,0,0,0.9)]"
-                    />
-                  ) : (
-                    <picture className="flex justify-center">
-                      <source srcSet={lucasHeroWebp} type="image/webp" />
-                      <img
-                        src={lucasHeroPng}
-                        alt="Lucas Evangelista"
-                        width={620}
-                        height={760}
-                        className="w-auto h-[400px] sm:h-[510px] lg:h-[570px] max-w-none object-contain -translate-x-[7%] sm:-translate-x-[8%] drop-shadow-[0_28px_60px_rgba(0,0,0,0.9)]"
-                      />
-                    </picture>
-                  )}
-                </div>
-              </div>
+              <AboutPortrait src={photoUrl || undefined} className="max-w-[520px] h-[480px] sm:h-[620px] lg:h-[700px]" />
 
               {/* Floating Editorial Signature Pill Centered Below the Circle */}
               <div
                 className="relative z-20 -mt-5 mx-auto w-full max-w-[340px] rounded-full border border-white/15 bg-[#141518]/95 backdrop-blur-xl px-6 py-3.5 flex items-center justify-between shadow-[0_20px_50px_rgba(0,0,0,0.75)] transition-transform duration-300 ease-out"
-                style={{
-                  transform: `translate3d(${portraitTilt.x * 5}px, ${portraitTilt.y * 5}px, 0)`,
-                }}
               >
                 <div>
                   <div className="font-display text-[16px] font-semibold text-foreground leading-tight">
@@ -539,7 +441,7 @@ const About = () => {
             </div>
 
             {/* Right (6 Columns): First-Person Biography & Interactive Counter Metrics */}
-            <div className="lg:col-span-6">
+            <div className="order-1 lg:order-2 lg:col-span-6">
               <motion.div
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -551,7 +453,7 @@ const About = () => {
                   <span>Biografia &amp; Visão</span>
                 </div>
 
-                <h2
+                <h2 data-orion-reveal
                   className="font-display text-foreground font-medium mb-6"
                   style={{ fontSize: "clamp(30px, 4vw, 46px)", lineHeight: 1.06 }}
                 >
@@ -609,14 +511,17 @@ const About = () => {
           </div>
         </section>
 
+        <SectionTransition sourceColor="#090A0C" destinationColor="#FFFAFA" />
+
         {/* 02. Trajetória Profissional — Interactive Scroll-Linked Timeline */}
-        <section className="container-editorial sec-pad border-b border-border">
+        <section className="orion-surface-light sec-pad">
+          <div className="container-editorial">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
             <div className="lg:col-span-5 lg:sticky lg:top-[116px]">
               <div className="section-label mb-3">
                 <span className="label-num">02.</span> Trajetória profissional
               </div>
-              <h2
+              <h2 data-orion-reveal
                 className="font-display text-foreground font-medium mb-4"
                 style={{ fontSize: "clamp(28px, 3.8vw, 44px)", lineHeight: 1.08 }}
               >
@@ -663,7 +568,7 @@ const About = () => {
                 className="absolute left-0 top-3 bottom-3 w-[2px] bg-border overflow-hidden rounded-full"
               >
                 <motion.div
-                  style={{ height: timelineHeight }}
+                  style={{ height: shouldReduceMotion ? "100%" : timelineHeight }}
                   className="w-full bg-gradient-to-b from-primary via-primary to-orange-400"
                 />
               </div>
@@ -682,8 +587,8 @@ const About = () => {
                       onClick={() => setActiveTrajectoryIdx(idx)}
                       className={`group relative cursor-pointer rounded-2xl border p-6 sm:p-8 transition-all duration-300 ${
                         isActive
-                          ? "border-primary/50 bg-[#141518] shadow-[0_18px_45px_-22px_rgba(255,64,1,0.28)]"
-                          : "border-border bg-[#141518]/50 hover:border-foreground/25 hover:bg-[#141518]"
+                          ? "border-primary/50 bg-card shadow-[0_18px_45px_-22px_rgba(255,64,1,0.28)]"
+                          : "border-border bg-card/50 hover:border-foreground/25 hover:bg-card"
                       }`}
                     >
                       {/* Timeline Node Dot */}
@@ -736,17 +641,19 @@ const About = () => {
               </div>
             </div>
           </div>
+          </div>
         </section>
 
+        <SectionTransition sourceColor="#FFFAFA" destinationColor="#141518" />
         {/* 03. Forma de Trabalhar — Interactive Cursor Spotlight Cards */}
-        <section className="bg-[#141518] sec-pad border-b border-border">
+        <section className="orion-surface-soft sec-pad">
           <div className="container-editorial">
             <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12 md:mb-14">
               <div>
                 <div className="section-label mb-3">
                   <span className="label-num">03.</span> Forma de trabalhar
                 </div>
-                <h2
+                <h2 data-orion-reveal
                   className="font-display text-foreground font-medium"
                   style={{ fontSize: "clamp(28px, 3.8vw, 44px)", lineHeight: 1.08 }}
                 >
@@ -775,13 +682,15 @@ const About = () => {
         </section>
 
         {/* 04. Ferramentas e Capacidades — Compact Editorial Horizontal Index */}
+        <SectionTransition sourceColor="#141518" destinationColor="#090A0C" direction="rise-left" />
+        <SectionGlow />
         <section className="container-editorial py-16 md:py-20 border-b border-border">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-10">
             <div>
               <div className="section-label mb-2.5">
                 <span className="label-num">04.</span> Ferramentas &amp; Capacidades
               </div>
-              <h2
+              <h2 data-orion-reveal
                 className="font-display text-foreground font-medium"
                 style={{ fontSize: "clamp(24px, 3.2vw, 36px)", lineHeight: 1.1 }}
               >

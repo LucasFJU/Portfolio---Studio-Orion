@@ -1,0 +1,4 @@
+.orion-section-glow { position: relative; height: 0; z-index: 1; pointer-events: none; user-select: none; }
+.orion-section-glow::before { content: ""; position: absolute; inset: 0 0 auto; height: 1px; background: linear-gradient(90deg, transparent, #ff40014d 24%, #ffa5678c 50%, #ff40014d 76%, transparent); }
+.orion-section-glow span { position: absolute; inset: 0 0 auto; height: 200px; background: radial-gradient(ellipse 70% 100% at 50% 0%, #ff400113, transparent 78%), linear-gradient(to bottom, #ff8b320a, transparent 85%); }
+@media (max-width: 639px) { .orion-section-glow { opacity: .65; } .orion-section-glow span { height: 120px; } }

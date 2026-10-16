@@ -1,0 +1,11 @@
+.orion-cursor-layer { position: fixed; inset: 0; overflow: hidden; z-index: 1000; pointer-events: none; }
+.orion-cursor { position: absolute; top: 0; left: 0; z-index: 1000; width: 25px; height: 30px; pointer-events: none; user-select: none; visibility: hidden; will-change: transform; }
+.orion-cursor span { position: absolute; top: 18px; left: 24px; padding: 6px 12px; border-radius: 100px; background: #FF4001; color: #090A0C; font: 600 12px/1.2 sans-serif; box-shadow: 0 2px 12px #0003; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html[data-orion-cursor="active"], html[data-orion-cursor="active"] * { cursor: none !important; }
+  html[data-orion-cursor="active"] :is(input, textarea, select, [contenteditable], [data-native-cursor], [style*="resize"], [class*="resize-"]) { cursor: revert !important; }
+}
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce), print { .orion-cursor { display: none; } }
+
+.orion-cursor[data-edge="left"] span { left: auto; right: 8px; }
+.orion-cursor[data-vertical="above"] span { top: auto; bottom: 10px; }

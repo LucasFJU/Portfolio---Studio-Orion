@@ -94,18 +94,21 @@ export type Database = {
       }
       proposal_views: {
         Row: {
+          created_at: string
           id: string
           proposal_id: string
           user_agent: string | null
           viewed_at: string
         }
         Insert: {
+          created_at?: string
           id?: string
           proposal_id: string
           user_agent?: string | null
           viewed_at?: string
         }
         Update: {
+          created_at?: string
           id?: string
           proposal_id?: string
           user_agent?: string | null

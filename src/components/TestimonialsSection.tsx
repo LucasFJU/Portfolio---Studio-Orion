@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, isSupabaseConfigured } from "@/integrations/supabase/client";
 import { ScrollRevealTitle } from "./ScrollRevealTitle";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Quote } from "lucide-react";
@@ -127,6 +127,8 @@ const FALLBACK_TESTIMONIALS: TestimonialItem[] = [
   },
 ];
 
+const previewTestimonials = import.meta.env.DEV && !isSupabaseConfigured ? FALLBACK_TESTIMONIALS : [];
+
 const getInitials = (name: string) => {
   return name
     .split(" ")
@@ -232,13 +234,13 @@ export const TestimonialsSection = ({ sectionNumber = "05." }: TestimonialsSecti
         .order("ordem", { ascending: true });
 
       if (error || !data || data.length === 0) {
-        return FALLBACK_TESTIMONIALS;
+        return previewTestimonials;
       }
-      return data as TestimonialItem[];
+      return data as unknown as TestimonialItem[];
     },
   });
 
-  const list = rawTestimonials && rawTestimonials.length > 0 ? rawTestimonials : FALLBACK_TESTIMONIALS;
+  const list = rawTestimonials ?? previewTestimonials;
 
   // Split into Row 1 (top) and Row 2 (bottom)
   const { rowTop, rowBottom } = useMemo(() => {
@@ -270,6 +272,8 @@ export const TestimonialsSection = ({ sectionNumber = "05." }: TestimonialsSecti
   // Seamless duplication
   const duplicatedTop = useMemo(() => [...rowTop, ...rowTop], [rowTop]);
   const duplicatedBottom = useMemo(() => [...rowBottom, ...rowBottom], [rowBottom]);
+
+  if (list.length === 0) return null;
 
   return (
     <section

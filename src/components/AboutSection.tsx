@@ -1,12 +1,11 @@
-import { useRef, useState, type MouseEvent } from "react";
+import { useRef } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
-import lucasHeroWebp from "@/assets/lucas-hero.webp";
-import lucasHeroPng from "@/assets/lucas-hero.png";
+import AboutPortrait from "./AboutPortrait";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scroll-reveal";
 
 const Word = ({
@@ -31,28 +30,14 @@ const Word = ({
   );
 };
 
-const AboutSection = () => {
+const AboutSection = ({ sectionNumber = "03." }: { sectionNumber?: string }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const portraitStageRef = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const shouldReduceMotion = useReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start 0.85", "end 0.55"],
   });
-
-  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (shouldReduceMotion) return;
-    const rect = portraitStageRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    const normX = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
-    const normY = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
-    setTilt({
-      x: Math.max(-1, Math.min(1, normX)),
-      y: Math.max(-1, Math.min(1, normY)),
-    });
-  };
 
   const { data: settings } = useQuery({
     queryKey: ["site-settings-public"],
@@ -79,90 +64,22 @@ const AboutSection = () => {
   ];
 
   return (
-    <section className="bg-background sec-pad border-b border-border overflow-hidden">
+    <section className="bg-background sec-pad overflow-hidden">
       <div className="container-editorial">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-center">
+        <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-center">
           {/* Centered Orbital Portrait */}
           <div
-            ref={portraitStageRef}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={() => setTilt({ x: 0, y: 0 })}
-            className="lg:col-span-6 flex flex-col items-center lg:items-start"
+            className="order-2 lg:order-1 relative lg:col-span-6 flex flex-col items-center lg:items-start lg:self-stretch lg:justify-end"
           >
-            <div className="section-label mb-3 self-start">
-              <span className="label-num">03.</span> Sobre
-            </div>
+            <AboutPortrait className="orion-home-portrait mx-auto max-w-[576px] h-[clamp(420px,110vw,600px)] lg:h-[clamp(560px,54vw,760px)]" />
 
-            <div className="relative w-[330px] sm:w-[440px] lg:w-[480px] h-[390px] sm:h-[500px] lg:h-[540px] mx-auto flex items-center justify-center">
-              {/* Warm ambient aura */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 m-auto w-[300px] sm:w-[380px] h-[300px] sm:h-[380px] rounded-full blur-[85px] opacity-65 transition-transform duration-300 ease-out"
-                style={{
-                  transform: `translate3d(${tilt.x * 18}px, ${tilt.y * 18}px, 0)`,
-                  background:
-                    "radial-gradient(circle, rgba(255,64,1,0.38) 0%, rgba(255,115,0,0.10) 55%, transparent 75%)",
-                }}
-              />
-
-              {/* Outer Dashed Orbital Circle — Centered */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 m-auto w-[300px] sm:w-[400px] lg:w-[430px] h-[300px] sm:h-[400px] lg:h-[430px] rounded-full border border-dashed border-primary/30 animate-[spin_46s_linear_infinite]"
-              />
-
-              {/* Inner Solid Orbital Circle — Centered */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 m-auto w-[250px] sm:w-[340px] lg:w-[365px] h-[250px] sm:h-[340px] lg:h-[365px] rounded-full border border-white/[0.10]"
-              />
-
-              {/* Cutout Portrait Optically Centered on the Circle */}
-              <div
-                className="relative z-10 w-full h-full flex items-end justify-center overflow-hidden rounded-b-[200px] transition-transform duration-300 ease-out"
-                style={{
-                  transform: `translate3d(${tilt.x * 10}px, ${tilt.y * 8}px, 0)`,
-                  maskImage:
-                    "radial-gradient(ellipse 92% 95% at 50% 45%, #000 68%, rgba(0,0,0,0.5) 86%, transparent 100%)",
-                  WebkitMaskImage:
-                    "radial-gradient(ellipse 92% 95% at 50% 45%, #000 68%, rgba(0,0,0,0.5) 86%, transparent 100%)",
-                }}
-              >
-                <picture className="flex justify-center">
-                  <source srcSet={lucasHeroWebp} type="image/webp" />
-                  <img
-                    src={lucasHeroPng}
-                    alt="Lucas Evangelista"
-                    width={580}
-                    height={720}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-auto h-[370px] sm:h-[470px] lg:h-[515px] max-w-none object-contain -translate-x-[7%] sm:-translate-x-[8%] drop-shadow-[0_24px_48px_rgba(0,0,0,0.85)]"
-                  />
-                </picture>
-              </div>
-            </div>
-
-            {/* Floating badge */}
-            <ScrollReveal delay={0.2} yOffset={16}>
-              <div className="relative z-20 -mt-5 mx-auto w-full max-w-[330px] rounded-full border border-white/15 bg-[#141518]/95 backdrop-blur-md px-5 py-3 flex items-center justify-between shadow-[0_16px_40px_rgba(0,0,0,0.65)]">
-                <div>
-                  <div className="font-display text-[15px] font-semibold text-foreground leading-tight">
-                    Lucas Evangelista
-                  </div>
-                  <div className="text-[12px] text-muted-foreground">
-                    Designer &amp; Diretor Criativo
-                  </div>
-                </div>
-                <span className="font-mono text-[11px] font-semibold text-primary bg-primary/10 border border-primary/25 rounded-full px-2.5 py-0.5">
-                  13+ ANOS
-                </span>
-              </div>
-            </ScrollReveal>
           </div>
 
           {/* Editorial Bio + Metrics */}
-          <div className="lg:col-span-6 flex flex-col justify-between lg:pt-6">
+          <div className="order-1 lg:order-2 lg:col-span-6 flex flex-col justify-between lg:pt-6">
+            <div className="section-label mb-6 lg:mb-0 lg:absolute lg:left-0 lg:top-12 z-20 self-start">
+              <span className="label-num">{sectionNumber}</span> Sobre
+            </div>
             <div ref={containerRef} className="mb-8">
               <h2
                 className="font-display font-medium tracking-[-0.025em] leading-[1.16] flex flex-wrap"

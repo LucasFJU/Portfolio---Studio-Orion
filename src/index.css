@@ -294,3 +294,20 @@
   }
 }
 
+
+/* Shared public content guides: the 1280px shell includes its gutters. */
+[data-public-layout="true"] {
+  --orion-shell: 1280px;
+  --orion-gutter: 24px;
+}
+@media (min-width: 640px) {
+  [data-public-layout="true"] { --orion-gutter: 40px; }
+}
+[data-public-layout="true"] .container-editorial,
+[data-public-layout="true"] .orion-content-container,
+[data-public-layout="true"] .orion-hero-container {
+  width: 100%;
+  max-width: var(--orion-shell);
+  margin-inline: auto;
+  padding-inline: var(--orion-gutter);
+}

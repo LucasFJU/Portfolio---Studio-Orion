@@ -1,13 +1,18 @@
-import { useState, useEffect } from "react";
+import AboutPortrait from "@/components/AboutPortrait";
+import LogosSection from "@/components/LogosSection";
+import GradientBlinds from "@/components/ui/GradientBlinds";
+import { HeroBackgroundStage } from "@/components/hero/HeroBackgroundStage";
+import { useState, useEffect, useLayoutEffect, useRef, type FocusEvent, type ReactNode } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Helmet } from "react-helmet-async";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
   CheckCircle2,
   ArrowUpRight,
   X,
+  Menu,
   Printer,
   Share2,
   Check,
@@ -16,6 +21,61 @@ import {
 import { toast } from "sonner";
 import { parseCaseStudy, isValidWhatsappNumber } from "@/lib/caseStudy";
 import { parseProposalProcessData } from "./AdminProposalForm";
+import { getStoredHeroConfig, resolveHeroImage } from "@/config/heroConfig";
+
+function ProposalStack({ enabled, children }: { enabled: boolean; children: ReactNode }) {
+  const stackRef = useRef<HTMLDivElement>(null);
+  const [stackEnabled, setStackEnabled] = useState(false);
+  const reducedMotion = useReducedMotion();
+
+  useLayoutEffect(() => {
+    if (!enabled || reducedMotion) {
+      setStackEnabled(false);
+      return;
+    }
+
+    let disposed = false;
+    const measure = () => {
+      if (disposed || !stackRef.current) return;
+      const panels = Array.from(stackRef.current.querySelectorAll<HTMLElement>("[data-proposal-stack-panel]"));
+      const heights = panels.map((panel) => panel.querySelector<HTMLElement>(".orion-proposal-stack-content")?.getBoundingClientRect().height || 0);
+      const offset = window.innerWidth >= 1024 ? 112 : 96;
+      const available = window.innerHeight - offset - 16;
+      panels.forEach((panel, index) => {
+        panel.style.setProperty("--proposal-panel-top", `${Math.min(offset, available + offset - heights[index])}px`);
+        panel.style.setProperty("--proposal-panel-offset", `${offset}px`);
+      });
+      setStackEnabled(panels.length > 1 && available >= 360 && heights.every((height) => height > 0));
+    };
+
+    const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(measure);
+    stackRef.current.querySelectorAll<HTMLElement>(".orion-proposal-stack-content").forEach((content) => observer?.observe(content));
+    window.addEventListener("resize", measure);
+    document.fonts?.addEventListener("loadingdone", measure);
+    document.fonts?.ready.then(measure);
+    measure();
+
+    return () => {
+      disposed = true;
+      observer?.disconnect();
+      window.removeEventListener("resize", measure);
+      document.fonts?.removeEventListener("loadingdone", measure);
+    };
+  }, [enabled, reducedMotion]);
+
+  const revealFocusedPanel = (event: FocusEvent<HTMLElement>) => {
+    if (!stackEnabled || !(event.target instanceof HTMLElement) || !event.target.matches(":focus-visible")) return;
+    const offset = window.innerWidth >= 1024 ? 112 : 96;
+    const top = event.currentTarget.getBoundingClientRect().top;
+    if (Math.abs(top - offset) > 2) window.scrollTo({ top: window.scrollY + top - offset, behavior: "instant" });
+  };
+
+  return (
+    <div ref={stackRef} className="orion-proposal-stack" data-scroll-mode={stackEnabled ? "stack" : "flow"} onFocusCapture={revealFocusedPanel}>
+      {children}
+    </div>
+  );
+}
 
 const formatCurrency = (val: number | null | undefined) => {
   if (val === null || val === undefined) return "Sob consulta";
@@ -31,13 +91,33 @@ const ProposalView = () => {
   const [selectedCaseModal, setSelectedCaseModal] = useState<any | null>(null);
   const [copied, setCopied] = useState(false);
   const [selectedPaymentIdx, setSelectedPaymentIdx] = useState<number>(0);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [navScrolled, setNavScrolled] = useState(false);
+  const [navHidden, setNavHidden] = useState(false);
+  const navLastScrollY = useRef(0);
+  const [coverHeroConfig] = useState(getStoredHeroConfig);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      const delta = currentY - navLastScrollY.current;
+      setNavScrolled(currentY > 36);
+      if (currentY <= 90) setNavHidden(false);
+      else if (delta > 8 && !mobileNavOpen) setNavHidden(true);
+      else if (delta < -5) setNavHidden(false);
+      navLastScrollY.current = currentY;
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [mobileNavOpen]);
 
   const { data: proposal, isLoading } = useQuery({
     queryKey: ["proposal", slug],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("proposals")
-        .select("*")
+        .select("id, slug, cliente_nome, cliente_empresa, titulo, introducao, status, projeto_ids, processo, formas_pagamento, prazo_entrega, validade_dias, valor_total, observacoes, created_at")
         .eq("slug", slug!)
         .maybeSingle();
       if (error) throw error;
@@ -170,6 +250,14 @@ const ProposalView = () => {
     .filter(Boolean) as any[];
 
   const { steps, deliverables } = parseProposalProcessData(proposal.processo, proposal.titulo);
+  const hasObjective = Boolean(proposal.introducao?.trim());
+  const hasScope = steps.length > 0 || deliverables.length > 0;
+  let nextSectionNumber = 0;
+  const objectiveNumber = hasObjective ? String(++nextSectionNumber).padStart(2, "0") : null;
+  const authorityNumber = String(++nextSectionNumber).padStart(2, "0");
+  const scopeNumber = hasScope ? String(++nextSectionNumber).padStart(2, "0") : null;
+  const casesNumber = selectedProjects.length > 0 ? String(++nextSectionNumber).padStart(2, "0") : null;
+  const investmentNumber = String(++nextSectionNumber).padStart(2, "0");
 
   const createdDate = proposal.created_at ? new Date(proposal.created_at) : new Date();
   const validUntil = new Date(createdDate);
@@ -193,7 +281,7 @@ const ProposalView = () => {
     : "/contato";
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="orion-proposal-page min-h-screen bg-background text-foreground">
       <Helmet>
         <title>Proposta Comercial: {clientDisplayName} — Lucas Evangelista</title>
         <meta
@@ -202,46 +290,56 @@ const ProposalView = () => {
         />
       </Helmet>
 
-      {/* Top Proposal Bar — Strict 3-Zone Contract matching main site Navbar */}
-      <header className="fixed top-3 left-0 right-0 z-40 px-4 md:px-6 print:hidden">
+      {/* Proposal navigation follows the compact, scroll-aware Studio Orion header. */}
+      <header
+        onFocusCapture={() => setNavHidden(false)}
+        className={`fixed top-3 md:top-4 left-0 right-0 z-40 px-4 sm:px-6 print:hidden transition-all duration-300 ease-out ${navHidden && !mobileNavOpen ? "-translate-y-[130%] opacity-0 pointer-events-none" : "translate-y-0 opacity-100"}`}
+      >
         <nav
           aria-label="Navegação da proposta"
-          className="max-w-[1200px] mx-auto flex items-center justify-between rounded-full border border-foreground/[0.08] bg-background/85 backdrop-blur-xl px-5 md:px-6 py-3"
+          className={`mx-auto flex items-center justify-between rounded-full border transition-all duration-300 ${navScrolled ? "max-w-[1080px] h-[52px] px-4 md:px-5 bg-[#090A0C]/95 backdrop-blur-xl border-white/[0.12] shadow-[0_12px_36px_rgba(0,0,0,0.7)]" : "max-w-[1280px] h-[58px] md:h-[72px] px-5 md:px-7 bg-[#0B0C0E]/90 backdrop-blur-md border-white/[0.08]"}`}
         >
-          {/* Zone 1: Single text element Brand wordmark */}
+          {/* Brand */}
           <Link
             to="/"
-            className="font-display text-[18px] font-semibold tracking-tight text-foreground whitespace-nowrap shrink-0"
+            className="font-display text-[16px] md:text-[17px] font-bold tracking-tight text-foreground whitespace-nowrap shrink-0 flex items-center gap-2"
           >
-            Lucas Evangelista
+            <span className="w-2 h-2 rounded-full bg-primary shrink-0" />
+            <span className={navScrolled ? "hidden sm:inline" : "inline"}>Studio <span className="text-primary">Orion</span></span>
+            <span className={navScrolled ? "inline sm:hidden font-mono text-sm" : "hidden"}>Orion</span>
           </Link>
 
-          {/* Zone 2: Section links */}
-          <div className="hidden md:flex items-center gap-7">
-            {(steps.length > 0 || deliverables.length > 0) && (
-              <a href="#escopo" className="nav-link-animated">
-                01. Escopo &amp; Entregáveis
+          {/* Desktop section links */}
+          <div className={`hidden xl:flex items-center transition-all ${navScrolled ? "gap-3" : "gap-5"}`}>
+            {hasObjective && (
+              <a href="#objetivo" onClick={() => setMobileNavOpen(false)} className="nav-link-animated">
+                {objectiveNumber}. Objetivo
+              </a>
+            )}
+            <a href="#autoridade" onClick={() => setMobileNavOpen(false)} className="nav-link-animated">
+              {authorityNumber}. Lucas
+            </a>
+            {hasScope && (
+              <a href="#escopo" onClick={() => setMobileNavOpen(false)} className="nav-link-animated">
+                {scopeNumber}. Escopo
               </a>
             )}
             {selectedProjects.length > 0 && (
-              <a href="#cases" className="nav-link-animated">
-                02. Cases
+              <a href="#cases" onClick={() => setMobileNavOpen(false)} className="nav-link-animated">
+                {casesNumber}. Cases
               </a>
             )}
-            <a href="#autoridade" className="nav-link-animated">
-              03. Trajetória
-            </a>
-            <a href="#investimento" className="nav-link-animated">
-              04. Investimento
+            <a href="#investimento" onClick={() => setMobileNavOpen(false)} className="nav-link-animated">
+              {investmentNumber}. Investimento
             </a>
           </div>
 
-          {/* Zone 3: Actions */}
+          {/* Actions */}
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={copyShareLink}
-              className="p-2.5 rounded-full border border-border bg-secondary/60 text-muted-foreground hover:text-foreground transition-colors"
+              className="hidden sm:inline-flex p-2.5 rounded-full border border-border bg-secondary/60 text-muted-foreground hover:text-foreground transition-colors"
               title="Copiar link da proposta"
               aria-label="Copiar link da proposta"
             >
@@ -258,39 +356,90 @@ const ProposalView = () => {
             </button>
             <a
               href="#investimento"
-              className="btn-primary px-5 py-2 text-[14px] inline-flex"
+              onClick={() => setMobileNavOpen(false)}
+              className={`inline-flex items-center justify-center gap-1.5 rounded-full border border-primary/35 bg-primary/15 px-3 py-1 text-[12px] font-medium text-primary transition-colors hover:bg-primary/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary xl:border-primary xl:bg-primary xl:px-5 xl:py-2 xl:text-[13px] xl:font-semibold xl:text-primary-foreground xl:hover:bg-[#ff551a] ${navScrolled ? "xl:px-4 xl:text-[13px]" : ""}`}
             >
-              {proposal.status === "Aprovada" ? "Proposta Aprovada" : "Aprovar Proposta →"}
+              <span className="xl:hidden inline-flex items-center gap-1 whitespace-nowrap">Investimento <ArrowUpRight size={14} /></span>
+              <span className="hidden xl:inline">{proposal.status === "Aprovada" ? "Proposta Aprovada" : "Aprovar Proposta →"}</span>
             </a>
+            <button
+              type="button"
+              className="xl:hidden text-foreground p-2 -mr-1 rounded-full hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              onClick={() => setMobileNavOpen((open) => !open)}
+              aria-expanded={mobileNavOpen}
+              aria-controls="proposal-mobile-nav"
+              aria-label={mobileNavOpen ? "Fechar navegação da proposta" : "Abrir navegação da proposta"}
+            >
+              {mobileNavOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
           </div>
         </nav>
+        <AnimatePresence>
+          {mobileNavOpen && (
+            <motion.nav
+              id="proposal-mobile-nav"
+              aria-label="Seções da proposta"
+              initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2 }}
+              className="xl:hidden max-w-[1280px] mx-auto mt-2 rounded-3xl bg-[#0E1014]/95 backdrop-blur-xl border border-white/[0.1] overflow-hidden shadow-2xl"
+            >
+              <div className="px-6 py-5 flex flex-col gap-1">
+                {[
+                  ...(hasObjective ? [{ href: "#objetivo", label: `${objectiveNumber}. Objetivo` }] : []),
+                  { href: "#autoridade", label: `${authorityNumber}. Lucas` },
+                  ...(hasScope ? [{ href: "#escopo", label: `${scopeNumber}. Escopo` }] : []),
+                  ...(selectedProjects.length ? [{ href: "#cases", label: `${casesNumber}. Cases` }] : []),
+                  { href: "#investimento", label: `${investmentNumber}. Investimento` },
+                ].map((item) => (
+                  <a key={item.href} href={item.href} onClick={() => setMobileNavOpen(false)} className="flex items-center justify-between py-2.5 text-[16px] font-display font-medium border-b border-white/[0.06] text-foreground hover:text-primary transition-colors">
+                    {item.label}<ArrowUpRight size={15} aria-hidden="true" />
+                  </a>
+                ))}
+              </div>
+            </motion.nav>
+          )}
+        </AnimatePresence>
       </header>
 
-      {/* Hero Section — Same Dark Editorial System as Public Site */}
+      {/* Cover with the same orange GradientBlinds effect used in the home hero */}
       <section
-        className="relative pt-[124px] md:pt-[156px] pb-[68px] md:pb-[96px] border-b border-border overflow-hidden px-6"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 55% at 50% 0%, hsl(15 100% 50% / 0.12), transparent 70%), hsl(var(--background))",
-        }}
+        className="orion-proposal-cover relative isolate overflow-hidden"
       >
-        <div className="max-w-[1200px] mx-auto">
-          {/* Unboxed Editorial Kicker */}
-          <div className="flex flex-wrap items-center gap-2 text-[13px] text-muted-foreground mb-5">
+        <div className="orion-proposal-cover-effect" aria-hidden="true">
+          <HeroBackgroundStage
+            backgroundConfig={coverHeroConfig.background}
+            colors={["#FF4001", "#000000", "#141518", "#090A0C"]}
+            bg="#000000"
+          />
+          <div className="orion-hero-atmosphere" />
+          <GradientBlinds
+            gradientColors={["#f97316", "#ef4444"]}
+            angle={20}
+            blindCount={16}
+            blindMinWidth={60}
+            spotlightRadius={0.5}
+            shine={0.4}
+            relief={0.5}
+            glow={0.4}
+            sway={0.35}
+            hoverTilt={0.6}
+            clickEffect="ripple"
+            noise={0.3}
+          />
+          {coverHeroConfig.media.glowEffect && <div className="orion-hero-light" />}
+        </div>
+        <div className="orion-hero-panels" aria-hidden="true" />
+        <img
+          className="orion-proposal-cover-photo"
+          src={resolveHeroImage(coverHeroConfig.media)}
+          alt="Lucas Evangelista, à frente do Studio Orion"
+          {...{ fetchpriority: "high" }}
+          decoding="async"
+        />
+        <div className="orion-shell orion-proposal-cover-content">
+            <div className="orion-proposal-cover-kicker flex flex-wrap items-center gap-2 text-[13px] text-muted-foreground">
             <span className="w-2 h-2 rounded-full bg-primary shrink-0" />
-            <span className="text-primary font-medium">Proposta Comercial</span>
-            <span aria-hidden="true">·</span>
-            <span>
-              Preparada para{" "}
-              <strong className="text-foreground font-medium">
-                {proposal.cliente_nome}
-                {proposal.cliente_empresa ? ` (${proposal.cliente_empresa})` : ""}
-              </strong>
-            </span>
-            <span aria-hidden="true">·</span>
-            <span>
-              Status: <strong className="text-foreground font-medium">{proposal.status}</strong>
-            </span>
+            <span className="text-primary font-medium">{clientDisplayName}</span>
           </div>
 
           <motion.div
@@ -299,61 +448,100 @@ const ProposalView = () => {
             transition={{ duration: 0.35 }}
           >
             <h1
-              className="font-display text-foreground font-medium tracking-[-0.025em] max-w-[940px] text-balance"
-              style={{ fontSize: "clamp(34px, 5.6vw, 70px)", lineHeight: 1.03 }}
+              className="orion-proposal-cover-title font-display text-foreground font-medium text-balance"
             >
-              {proposal.titulo}
+              <span>Proposta</span>
+              <span className="text-primary">Comercial</span>
             </h1>
-
-            {proposal.introducao && (
-              <p className="text-muted-foreground text-[16px] md:text-[18px] leading-[1.65] max-w-[740px] mt-6">
-                {proposal.introducao}
-              </p>
-            )}
           </motion.div>
 
-          {/* Editorial Metadata Bar — Clean unboxed labels matching ProjectDetail */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 pt-8 border-t border-border">
-            <div>
-              <span className="text-[12px] text-muted-foreground block mb-1">Cliente</span>
-              <strong className="font-display text-[15px] text-foreground font-medium">
-                {clientDisplayName}
-              </strong>
-            </div>
-            <div>
-              <span className="text-[12px] text-muted-foreground block mb-1">Direção Criativa</span>
-              <strong className="font-display text-[15px] text-foreground font-medium">
-                Lucas Evangelista
-              </strong>
-            </div>
-            <div>
-              <span className="text-[12px] text-muted-foreground block mb-1">Prazo Estimado</span>
-              <strong className="font-display text-[15px] text-foreground font-medium tabular-nums">
-                {proposal.prazo_entrega || "A definir"}
-              </strong>
-            </div>
-            <div>
-              <span className="text-[12px] text-muted-foreground block mb-1">
-                Validade da Proposta
-              </span>
-              <strong className="font-display text-[15px] text-foreground font-medium tabular-nums">
-                Até {validUntil.toLocaleDateString("pt-BR")}
-              </strong>
-            </div>
+          <p className="orion-proposal-cover-client">{proposal.titulo}</p>
+          <div className="orion-proposal-cover-meta" aria-label={`Status ${proposal.status}; válida até ${validUntil.toLocaleDateString("pt-BR")}`}>
+            <span>{proposal.status}</span>
+            <span aria-hidden="true" className="orion-proposal-cover-meta-dot" />
+            <span>Válida até {validUntil.toLocaleDateString("pt-BR")}</span>
           </div>
         </div>
       </section>
 
-      {/* 01. Escopo, Entregáveis & Cronograma de Execução */}
-      {(steps.length > 0 || deliverables.length > 0) && (
-        <section id="escopo" className="border-b border-border">
-          <div className="max-w-[1200px] mx-auto px-6 md:px-0 py-[72px] md:py-[110px]">
+      <LogosSection />
+
+      {hasObjective && (
+        <section id="objetivo" className="orion-surface-light border-t border-border">
+          <div className="orion-shell orion-proposal-objective">
+            <div className="section-label mb-4">
+              <span className="label-num">{objectiveNumber}.</span> Objetivo do Projeto
+            </div>
+            <h2 data-orion-reveal className="font-display text-foreground text-balance">
+              O que vamos construir para <span className="text-primary">{clientDisplayName}</span>?
+            </h2>
+            <p data-orion-reveal>{proposal.introducao}</p>
+          </div>
+        </section>
+      )}
+
+      {/* Presentation and trust indicators */}
+      <section id="autoridade" className="orion-surface-soft border-t border-border">
+        <div className="orion-shell orion-proposal-authority">
+          <div className="section-label mb-8">
+            <span className="label-num">{authorityNumber}.</span> Experiência &amp; Solidez de Entrega
+          </div>
+          <div className="orion-proposal-author">
+            <AboutPortrait loading="eager" className="orion-proposal-portrait" />
+            <div className="orion-proposal-author-copy" data-orion-reveal>
+              <h2>Prazer, sou o Lucas.</h2>
+              <p>Sou designer e diretor criativo com mais de 13 anos de experiência ajudando empresas e profissionais a estruturarem sua presença visual com clareza, critério e consistência.</p>
+              <p className="mt-5">Cada projeto é conduzido diretamente por mim, do diagnóstico inicial à entrega final.</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 border-t border-border">
+            {[
+              {
+                num: statProjects,
+                label: "Projetos entregues",
+                text: "Sistemas visuais, marcas e interfaces desenvolvidos com foco em posicionamento e resultado comercial.",
+              },
+              {
+                num: statClients,
+                label: "Clientes atendidos",
+                text: "Empresas, especialistas e marcas atendidas no Brasil e no exterior em múltiplos segmentos.",
+              },
+              {
+                num: statExperience,
+                label: "De atuação prática",
+                text: "Mais de uma década unindo direção criativa, clareza estratégica e arquivos prontos para escala.",
+              },
+            ].map((item, i) => (
+              <div
+                key={item.label}
+                className={`p-6 md:p-10 ${
+                  i < 2 ? "md:border-r border-b md:border-b-0 border-border" : ""
+                }`}
+              >
+                <span className="font-display text-[40px] md:text-[52px] font-medium text-foreground tabular-nums leading-none block mb-2">
+                  {item.num}
+                </span>
+                <span className="text-[13px] font-medium text-primary block mb-2">
+                  {item.label}
+                </span>
+                <p className="text-muted-foreground text-[15px] leading-[1.6]">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Scope, deliverables and schedule */}
+      <ProposalStack enabled={hasScope && selectedProjects.length > 0}>
+      {hasScope && (
+        <section id="escopo" data-proposal-stack-panel className="orion-proposal-stack-panel orion-surface-light border-t border-border" style={{ zIndex: 1 }}>
+          <div className="orion-shell orion-proposal-stack-content py-[72px] md:py-[110px]">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end mb-12">
               <div className="lg:col-span-8">
                 <div className="section-label mb-3">
-                  <span className="label-num">01.</span> Escopo, Entregáveis &amp; Cronograma
+                  <span className="label-num">{scopeNumber}.</span> Escopo, Entregáveis &amp; Cronograma
                 </div>
-                <h2
+                <h2 data-orion-reveal
                   className="font-display text-foreground text-balance"
                   style={{ fontSize: "clamp(26px, 3.8vw, 44px)", fontWeight: 500, lineHeight: 1.1 }}
                 >
@@ -405,7 +593,7 @@ const ProposalView = () => {
 
             {/* Matriz de Entregáveis Inclusos */}
             {deliverables.length > 0 && (
-              <div className="rounded-2xl border border-border bg-[#141518] p-7 md:p-10">
+              <div className="orion-surface-soft orion-legacy-dark rounded-2xl border border-border p-7 md:p-10">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-5 border-b border-border">
                   <div className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-xl bg-primary/15 border border-primary/30 flex items-center justify-center text-primary">
@@ -446,16 +634,16 @@ const ProposalView = () => {
         </section>
       )}
 
-      {/* 02. Cases de Referência Selecionados — Identical Card Architecture to FeaturedProjects */}
+      {/* Curated case studies */}
       {selectedProjects.length > 0 && (
-        <section id="cases" className="border-b border-border">
-          <div className="max-w-[1200px] mx-auto px-6 md:px-0 py-[72px] md:py-[110px]">
+        <section id="cases" data-proposal-stack-panel className="orion-proposal-stack-panel orion-surface-dark border-t border-border" style={{ zIndex: 2 }}>
+          <div className="orion-shell orion-proposal-stack-content py-[72px] md:py-[110px]">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end mb-12">
               <div className="lg:col-span-8">
                 <div className="section-label mb-3">
-                  <span className="label-num">02.</span> Cases de Referência Selecionados
+                  <span className="label-num">{casesNumber}.</span> Cases de Referência Selecionados
                 </div>
-                <h2
+                <h2 data-orion-reveal
                   className="font-display text-foreground text-balance"
                   style={{ fontSize: "clamp(26px, 3.8vw, 44px)", fontWeight: 500, lineHeight: 1.1 }}
                 >
@@ -489,11 +677,20 @@ const ProposalView = () => {
                 return (
                   <motion.article
                     key={project.id}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Abrir estudo de caso ${project.titulo}`}
                     initial={{ opacity: 0, y: 18 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.06 }}
                     onClick={() => setSelectedCaseModal(project)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        setSelectedCaseModal(project);
+                      }
+                    }}
                     className={`${span} group cursor-pointer rounded-2xl border border-border bg-card/40 overflow-hidden hover:border-foreground/30 transition-colors duration-300 flex flex-col`}
                   >
                     {/* Cover Frame */}
@@ -569,58 +766,17 @@ const ProposalView = () => {
         </section>
       )}
 
-      {/* 03. Autoridade & Trajetória — Synced with site_settings */}
-      <section id="autoridade" className="border-b border-border">
-        <div className="max-w-[1200px] mx-auto px-6 md:px-0 py-[64px] md:py-[96px]">
-          <div className="section-label mb-8">
-            <span className="label-num">03.</span> Experiência &amp; Solidez de Entrega
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 border-t border-border">
-            {[
-              {
-                num: statProjects,
-                label: "Projetos entregues",
-                text: "Sistemas visuais, marcas e interfaces desenvolvidos com foco em posicionamento e resultado comercial.",
-              },
-              {
-                num: statClients,
-                label: "Clientes atendidos",
-                text: "Empresas, especialistas e marcas atendidas no Brasil e no exterior em múltiplos segmentos.",
-              },
-              {
-                num: statExperience,
-                label: "De atuação prática",
-                text: "Mais de uma década unindo direção criativa, clareza estratégica e arquivos prontos para escala.",
-              },
-            ].map((item, i) => (
-              <div
-                key={item.label}
-                className={`p-6 md:p-10 ${
-                  i < 2 ? "md:border-r border-b md:border-b-0 border-border" : ""
-                }`}
-              >
-                <span className="font-display text-[40px] md:text-[52px] font-medium text-foreground tabular-nums leading-none block mb-2">
-                  {item.num}
-                </span>
-                <span className="text-[13px] font-medium text-primary block mb-2">
-                  {item.label}
-                </span>
-                <p className="text-muted-foreground text-[15px] leading-[1.6]">{item.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      </ProposalStack>
 
       {/* 04. Investimento & Condições Comerciais */}
-      <section id="investimento" className="py-[72px] md:py-[120px] px-6 md:px-0">
-        <div className="max-w-[1200px] mx-auto">
+      <section id="investimento" className="orion-surface-light border-t border-border py-[72px] md:py-[120px]">
+        <div className="orion-shell">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end mb-12">
             <div className="lg:col-span-8">
               <div className="section-label mb-3">
-                <span className="label-num">04.</span> Investimento &amp; Condições Comerciais
+                <span className="label-num">{investmentNumber}.</span> Investimento &amp; Condições Comerciais
               </div>
-              <h2
+              <h2 data-orion-reveal
                 className="font-display text-foreground text-balance"
                 style={{ fontSize: "clamp(26px, 3.8vw, 44px)", fontWeight: 500, lineHeight: 1.1 }}
               >
@@ -722,6 +878,8 @@ const ProposalView = () => {
                 return (
                   <button
                     key={idx}
+                    data-proposal-payment
+                    aria-pressed={isSelected}
                     type="button"
                     onClick={() => setSelectedPaymentIdx(idx)}
                     className={`w-full text-left rounded-2xl border p-6 transition-all duration-200 ${
@@ -776,8 +934,8 @@ const ProposalView = () => {
       </section>
 
       {/* Quiet Editorial Footer */}
-      <footer className="border-t border-border py-10 px-6 text-xs text-muted-foreground">
-        <div className="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <footer className="border-t border-border py-10 text-xs text-muted-foreground">
+        <div className="orion-shell flex flex-col sm:flex-row items-center justify-between gap-4">
           <Link to="/" className="font-display text-sm font-medium text-foreground">
             Lucas Evangelista — Direção Criativa &amp; Design Estratégico
           </Link>
@@ -795,6 +953,7 @@ const ProposalView = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
+            role="dialog" aria-modal="true" aria-label="Estudo de caso da proposta"
             className="fixed inset-0 z-50 bg-background/90 backdrop-blur-md overflow-y-auto p-4 md:p-10 flex items-start justify-center"
             onClick={() => setSelectedCaseModal(null)}
           >

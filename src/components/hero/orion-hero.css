@@ -1,0 +1,111 @@
+.orion-hero { container: orion-hero / inline-size; background: #000; }
+.orion-hero-stage { position: relative; isolation: isolate; overflow: hidden; padding-top: 112px; }
+.orion-hero-container { position: relative; display: flex; flex-direction: column; max-width: 1280px; margin-inline: auto; padding-inline: 24px; }
+.orion-hero[data-order="image-first"] .orion-hero-portrait { order: -1; }
+.orion-hero-atmosphere { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 90% 20%, #59321955, transparent 50%), linear-gradient(110deg, #000 25%, #0009 60%, #29100a55); }
+.orion-hero-light { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 65% 75% at 85% 58%, #ff5b0090 0%, #ff400125 40%, transparent 75%); }
+.orion-hero-panels { display: none; }
+.orion-hero-copy { position: relative; z-index: 3; min-width: 0; padding-bottom: 24px; }
+.orion-hero-copy[data-alignment="center"] { text-align: center; }
+.orion-hero-copy[data-alignment="center"] :is(.orion-hero-kicker, .orion-hero-actions, .orion-hero-proof) { justify-content: center; }
+.orion-hero-copy[data-alignment="center"] .orion-hero-subtitle { margin-inline: auto; }
+.orion-hero-kicker { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 9px; padding: 9px 14px; border: 1px solid #ff400150; border-radius: 100px; font-size: 12px; color: #ededeb; margin-bottom: 28px; background: #090a0c80; }
+.orion-status-dot { width: 6px; height: 6px; border-radius: 50%; background: #ff5b2a; }
+.orion-hero-kicker-detail { color: #b9b9bc; }
+.orion-hero-title { font-size: clamp(34px, 8.6cqw, 52px); font-weight: 500; letter-spacing: -0.045em; line-height: 1.12; margin-bottom: 26px; }
+.orion-hero-title > span { display: block; }
+.orion-hero-title em { color: #ff4d0b; font-style: normal; }
+.orion-hero-title[data-size="compact"] { font-size: clamp(30px, 7.8cqw, 48px); }
+.orion-hero-title[data-size="large"] { font-size: clamp(38px, 9.2cqw, 60px); }
+.orion-hero-subtitle { max-width: 45ch; color: #bcbcbc; font-size: 16px; line-height: 1.65; margin-bottom: 30px; }
+.orion-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.orion-action { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; border-radius: 100px; padding: 13px 24px; font-size: 14px; font-weight: 600; transition: background-color 180ms, border-color 180ms; }
+.orion-action-primary { background: #ff4001; color: #fff; border: 1px solid #ff4001; }
+.orion-action-primary:hover { background: #e83b00; border-color: #e83b00; }
+.orion-action-secondary { border: 1px solid #ffffff80; color: #f5f5f2; background: #0003; }
+.orion-action-secondary:hover { border-color: white; background: #ffffff0d; }
+.orion-action:focus-visible, .orion-social:focus-visible { outline: 2px solid #fff; outline-offset: 5px; }
+.orion-hero-proof:empty { display: none; }
+.orion-hero-proof { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 30px; }
+.orion-social { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid #ffffff30; border-radius: 50%; }
+.orion-hero-portrait { position: relative; height: auto; aspect-ratio: var(--portrait-aspect, 16 / 10); margin-inline: -24px; overflow: hidden; }
+.orion-hero-gradient {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  opacity: .75;
+  /* One continuous backdrop across copy and portrait; neither block clips the shader. */
+  mask-image: linear-gradient(90deg, #0005 0%, #0002 20%, transparent 38%, #0008 65%, #000 100%), linear-gradient(to bottom, transparent, #000 26%, #000 74%, transparent);
+  mask-composite: intersect;
+}
+.orion-hero-portrait-image { z-index: 1; }
+.orion-hero-portrait-fade { z-index: 2; }
+.orion-hero-badge, .orion-hero-caption { z-index: 3; }
+.orion-hero-portrait-image { position: absolute; width: auto; max-width: none; height: 100%; left: 50%; top: 0; transform: translateX(-62%); }
+.orion-hero-portrait-fade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to top, #000 0%, transparent 18%); }
+.orion-hero-badge { position: absolute; right: 24px; bottom: 90px; padding: 8px 12px; border: 1px solid #ff400150; background: #0009; border-radius: 100px; font-size: 12px; }
+.orion-hero-badge[data-status="emerald"] { color: #6ee7b7; }
+.orion-hero-badge[data-status="amber"] { color: #fcd34d; }
+.orion-hero-badge[data-status="blue"] { color: #93c5fd; }
+.orion-hero-badge[data-status="primary"] { color: #ff814f; }
+.orion-hero-caption { position: absolute; right: 24px; bottom: 26px; text-align: right; font-size: 12px; color: #adadae; }
+.orion-hero-caption p:first-child { color: #f5f5f2; font-size: 14px; }
+
+@container orion-hero (min-width: 640px) {
+  .orion-hero-container { padding-inline: 40px; }
+  .orion-hero-copy { max-width: 650px; }
+  .orion-hero-portrait { margin-inline: -40px; max-height: 620px; }
+}
+@container orion-hero (min-width: 1024px) {
+  .orion-hero-stage { padding-top: 120px; min-height: clamp(780px, 58cqw, 900px); display: flex; align-items: center; }
+  .orion-hero-container { width: 100%; display: block; padding-inline: 40px; position: static; }
+  .orion-hero-copy { width: 56%; max-width: 680px; padding-block: 20px 140px; }
+  .orion-hero-title { font-size: clamp(48px, 4cqw, 60px); }
+  .orion-hero-title[data-size="compact"] { font-size: clamp(42px, 3.6cqw, 54px); }
+  .orion-hero-title[data-size="large"] { font-size: clamp(52px, 4.2cqw, 64px); }
+  .orion-hero-subtitle { max-width: 43ch; font-size: 18px; }
+  .orion-hero-kicker-detail { display: none; }
+  .orion-hero-portrait { position: absolute; inset: 110px auto 0; left: 50%; width: min(100%, 1280px); transform: translateX(-50%); margin: 0; max-height: none; aspect-ratio: auto; z-index: 2; pointer-events: none; }
+  .orion-hero-gradient {
+    mask-image: linear-gradient(90deg, #0005 0%, #0002 20%, transparent 38%, #0008 65%, #000 100%), linear-gradient(to bottom, transparent, #000 20%, #000 76%, transparent);
+  }
+  .orion-hero-portrait-image { width: min(100cqw, 1540px); height: auto; left: auto; right: -4%; top: auto; bottom: 0; transform: none; }
+  .orion-hero-portrait-fade { background: linear-gradient(to top, #000 0%, transparent 12%); }
+  .orion-hero-panels { display: block; position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+  .orion-hero-panels span { position: absolute; top: 30%; right: 32%; width: 15%; height: 28%; background: #ffffff06; border: 1px solid #ffffff25; border-radius: 22px; }
+  .orion-hero-panels span + span { top: 49%; right: 5%; width: 14%; height: 24%; }
+  .orion-hero-badge, .orion-hero-caption { right: max(40px, calc((100% - 1200px) / 2)); }
+  .orion-hero[data-layout="6-6"] .orion-hero-copy { width: 52%; }
+  .orion-hero[data-layout="inverted"] .orion-hero-copy { margin-left: auto; }
+  .orion-hero[data-layout="inverted"] .orion-hero-portrait { transform: translateX(-84%); }
+  .orion-hero[data-layout="inverted"] .orion-hero-light { transform: translateX(-50%); }
+  .orion-hero[data-layout="inverted"] .orion-hero-gradient { transform: scaleX(-1); }
+  .orion-hero[data-padding="compact"] .orion-hero-stage { min-height: 740px; }
+  .orion-hero[data-padding="spacious"] .orion-hero-stage { min-height: 940px; }
+}
+.orion-hero[data-layout="centered"] .orion-hero-stage { display: block; }
+.orion-hero[data-layout="centered"] .orion-hero-copy { width: 100%; margin-inline: auto; text-align: center; padding-bottom: 24px; }
+.orion-hero[data-layout="centered"] :is(.orion-hero-kicker, .orion-hero-actions, .orion-hero-proof) { justify-content: center; }
+.orion-hero[data-layout="centered"] .orion-hero-subtitle { margin-inline: auto; }
+.orion-hero[data-layout="centered"] .orion-hero-portrait { position: relative; inset: auto; aspect-ratio: var(--portrait-aspect, 16 / 10); max-height: 620px; }
+.orion-hero[data-layout="centered"] .orion-hero-portrait-image { width: auto; height: 100%; left: 50%; right: auto; top: 0; bottom: auto; transform: translateX(-62%); }
+.orion-hero[data-has-media="false"] .orion-hero-copy { width: 100%; max-width: 780px; }
+@media (prefers-reduced-motion: reduce) {
+  .orion-hero *, .orion-services * { transition-duration: 0ms !important; animation: none !important; }
+}
+
+/* The seated portrait fills the hero like the supplied composition. */
+@container orion-hero (min-width: 1024px) {
+  .orion-hero[data-portrait="seated"] .orion-hero-portrait { top: 80px; }
+  .orion-hero[data-portrait="seated"] .orion-hero-portrait-image {
+    width: auto;
+    height: calc(100% + 70px);
+    bottom: -70px;
+    right: 0;
+  }
+}
+
+@container orion-hero (min-width: 1024px) {
+  .orion-hero[data-portrait="seated"] .orion-hero-subtitle { max-width: 36ch; }
+}

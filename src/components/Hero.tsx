@@ -18,7 +18,7 @@ const Hero = ({
   config: propConfig,
 }: HeroProps = {}) => {
   const { openContactDrawer } = useContactDrawer();
-  const [heroConfig, setHeroConfig] = useState<HeroConfig>(propConfig || getStoredHeroConfig());
+  const [heroConfig, setHeroConfig] = useState<HeroConfig>(() => propConfig || getStoredHeroConfig());
 
   useEffect(() => {
     if (propConfig) {
@@ -67,6 +67,7 @@ const Hero = ({
   const dribbbleUrl = isValidSocialUrl(rawDribbble) ? rawDribbble : "https://dribbble.com";
 
   const sharedProps = {
+    whatsappNumber: getSetting("whatsapp_number", ""),
     statProjects,
     statClients,
     statExperience,
