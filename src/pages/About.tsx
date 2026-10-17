@@ -424,7 +424,7 @@ const About = () => {
             </div>
 
             {/* Right (6 Columns): First-Person Biography & Interactive Counter Metrics */}
-            <div className="order-1 lg:order-2 lg:col-span-6">
+            <div className="order-1 lg:order-2 lg:col-span-6 lg:pb-28">
               <motion.div
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
