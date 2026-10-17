@@ -1,4 +1,5 @@
 import SectionTransition from "@/components/SectionTransition";
+import SectionGlow from "@/components/SectionGlow";
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -145,8 +146,8 @@ const Projects = () => {
           </div>
 
         </section>
-        <SectionTransition sourceColor="#090A0C" destinationColor="#FFFAFA" />
-        <section className="orion-surface-light sec-pad">
+        <SectionGlow />
+        <section className="orion-surface-dark sec-pad">
           <div className="container-editorial">
           {/* Projects Vertical Stream (Uma em baixo da outra com staggered reveal) */}
           {isLoading ? (
@@ -206,7 +207,7 @@ const Projects = () => {
           )}
           </div>
         </section>
-        <SectionTransition sourceColor="#FFFAFA" destinationColor="#090A0C" />
+        <SectionTransition sourceColor="#090A0C" destinationColor="#07080A" />
         <CTASection />
       </main>
 
