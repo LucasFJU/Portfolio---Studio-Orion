@@ -104,6 +104,12 @@
     bottom: -70px;
     right: 0;
   }
+  .orion-hero[data-portrait="seated"]:not([data-layout="centered"]):not([data-layout="inverted"]) .orion-hero-portrait {
+    overflow: visible;
+  }
+  .orion-hero[data-portrait="seated"]:not([data-layout="centered"]):not([data-layout="inverted"]) .orion-hero-portrait-image {
+    right: clamp(-144px, -8cqw, -88px);
+  }
 }
 
 @container orion-hero (min-width: 1024px) {

@@ -1,0 +1,35 @@
+.orion-capabilities { padding-block: clamp(64px, 7vw, 104px); border-bottom: 1px solid hsl(var(--border)); }
+.orion-capabilities-heading { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 40px; }
+.orion-capabilities-heading h2 { font-family: var(--font-display, inherit); font-weight: 500; font-size: clamp(30px, 3.4vw, 48px); line-height: 1.12; letter-spacing: -.035em; }
+.orion-capabilities-heading > p { max-width: 34ch; color: hsl(var(--muted-foreground)); font-size: 15px; line-height: 1.65; }
+.orion-capabilities-list { border-top: 1px solid hsl(var(--border)); }
+.orion-capability { border-bottom: 1px solid hsl(var(--border)); }
+.orion-capability:last-child { border-bottom: 0; }
+.orion-capability-trigger { display: grid; grid-template-columns: 40px 1fr 36px; gap: 20px; width: 100%; padding-block: 25px; text-align: left; align-items: center; }
+.orion-capability-number { font-family: ui-monospace, monospace; font-size: 12px; color: hsl(var(--muted-foreground)); transition: color 180ms; }
+.orion-capability-name { font-size: clamp(19px, 2vw, 27px); font-weight: 500; letter-spacing: -.025em; transition: color 180ms; }
+.orion-capability-toggle { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid hsl(var(--border)); border-radius: 50%; color: hsl(var(--muted-foreground)); transition: transform 200ms, color 200ms, border-color 200ms; }
+.orion-capability-trigger:hover .orion-capability-name { color: #ff6a36; }
+.orion-capability-trigger:focus-visible { outline: 2px solid #ff4001; outline-offset: 6px; border-radius: 2px; }
+.orion-capability[data-expanded="true"] .orion-capability-number { color: #ff6a36; }
+.orion-capability[data-expanded="true"] .orion-capability-toggle { transform: rotate(45deg); border-color: #ff400160; color: #ff6a36; }
+.orion-capability-detail { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(24px, 5vw, 72px); padding: 0 0 32px 60px; }
+.orion-capability-summary { display: flex; align-items: start; gap: 16px; max-width: 40ch; padding-top: 9px; }
+.orion-capability-summary svg { flex-shrink: 0; color: #ff6a36; }
+.orion-capability-summary p { font-size: 15px; line-height: 1.65; color: hsl(var(--muted-foreground)); }
+.orion-capability-skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px; }
+.orion-capability-skills li { display: flex; gap: 10px; padding-block: 11px; border-bottom: 1px solid #ffffff0c; font-size: 14px; line-height: 1.5; color: #dfdfe1; }
+.orion-capability-skills li::before { content: ""; width: 4px; height: 4px; margin-top: 8px; background: #ff6a36; border-radius: 50%; flex-shrink: 0; }
+@media (max-width: 767px) {
+  .orion-capabilities-heading { display: block; margin-bottom: 28px; }
+  .orion-capabilities-heading > p { margin-top: 18px; }
+  .orion-capability-trigger { grid-template-columns: 24px 1fr 32px; gap: 12px; padding-block: 22px; }
+  .orion-capability-toggle { width: 32px; height: 32px; }
+  .orion-capability-detail { grid-template-columns: 1fr; gap: 16px; padding: 0 0 26px 36px; }
+  .orion-capability-summary p { font-size: 14px; }
+  .orion-capability-summary svg { width: 21px; }
+  .orion-capability-skills { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .orion-capabilities * { transition: none !important; }
+}

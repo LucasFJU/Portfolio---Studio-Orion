@@ -26,6 +26,7 @@ import PageMeta from "@/components/PageMeta";
 import { useContactDrawer } from "@/components/ContactDrawer";
 
 import AboutPortrait from "@/components/AboutPortrait";
+import CapabilitiesSection from "@/components/CapabilitiesSection";
 
 const DEFAULT_BIO = [
   "Sou designer e diretor criativo com mais de 13 anos de experiência ajudando empresas e profissionais a estruturarem sua presença visual com clareza, critério e consistência.",
@@ -325,7 +326,6 @@ const About = () => {
   const { openContactDrawer } = useContactDrawer();
   const [activeTrajectoryIdx, setActiveTrajectoryIdx] = useState(2);
   const [activeMethodIdx, setActiveMethodIdx] = useState(0);
-  const [activeCapabilityIdx, setActiveCapabilityIdx] = useState<number>(0);
 
   // Scroll-linked timeline progress
   const timelineRef = useRef<HTMLDivElement>(null);
@@ -681,97 +681,9 @@ const About = () => {
           </div>
         </section>
 
-        {/* 04. Ferramentas e Capacidades — Compact Editorial Horizontal Index */}
         <SectionTransition sourceColor="#141518" destinationColor="#090A0C" direction="rise-left" />
         <SectionGlow />
-        <section className="container-editorial py-16 md:py-20 border-b border-border">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-10">
-            <div>
-              <div className="section-label mb-2.5">
-                <span className="label-num">04.</span> Ferramentas &amp; Capacidades
-              </div>
-              <h2 data-orion-reveal
-                className="font-display text-foreground font-medium"
-                style={{ fontSize: "clamp(24px, 3.2vw, 36px)", lineHeight: 1.1 }}
-              >
-                Domínio técnico e entregáveis de ponta a ponta.
-              </h2>
-            </div>
-
-            <p className="text-muted-foreground text-[14px] md:text-[15px] max-w-[42ch]">
-              Passe o cursor ou toque em cada frente para destacar as competências e ferramentas utilizadas.
-            </p>
-          </div>
-
-          {/* Sleek Compact Architectural Rows instead of heavy 2x2 boxes */}
-          <div className="divide-y divide-border border-y border-border">
-            {CAPABILITY_ROWS.map((row, idx) => {
-              const IconComponent = row.icon;
-              const isActive = activeCapabilityIdx === idx;
-
-              return (
-                <div
-                  key={row.num}
-                  onMouseEnter={() => setActiveCapabilityIdx(idx)}
-                  onClick={() => setActiveCapabilityIdx(idx)}
-                  className={`group cursor-pointer py-5 sm:py-6 px-4 sm:px-6 -mx-4 sm:-mx-6 rounded-2xl transition-all duration-300 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-center ${
-                    isActive ? "bg-[#141518]" : "hover:bg-[#141518]/60"
-                  }`}
-                >
-                  {/* Left: Number + Icon + Title */}
-                  <div className="lg:col-span-5 flex items-center gap-4">
-                    <span
-                      className={`font-mono text-xs tabular-nums transition-colors ${
-                        isActive ? "text-primary font-semibold" : "text-muted-foreground"
-                      }`}
-                    >
-                      {row.num}
-                    </span>
-
-                    <div
-                      className={`w-9 h-9 rounded-xl border flex items-center justify-center shrink-0 transition-all duration-300 ${
-                        isActive
-                          ? "bg-primary text-primary-foreground border-primary shadow-[0_0_20px_rgba(255,64,1,0.35)]"
-                          : "bg-background border-border text-muted-foreground group-hover:text-foreground"
-                      }`}
-                    >
-                      <IconComponent size={16} />
-                    </div>
-
-                    <div>
-                      <h3
-                        className={`font-display text-[18px] sm:text-[20px] font-medium transition-colors ${
-                          isActive ? "text-primary" : "text-foreground"
-                        }`}
-                      >
-                        {row.category}
-                      </h3>
-                      <p className="text-xs text-muted-foreground hidden sm:block mt-0.5">
-                        {row.summary}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Right: Compact Inline Skill Pills */}
-                  <div className="lg:col-span-7 flex flex-wrap items-center lg:justify-end gap-2">
-                    {row.skills.map((skill) => (
-                      <span
-                        key={skill}
-                        className={`text-[12px] sm:text-[13px] px-3 py-1.5 rounded-full border transition-all duration-200 ${
-                          isActive
-                            ? "bg-background border-primary/35 text-foreground"
-                            : "bg-background/50 border-border text-muted-foreground group-hover:text-foreground/85"
-                        }`}
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </section>
+        <CapabilitiesSection items={CAPABILITY_ROWS} />
 
         <CTASection />
       </main>
