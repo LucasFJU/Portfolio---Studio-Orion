@@ -414,30 +414,13 @@ const About = () => {
         </section>
 
         {/* Biography + Centered Orbital Portrait Section */}
-        <section className="container-editorial py-16 md:py-24 overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-center">
+        <section className="container-editorial pt-16 pb-0 md:pt-24 md:pb-0 overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-end">
             {/* Left (6 Columns): Portrait Centered Precisely Inside the Orbital Circle */}
             <div
-                className="order-2 lg:order-1 lg:col-span-6 relative flex flex-col items-center justify-center select-none"
+                className="order-2 lg:order-1 lg:col-span-6 relative flex flex-col items-center justify-end select-none"
             >
-              <AboutPortrait src={photoUrl || undefined} className="max-w-[520px] h-[480px] sm:h-[620px] lg:h-[700px]" />
-
-              {/* Floating Editorial Signature Pill Centered Below the Circle */}
-              <div
-                className="relative z-20 -mt-5 mx-auto w-full max-w-[340px] rounded-full border border-white/15 bg-[#141518]/95 backdrop-blur-xl px-6 py-3.5 flex items-center justify-between shadow-[0_20px_50px_rgba(0,0,0,0.75)] transition-transform duration-300 ease-out"
-              >
-                <div>
-                  <div className="font-display text-[16px] font-semibold text-foreground leading-tight">
-                    Lucas Evangelista
-                  </div>
-                  <div className="text-[12px] text-muted-foreground">
-                    Designer &amp; Diretor Criativo
-                  </div>
-                </div>
-                <span className="font-mono text-[11px] font-semibold text-primary bg-primary/15 border border-primary/30 rounded-full px-3 py-1">
-                  13+ ANOS
-                </span>
-              </div>
+              <AboutPortrait src={photoUrl || undefined} className="orion-about-page-portrait max-w-[520px] h-[520px] sm:h-[680px] lg:h-[760px]" />
             </div>
 
             {/* Right (6 Columns): First-Person Biography & Interactive Counter Metrics */}
