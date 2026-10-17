@@ -146,7 +146,7 @@ const Projects = () => {
           </div>
 
         </section>
-        <SectionGlow />
+        <SectionGlow continuousLine />
         <section className="orion-surface-dark sec-pad">
           <div className="container-editorial">
           {/* Projects Vertical Stream (Uma em baixo da outra com staggered reveal) */}
