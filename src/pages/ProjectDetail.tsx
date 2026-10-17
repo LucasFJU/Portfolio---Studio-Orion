@@ -334,8 +334,9 @@ const ProjectDetail = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             {/* COLUNA PRINCIPAL (Narrativa Estruturada + Galeria de Desdobramentos) */}
             <div className="lg:col-span-8 space-y-10 md:space-y-14 min-w-0">
+              <div className="divide-y divide-border/70 border-y border-border/70">
               {/* Contexto do Projeto */}
-              <section className="orion-surface-light orion-narrative" data-orion-reveal>
+              <section className="py-7 sm:py-9" data-orion-reveal>
                 <div className="section-label mb-3 text-xs uppercase tracking-wider font-mono">
                   <span className="label-num text-primary">01.</span> Contexto do Projeto
                 </div>
@@ -344,8 +345,8 @@ const ProjectDetail = () => {
                 </p>
               </section>
 
-              {/* Card 02: O Desafio */}
-              <section className="orion-surface-light orion-narrative" data-orion-reveal>
+              {/* 02. O Desafio */}
+              <section className="py-7 sm:py-9" data-orion-reveal>
                 <div className="text-[13px] font-mono text-primary font-medium mb-3 flex items-center gap-2">
                   <span>02.</span>
                   <span>O Desafio</span>
@@ -355,8 +356,8 @@ const ProjectDetail = () => {
                 </p>
               </section>
 
-              {/* Card 03: Direção Criativa & Solução */}
-              <section className="orion-surface-light orion-narrative" data-orion-reveal>
+              {/* 03. Direção Criativa & Solução */}
+              <section className="py-7 sm:py-9" data-orion-reveal>
                 <div className="text-[13px] font-mono text-primary font-medium mb-3 flex items-center gap-2">
                   <span>03.</span>
                   <span>Direção Criativa & Solução</span>
@@ -366,8 +367,8 @@ const ProjectDetail = () => {
                 </p>
               </section>
 
-              {/* Card 04: Resultados Comprovados */}
-              <section className="orion-surface-light orion-narrative" data-orion-reveal>
+              {/* 04. Resultados Comprovados */}
+              <section className="py-7 sm:py-9" data-orion-reveal>
                 <div className="flex items-center justify-between gap-2 mb-3">
                   <div className="text-[13px] font-mono text-primary font-medium flex items-center gap-2">
                     <span>04.</span>
@@ -381,6 +382,7 @@ const ProjectDetail = () => {
                   {caseData.resultado}
                 </p>
               </section>
+              </div>
 
               {/* 4. GALERIA DE DESDOBRAMENTOS VISUAIS (Integrada na Coluna Principal) */}
               {galleryImages.length > 0 && (
