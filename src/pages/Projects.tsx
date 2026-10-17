@@ -206,7 +206,7 @@ const Projects = () => {
           )}
           </div>
         </section>
-        <SectionTransition sourceColor="#FFFAFA" destinationColor="#090A0C" direction="rise-left" />
+        <SectionTransition sourceColor="#FFFAFA" destinationColor="#090A0C" />
         <CTASection />
       </main>
 

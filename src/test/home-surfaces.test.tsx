@@ -23,25 +23,24 @@ function viewport(desktop: boolean) {
   })));
 }
 
-it("keeps transitions decorative and static for reduced motion, even on desktop", () => {
+it("renders a straight, static section boundary on desktop", () => {
   viewport(true);
   const { container } = render(<SectionTransition sourceColor="#090A0C" destinationColor="#F0EEE8" />);
   const band = container.firstElementChild!;
   expect(band).toHaveAttribute("aria-hidden", "true");
   expect(band).toHaveAttribute("data-motion", "static");
-  expect(band).toHaveStyle({ backgroundColor: "#090A0C" });
-  expect(container.querySelector("svg")).toHaveAttribute("focusable", "false");
-  expect(container.querySelector("path")).toHaveAttribute("fill", "#F0EEE8");
+  expect(band).toHaveStyle({ backgroundColor: "#F0EEE8" });
+  expect(container.querySelector("svg, path")).toBeNull();
   expect(container.querySelector("button, a, [tabindex]")).toBeNull();
 });
 
-it("keeps the curve static on mobile without changing the chosen destination", () => {
+it("keeps the same straight boundary on mobile with motion enabled", () => {
   reducedMotion = false;
   viewport(false);
-  const { container } = render(<SectionTransition sourceColor="#FF4001" destinationColor="#090A0C" direction="rise-left" />);
+  const { container } = render(<SectionTransition sourceColor="#FF4001" destinationColor="#090A0C" />);
   expect(container.firstElementChild).toHaveAttribute("data-motion", "static");
-  expect(container.querySelector("path")).toHaveAttribute("fill", "#090A0C");
-  expect(container.querySelector("svg")).toHaveClass("-scale-x-100");
+  expect(container.firstElementChild).toHaveStyle({ backgroundColor: "#090A0C" });
+  expect(container.querySelector("svg, path")).toBeNull();
 });
 
 it("exposes all three benefits immediately when motion is reduced", () => {

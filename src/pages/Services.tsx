@@ -44,7 +44,7 @@ const Services = () => {
         <SectionGlow />
         <ProcessSection detailed sectionNumber="02." />
         {/* Unified Continuous Atmospheric Stage: FAQ -> CTA -> Footer */}
-        <SectionTransition sourceColor="#141518" destinationColor="#090A0C" direction="rise-left" />
+        <SectionTransition sourceColor="#141518" destinationColor="#090A0C" />
         <UnifiedAtmosphereSection sectionNumber="03." />
       </main>
     </div>

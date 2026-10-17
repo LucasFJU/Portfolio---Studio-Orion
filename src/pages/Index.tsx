@@ -36,7 +36,7 @@ const Index = () => {
         <ProjectShowcaseScroll sectionNumber="04." />
         <SectionTransition sourceColor="#090A0C" destinationColor="#141518" />
         <ProcessSection sectionNumber="05." />
-        <SectionTransition sourceColor="#141518" destinationColor="#090A0C" direction="rise-left" />
+        <SectionTransition sourceColor="#141518" destinationColor="#090A0C" />
         <TestimonialsSection sectionNumber="06." />
         {/* Unified Continuous Atmospheric Stage: FAQ -> CTA -> Footer */}
         <UnifiedAtmosphereSection sectionNumber="07." />

@@ -664,7 +664,7 @@ const About = () => {
           </div>
         </section>
 
-        <SectionTransition sourceColor="#141518" destinationColor="#090A0C" direction="rise-left" />
+        <SectionTransition sourceColor="#141518" destinationColor="#090A0C" />
         <SectionGlow />
         <CapabilitiesSection items={CAPABILITY_ROWS} />
 
