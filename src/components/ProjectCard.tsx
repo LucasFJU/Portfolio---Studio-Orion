@@ -1,3 +1,4 @@
+import ResponsiveImage from "@/components/ResponsiveImage";
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { parseCaseStudy, formatCategoryLabel } from "@/lib/caseStudy";
@@ -49,12 +50,12 @@ const ProjectCard = ({
         <div className="lg:col-span-7 relative bg-secondary/40 overflow-hidden">
           <div className="aspect-[16/10] w-full h-full relative overflow-hidden">
             {imagem_capa ? (
-              <img
+              <ResponsiveImage
                 src={imagem_capa}
                 alt={titulo}
                 width={1280}
                 height={800}
-                loading={index < 2 ? "eager" : "lazy"}
+                loading="lazy" sizes="(min-width: 1360px) 700px, (min-width: 1024px) 58vw, 100vw"
                 decoding="async"
                 className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
               />

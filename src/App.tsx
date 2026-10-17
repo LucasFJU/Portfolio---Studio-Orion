@@ -1,29 +1,29 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Layout from "./components/Layout";
 import Index from "./pages/Index";
-import Projects from "./pages/Projects";
-import ProjectDetail from "./pages/ProjectDetail";
-import About from "./pages/About";
-import Services from "./pages/Services";
-import Contact from "./pages/Contact";
-import AdminLogin from "./pages/AdminLogin";
-import AdminDashboard from "./pages/AdminDashboard";
-import AdminProjectForm from "./pages/AdminProjectForm";
-import AdminSettings from "./pages/AdminSettings";
-import AdminAbout from "./pages/AdminAbout";
-import AdminTestimonials from "./pages/AdminTestimonials";
-import AdminProposals from "./pages/AdminProposals";
-import AdminProposalForm from "./pages/AdminProposalForm";
-import AdminLeads from "./pages/AdminLeads";
-import AdminHeroEditor from "./pages/AdminHeroEditor";
-import ProposalView from "./pages/ProposalView";
-import NotFound from "./pages/NotFound";
+const Projects = lazy(() => import("./pages/Projects"));
+const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
+const About = lazy(() => import("./pages/About"));
+const Services = lazy(() => import("./pages/Services"));
+const Contact = lazy(() => import("./pages/Contact"));
+const AdminLogin = lazy(() => import("./pages/AdminLogin"));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const AdminProjectForm = lazy(() => import("./pages/AdminProjectForm"));
+const AdminSettings = lazy(() => import("./pages/AdminSettings"));
+const AdminAbout = lazy(() => import("./pages/AdminAbout"));
+const AdminTestimonials = lazy(() => import("./pages/AdminTestimonials"));
+const AdminProposals = lazy(() => import("./pages/AdminProposals"));
+const AdminProposalForm = lazy(() => import("./pages/AdminProposalForm"));
+const AdminLeads = lazy(() => import("./pages/AdminLeads"));
+const AdminHeroEditor = lazy(() => import("./pages/AdminHeroEditor"));
+const ProposalView = lazy(() => import("./pages/ProposalView"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -74,6 +74,7 @@ const App = () => (
           <ScrollToTop />
           <StoreSyncListener />
           <Layout>
+            <Suspense fallback={<main className="container-editorial min-h-screen pt-32" aria-busy="true" aria-label="Carregando página"><span className="sr-only" role="status">Carregando página…</span><div aria-hidden="true" className="h-12 w-2/3 rounded-xl bg-card" /></main>}>
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/projetos" element={<Projects />} />
@@ -96,6 +97,7 @@ const App = () => (
               <Route path="/admin/sobre" element={<AdminAbout />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            </Suspense>
           </Layout>
         </BrowserRouter>
       </TooltipProvider>

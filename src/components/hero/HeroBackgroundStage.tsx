@@ -1,3 +1,4 @@
+import ResponsiveImage from "@/components/ResponsiveImage";
 import React from "react";
 import { DynamicStudioBackground } from "./DynamicStudioBackground";
 import type { HeroConfig } from "@/config/heroConfig";
@@ -22,8 +23,9 @@ export const HeroBackgroundStage: React.FC<HeroBackgroundStageProps> = ({
     const imgSrc = backgroundConfig?.imageUrl?.trim() || heroBgJpg;
     return (
       <div className="absolute inset-0 z-0 overflow-hidden bg-black pointer-events-none" aria-hidden="true">
-        <img
+        <ResponsiveImage
           src={imgSrc}
+          loading="eager"
           alt=""
           role="presentation"
           referrerPolicy="no-referrer"

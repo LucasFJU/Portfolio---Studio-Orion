@@ -1,3 +1,4 @@
+import ResponsiveImage from "@/components/ResponsiveImage";
 import type { PointerEvent } from "react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import portrait from "@/assets/lucas-about-orion-v5.webp";
@@ -22,7 +23,7 @@ export default function AboutPortrait({ src = portrait, className = "", loading 
       <div aria-hidden="true" className="orion-portrait-halo" />
       <div aria-hidden="true" className="orion-portrait-ring orion-portrait-ring-outer" />
       <div aria-hidden="true" className="orion-portrait-ring orion-portrait-ring-inner" />
-      <img src={src} alt="Lucas Evangelista" width={1194} height={1600} loading={loading} decoding="async" className="orion-about-portrait" />
+      <ResponsiveImage src={src} sizes="(min-width: 1280px) 640px, (min-width: 768px) 50vw, 100vw" alt="Lucas Evangelista" width={1194} height={1600} loading={loading} decoding="async" className="orion-about-portrait" />
       <div aria-hidden="true" className="orion-portrait-tags">
         <span>Identidade visual</span><span>Redes sociais</span><span>Sites e interfaces</span>
       </div>

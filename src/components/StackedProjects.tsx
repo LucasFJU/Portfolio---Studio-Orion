@@ -1,3 +1,4 @@
+import ResponsiveImage from "@/components/ResponsiveImage";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -296,12 +297,16 @@ const StackedProjects = () => {
                         type="button"
                         onClick={() => scrollToCard(idx)}
                         aria-label={`Ir para projeto ${idx + 1}`}
-                        className={`h-2 rounded-full transition-all duration-300 ${
+                        className="h-11 w-11 shrink-0 flex items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        aria-current={activeCardIndex === idx ? "true" : undefined}
+                      >
+                        <span aria-hidden="true" className={`block h-2 rounded-full transition-all duration-300 ${
                           activeCardIndex === idx
                             ? "w-6 bg-primary"
                             : "w-2 bg-white/20 hover:bg-white/40"
                         }`}
-                      />
+                        />
+                      </button>
                     ))}
                   </div>
 
@@ -315,7 +320,7 @@ const StackedProjects = () => {
                       onClick={() => scrollToCard(activeCardIndex - 1)}
                       disabled={activeCardIndex === 0}
                       aria-label="Projeto anterior"
-                      className="w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-white/5 disabled:opacity-30 disabled:pointer-events-none transition-colors"
+                      className="w-11 h-11 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-white/5 disabled:opacity-30 disabled:pointer-events-none transition-colors"
                     >
                       <ChevronLeft size={14} />
                     </button>
@@ -324,7 +329,7 @@ const StackedProjects = () => {
                       onClick={() => scrollToCard(activeCardIndex + 1)}
                       disabled={activeCardIndex === totalCards - 1}
                       aria-label="Próximo projeto"
-                      className="w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-white/5 disabled:opacity-30 disabled:pointer-events-none transition-colors"
+                      className="w-11 h-11 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-white/5 disabled:opacity-30 disabled:pointer-events-none transition-colors"
                     >
                       <ChevronRight size={14} />
                     </button>
@@ -380,12 +385,12 @@ const StackedProjects = () => {
                       >
                         <div className="lg:col-span-7 aspect-[16/10] lg:aspect-auto lg:h-[clamp(300px,calc(100vh-335px),440px)] bg-secondary relative overflow-hidden">
                           {project.imagem_capa ? (
-                            <img
+                            <ResponsiveImage
                               src={project.imagem_capa}
                               alt={project.titulo}
                               width={900}
                               height={560}
-                              loading={index === 0 ? "eager" : "lazy"}
+                              loading="lazy" sizes="(min-width: 1360px) 700px, (min-width: 1024px) 58vw, 100vw"
                               decoding="async"
                               className="w-full h-full object-cover"
                             />

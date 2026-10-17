@@ -1,3 +1,4 @@
+import ResponsiveImage from "@/components/ResponsiveImage";
 import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
@@ -22,7 +23,7 @@ function CustomElement({ element }: { element: CustomHeroElement }) {
   return (
     <div className={`my-4 ${color} ${size}`} style={style}>
       {element.type === "text" && <p>{element.content}</p>}
-      {element.type === "image" && <img src={element.content} alt={element.title} className={`inline-block max-h-32 max-w-full object-contain ${element.style?.size === "sm" ? "max-h-16" : element.style?.size === "lg" ? "max-h-40" : ""}`} />}
+      {element.type === "image" && <ResponsiveImage src={element.content} alt={element.title} className={`inline-block max-h-32 max-w-full object-contain ${element.style?.size === "sm" ? "max-h-16" : element.style?.size === "lg" ? "max-h-40" : ""}`} />}
       {element.type === "button" && (
         <a href={element.linkUrl || "#"} target={element.linkUrl?.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className="orion-action orion-action-secondary">
           {element.content || element.title}<ExternalLink size={14} aria-hidden="true" />
@@ -136,7 +137,7 @@ export function HeroSplitEditorial({
 
           {hasMedia && (
             <div className="orion-hero-portrait" style={{ "--portrait-aspect": imageAspect } as CSSProperties}>
-              <img src={resolveHeroImage(cfg.media)} alt="Lucas Evangelista, à frente do Studio Orion" className="orion-hero-portrait-image" {...{ fetchpriority: "high" }} decoding="async" />
+              <ResponsiveImage src={resolveHeroImage(cfg.media)} alt="Lucas Evangelista, à frente do Studio Orion" loading="eager" sizes="(min-width: 1540px) 1540px, 100vw" className="orion-hero-portrait-image" {...{ fetchpriority: "high" }} decoding="async" />
               <div className="orion-hero-portrait-fade" aria-hidden="true" />
               {cfg.media.badgeEnabled && cfg.media.badgeText && <span className="orion-hero-badge" data-status={cfg.media.badgeStatus}>{cfg.media.badgeText}</span>}
             </div>

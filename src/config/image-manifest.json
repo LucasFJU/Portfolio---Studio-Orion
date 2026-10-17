@@ -1,0 +1,1011 @@
+{
+  "assets/cta-bg.jpg": {
+    "width": 1920,
+    "height": 1080,
+    "originalBytes": 80381,
+    "variants": [
+      {
+        "src": "/images/optimized/cta-bg-f3aca96d74b4-480.webp",
+        "width": 480,
+        "bytes": 7366
+      },
+      {
+        "src": "/images/optimized/cta-bg-f3aca96d74b4-768.webp",
+        "width": 768,
+        "bytes": 12862
+      },
+      {
+        "src": "/images/optimized/cta-bg-f3aca96d74b4-1200.webp",
+        "width": 1200,
+        "bytes": 23028
+      },
+      {
+        "src": "/images/optimized/cta-bg-f3aca96d74b4-1600.webp",
+        "width": 1600,
+        "bytes": 35302
+      }
+    ]
+  },
+  "assets/demo-app-design.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 67896,
+    "variants": [
+      {
+        "src": "/images/optimized/demo-app-design-87c9c1d9d581-480.webp",
+        "width": 480,
+        "bytes": 16770
+      },
+      {
+        "src": "/images/optimized/demo-app-design-87c9c1d9d581-768.webp",
+        "width": 768,
+        "bytes": 33186
+      },
+      {
+        "src": "/images/optimized/demo-app-design-87c9c1d9d581-1024.webp",
+        "width": 1024,
+        "bytes": 51046
+      }
+    ]
+  },
+  "assets/demo-brand-identity.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 45072,
+    "variants": [
+      {
+        "src": "/images/optimized/demo-brand-identity-23ddd8b23a6f-480.webp",
+        "width": 480,
+        "bytes": 5894
+      },
+      {
+        "src": "/images/optimized/demo-brand-identity-23ddd8b23a6f-768.webp",
+        "width": 768,
+        "bytes": 12904
+      },
+      {
+        "src": "/images/optimized/demo-brand-identity-23ddd8b23a6f-1024.webp",
+        "width": 1024,
+        "bytes": 23574
+      }
+    ]
+  },
+  "assets/demo-packaging.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 62545,
+    "variants": [
+      {
+        "src": "/images/optimized/demo-packaging-a2f9d0fe1d9c-480.webp",
+        "width": 480,
+        "bytes": 12244
+      },
+      {
+        "src": "/images/optimized/demo-packaging-a2f9d0fe1d9c-768.webp",
+        "width": 768,
+        "bytes": 24524
+      },
+      {
+        "src": "/images/optimized/demo-packaging-a2f9d0fe1d9c-1024.webp",
+        "width": 1024,
+        "bytes": 39128
+      }
+    ]
+  },
+  "assets/demo-restaurant-brand.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 83700,
+    "variants": [
+      {
+        "src": "/images/optimized/demo-restaurant-brand-1b321a51f11f-480.webp",
+        "width": 480,
+        "bytes": 18006
+      },
+      {
+        "src": "/images/optimized/demo-restaurant-brand-1b321a51f11f-768.webp",
+        "width": 768,
+        "bytes": 36538
+      },
+      {
+        "src": "/images/optimized/demo-restaurant-brand-1b321a51f11f-1024.webp",
+        "width": 1024,
+        "bytes": 56916
+      }
+    ]
+  },
+  "assets/demo-social-media.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 96488,
+    "variants": [
+      {
+        "src": "/images/optimized/demo-social-media-7d51b2da1de0-480.webp",
+        "width": 480,
+        "bytes": 23762
+      },
+      {
+        "src": "/images/optimized/demo-social-media-7d51b2da1de0-768.webp",
+        "width": 768,
+        "bytes": 47552
+      },
+      {
+        "src": "/images/optimized/demo-social-media-7d51b2da1de0-1024.webp",
+        "width": 1024,
+        "bytes": 72104
+      }
+    ]
+  },
+  "assets/demo-web-design.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 45556,
+    "variants": [
+      {
+        "src": "/images/optimized/demo-web-design-d4862e184df9-480.webp",
+        "width": 480,
+        "bytes": 9454
+      },
+      {
+        "src": "/images/optimized/demo-web-design-d4862e184df9-768.webp",
+        "width": 768,
+        "bytes": 17492
+      },
+      {
+        "src": "/images/optimized/demo-web-design-d4862e184df9-1024.webp",
+        "width": 1024,
+        "bytes": 27438
+      }
+    ]
+  },
+  "assets/gallery/fit-1.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 47136,
+    "variants": [
+      {
+        "src": "/images/optimized/fit-1-705f82430139-480.webp",
+        "width": 480,
+        "bytes": 8046
+      },
+      {
+        "src": "/images/optimized/fit-1-705f82430139-768.webp",
+        "width": 768,
+        "bytes": 16050
+      },
+      {
+        "src": "/images/optimized/fit-1-705f82430139-1024.webp",
+        "width": 1024,
+        "bytes": 24948
+      }
+    ]
+  },
+  "assets/gallery/fit-10.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 42029,
+    "variants": [
+      {
+        "src": "/images/optimized/fit-10-bc7ecad076bc-480.webp",
+        "width": 480,
+        "bytes": 9098
+      },
+      {
+        "src": "/images/optimized/fit-10-bc7ecad076bc-768.webp",
+        "width": 768,
+        "bytes": 16510
+      },
+      {
+        "src": "/images/optimized/fit-10-bc7ecad076bc-1024.webp",
+        "width": 1024,
+        "bytes": 23410
+      }
+    ]
+  },
+  "assets/gallery/fit-2.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 40613,
+    "variants": [
+      {
+        "src": "/images/optimized/fit-2-7b181109b594-480.webp",
+        "width": 480,
+        "bytes": 6228
+      },
+      {
+        "src": "/images/optimized/fit-2-7b181109b594-768.webp",
+        "width": 768,
+        "bytes": 11524
+      },
+      {
+        "src": "/images/optimized/fit-2-7b181109b594-1024.webp",
+        "width": 1024,
+        "bytes": 18608
+      }
+    ]
+  },
+  "assets/gallery/fit-3.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 37190,
+    "variants": [
+      {
+        "src": "/images/optimized/fit-3-9d6164e17791-480.webp",
+        "width": 480,
+        "bytes": 8080
+      },
+      {
+        "src": "/images/optimized/fit-3-9d6164e17791-768.webp",
+        "width": 768,
+        "bytes": 13982
+      },
+      {
+        "src": "/images/optimized/fit-3-9d6164e17791-1024.webp",
+        "width": 1024,
+        "bytes": 19822
+      }
+    ]
+  },
+  "assets/gallery/fit-4.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 65860,
+    "variants": [
+      {
+        "src": "/images/optimized/fit-4-b8c16913e90c-480.webp",
+        "width": 480,
+        "bytes": 14886
+      },
+      {
+        "src": "/images/optimized/fit-4-b8c16913e90c-768.webp",
+        "width": 768,
+        "bytes": 27120
+      },
+      {
+        "src": "/images/optimized/fit-4-b8c16913e90c-1024.webp",
+        "width": 1024,
+        "bytes": 40438
+      }
+    ]
+  },
+  "assets/gallery/fit-5.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 30349,
+    "variants": [
+      {
+        "src": "/images/optimized/fit-5-c820a08767a0-480.webp",
+        "width": 480,
+        "bytes": 5214
+      },
+      {
+        "src": "/images/optimized/fit-5-c820a08767a0-768.webp",
+        "width": 768,
+        "bytes": 8512
+      },
+      {
+        "src": "/images/optimized/fit-5-c820a08767a0-1024.webp",
+        "width": 1024,
+        "bytes": 11966
+      }
+    ]
+  },
+  "assets/gallery/fit-6.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 56581,
+    "variants": [
+      {
+        "src": "/images/optimized/fit-6-edd7b3a36d0e-480.webp",
+        "width": 480,
+        "bytes": 13156
+      },
+      {
+        "src": "/images/optimized/fit-6-edd7b3a36d0e-768.webp",
+        "width": 768,
+        "bytes": 23390
+      },
+      {
+        "src": "/images/optimized/fit-6-edd7b3a36d0e-1024.webp",
+        "width": 1024,
+        "bytes": 33506
+      }
+    ]
+  },
+  "assets/gallery/fit-7.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 62421,
+    "variants": [
+      {
+        "src": "/images/optimized/fit-7-e82cf021a1da-480.webp",
+        "width": 480,
+        "bytes": 14494
+      },
+      {
+        "src": "/images/optimized/fit-7-e82cf021a1da-768.webp",
+        "width": 768,
+        "bytes": 27396
+      },
+      {
+        "src": "/images/optimized/fit-7-e82cf021a1da-1024.webp",
+        "width": 1024,
+        "bytes": 42122
+      }
+    ]
+  },
+  "assets/gallery/fit-8.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 91757,
+    "variants": [
+      {
+        "src": "/images/optimized/fit-8-e46a0991862c-480.webp",
+        "width": 480,
+        "bytes": 21260
+      },
+      {
+        "src": "/images/optimized/fit-8-e46a0991862c-768.webp",
+        "width": 768,
+        "bytes": 37632
+      },
+      {
+        "src": "/images/optimized/fit-8-e46a0991862c-1024.webp",
+        "width": 1024,
+        "bytes": 57700
+      }
+    ]
+  },
+  "assets/gallery/fit-9.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 54519,
+    "variants": [
+      {
+        "src": "/images/optimized/fit-9-b3a0225b1c29-480.webp",
+        "width": 480,
+        "bytes": 8908
+      },
+      {
+        "src": "/images/optimized/fit-9-b3a0225b1c29-768.webp",
+        "width": 768,
+        "bytes": 17874
+      },
+      {
+        "src": "/images/optimized/fit-9-b3a0225b1c29-1024.webp",
+        "width": 1024,
+        "bytes": 28478
+      }
+    ]
+  },
+  "assets/gallery/nex-cover.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 58072,
+    "variants": [
+      {
+        "src": "/images/optimized/nex-cover-6b3cbeb1f8fe-480.webp",
+        "width": 480,
+        "bytes": 10238
+      },
+      {
+        "src": "/images/optimized/nex-cover-6b3cbeb1f8fe-768.webp",
+        "width": 768,
+        "bytes": 19750
+      },
+      {
+        "src": "/images/optimized/nex-cover-6b3cbeb1f8fe-1024.webp",
+        "width": 1024,
+        "bytes": 31100
+      }
+    ]
+  },
+  "assets/gallery/noir-cover.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 36111,
+    "variants": [
+      {
+        "src": "/images/optimized/noir-cover-bce1c2ab30a6-480.webp",
+        "width": 480,
+        "bytes": 7300
+      },
+      {
+        "src": "/images/optimized/noir-cover-bce1c2ab30a6-768.webp",
+        "width": 768,
+        "bytes": 12546
+      },
+      {
+        "src": "/images/optimized/noir-cover-bce1c2ab30a6-1024.webp",
+        "width": 1024,
+        "bytes": 19072
+      }
+    ]
+  },
+  "assets/hero-bg.jpg": {
+    "width": 1920,
+    "height": 1048,
+    "originalBytes": 1886352,
+    "variants": [
+      {
+        "src": "/images/optimized/hero-bg-fba115be2621-480.webp",
+        "width": 480,
+        "bytes": 7334
+      },
+      {
+        "src": "/images/optimized/hero-bg-fba115be2621-768.webp",
+        "width": 768,
+        "bytes": 14404
+      },
+      {
+        "src": "/images/optimized/hero-bg-fba115be2621-1200.webp",
+        "width": 1200,
+        "bytes": 31408
+      },
+      {
+        "src": "/images/optimized/hero-bg-fba115be2621-1600.webp",
+        "width": 1600,
+        "bytes": 58622
+      }
+    ]
+  },
+  "assets/hero-bg.png": {
+    "width": 2880,
+    "height": 1622,
+    "originalBytes": 5086351,
+    "variants": [
+      {
+        "src": "/images/optimized/hero-bg-0f04fb76a174-480.webp",
+        "width": 480,
+        "bytes": 2556
+      },
+      {
+        "src": "/images/optimized/hero-bg-0f04fb76a174-768.webp",
+        "width": 768,
+        "bytes": 5760
+      },
+      {
+        "src": "/images/optimized/hero-bg-0f04fb76a174-1200.webp",
+        "width": 1200,
+        "bytes": 18208
+      },
+      {
+        "src": "/images/optimized/hero-bg-0f04fb76a174-1600.webp",
+        "width": 1600,
+        "bytes": 44522
+      }
+    ]
+  },
+  "assets/hero-bg.webp": {
+    "width": 1920,
+    "height": 1082,
+    "originalBytes": 23136,
+    "variants": [
+      {
+        "src": "/images/optimized/hero-bg-7ec1e0134f84-480.webp",
+        "width": 480,
+        "bytes": 2764
+      },
+      {
+        "src": "/images/optimized/hero-bg-7ec1e0134f84-768.webp",
+        "width": 768,
+        "bytes": 5830
+      },
+      {
+        "src": "/images/optimized/hero-bg-7ec1e0134f84-1200.webp",
+        "width": 1200,
+        "bytes": 12760
+      },
+      {
+        "src": "/images/optimized/hero-bg-7ec1e0134f84-1600.webp",
+        "width": 1600,
+        "bytes": 18064
+      }
+    ]
+  },
+  "assets/images/lucas_hero_orange_1791086284095.jpg": {
+    "width": 1376,
+    "height": 768,
+    "originalBytes": 626814,
+    "variants": [
+      {
+        "src": "/images/optimized/lucas-hero-orange-1791086284095-e6fdc6c39434-480.webp",
+        "width": 480,
+        "bytes": 13152
+      },
+      {
+        "src": "/images/optimized/lucas-hero-orange-1791086284095-e6fdc6c39434-768.webp",
+        "width": 768,
+        "bytes": 23878
+      },
+      {
+        "src": "/images/optimized/lucas-hero-orange-1791086284095-e6fdc6c39434-1200.webp",
+        "width": 1200,
+        "bytes": 47084
+      },
+      {
+        "src": "/images/optimized/lucas-hero-orange-1791086284095-e6fdc6c39434-1376.webp",
+        "width": 1376,
+        "bytes": 60512
+      }
+    ]
+  },
+  "assets/lucas-about-cutout-v3.png": {
+    "width": 1678,
+    "height": 937,
+    "originalBytes": 762923,
+    "variants": [
+      {
+        "src": "/images/optimized/lucas-about-cutout-v3-179cb39a7e6a-480.webp",
+        "width": 480,
+        "bytes": 10484
+      },
+      {
+        "src": "/images/optimized/lucas-about-cutout-v3-179cb39a7e6a-768.webp",
+        "width": 768,
+        "bytes": 19348
+      },
+      {
+        "src": "/images/optimized/lucas-about-cutout-v3-179cb39a7e6a-1200.webp",
+        "width": 1200,
+        "bytes": 38040
+      },
+      {
+        "src": "/images/optimized/lucas-about-cutout-v3-179cb39a7e6a-1600.webp",
+        "width": 1600,
+        "bytes": 57818
+      }
+    ]
+  },
+  "assets/lucas-about-orion-v5.webp": {
+    "width": 1194,
+    "height": 1600,
+    "originalBytes": 144158,
+    "variants": [
+      {
+        "src": "/images/optimized/lucas-about-orion-v5-f4477ce966bc-480.webp",
+        "width": 480,
+        "bytes": 24068
+      },
+      {
+        "src": "/images/optimized/lucas-about-orion-v5-f4477ce966bc-768.webp",
+        "width": 768,
+        "bytes": 47232
+      },
+      {
+        "src": "/images/optimized/lucas-about-orion-v5-f4477ce966bc-1194.webp",
+        "width": 1194,
+        "bytes": 100166
+      }
+    ]
+  },
+  "assets/lucas-about-seated-v4.jpg": {
+    "width": 1792,
+    "height": 2400,
+    "originalBytes": 2167103,
+    "variants": [
+      {
+        "src": "/images/optimized/lucas-about-seated-v4-25dc327a18bc-480.webp",
+        "width": 480,
+        "bytes": 16534
+      },
+      {
+        "src": "/images/optimized/lucas-about-seated-v4-25dc327a18bc-768.webp",
+        "width": 768,
+        "bytes": 32392
+      },
+      {
+        "src": "/images/optimized/lucas-about-seated-v4-25dc327a18bc-1200.webp",
+        "width": 1200,
+        "bytes": 67764
+      },
+      {
+        "src": "/images/optimized/lucas-about-seated-v4-25dc327a18bc-1600.webp",
+        "width": 1600,
+        "bytes": 111642
+      }
+    ]
+  },
+  "assets/lucas-hero-seated-v2.png": {
+    "width": 1455,
+    "height": 1081,
+    "originalBytes": 1566873,
+    "variants": [
+      {
+        "src": "/images/optimized/lucas-hero-seated-v2-0dc5059f8f62-480.webp",
+        "width": 480,
+        "bytes": 24990
+      },
+      {
+        "src": "/images/optimized/lucas-hero-seated-v2-0dc5059f8f62-768.webp",
+        "width": 768,
+        "bytes": 48960
+      },
+      {
+        "src": "/images/optimized/lucas-hero-seated-v2-0dc5059f8f62-1200.webp",
+        "width": 1200,
+        "bytes": 102550
+      },
+      {
+        "src": "/images/optimized/lucas-hero-seated-v2-0dc5059f8f62-1455.webp",
+        "width": 1455,
+        "bytes": 144882
+      }
+    ]
+  },
+  "assets/lucas-hero.jpg": {
+    "width": 1376,
+    "height": 768,
+    "originalBytes": 626814,
+    "variants": [
+      {
+        "src": "/images/optimized/lucas-hero-e6fdc6c39434-480.webp",
+        "width": 480,
+        "bytes": 13152
+      },
+      {
+        "src": "/images/optimized/lucas-hero-e6fdc6c39434-768.webp",
+        "width": 768,
+        "bytes": 23878
+      },
+      {
+        "src": "/images/optimized/lucas-hero-e6fdc6c39434-1200.webp",
+        "width": 1200,
+        "bytes": 47084
+      },
+      {
+        "src": "/images/optimized/lucas-hero-e6fdc6c39434-1376.webp",
+        "width": 1376,
+        "bytes": 60512
+      }
+    ]
+  },
+  "assets/lucas-hero.png": {
+    "width": 1920,
+    "height": 1071,
+    "originalBytes": 1021177,
+    "variants": [
+      {
+        "src": "/images/optimized/lucas-hero-8f4a4c34dabc-480.webp",
+        "width": 480,
+        "bytes": 12422
+      },
+      {
+        "src": "/images/optimized/lucas-hero-8f4a4c34dabc-768.webp",
+        "width": 768,
+        "bytes": 22026
+      },
+      {
+        "src": "/images/optimized/lucas-hero-8f4a4c34dabc-1200.webp",
+        "width": 1200,
+        "bytes": 38902
+      },
+      {
+        "src": "/images/optimized/lucas-hero-8f4a4c34dabc-1600.webp",
+        "width": 1600,
+        "bytes": 63130
+      }
+    ]
+  },
+  "assets/lucas-hero.webp": {
+    "width": 1920,
+    "height": 1071,
+    "originalBytes": 81898,
+    "variants": [
+      {
+        "src": "/images/optimized/lucas-hero-6ee53eb4c6d8-480.webp",
+        "width": 480,
+        "bytes": 9452
+      },
+      {
+        "src": "/images/optimized/lucas-hero-6ee53eb4c6d8-768.webp",
+        "width": 768,
+        "bytes": 17272
+      },
+      {
+        "src": "/images/optimized/lucas-hero-6ee53eb4c6d8-1200.webp",
+        "width": 1200,
+        "bytes": 31984
+      },
+      {
+        "src": "/images/optimized/lucas-hero-6ee53eb4c6d8-1600.webp",
+        "width": 1600,
+        "bytes": 48896
+      }
+    ]
+  },
+  "assets/lucas-orion-cutout.webp": {
+    "width": 2400,
+    "height": 1311,
+    "originalBytes": 159176,
+    "variants": [
+      {
+        "src": "/images/optimized/lucas-orion-cutout-7e15864f53b4-480.webp",
+        "width": 480,
+        "bytes": 8716
+      },
+      {
+        "src": "/images/optimized/lucas-orion-cutout-7e15864f53b4-768.webp",
+        "width": 768,
+        "bytes": 16174
+      },
+      {
+        "src": "/images/optimized/lucas-orion-cutout-7e15864f53b4-1200.webp",
+        "width": 1200,
+        "bytes": 30896
+      },
+      {
+        "src": "/images/optimized/lucas-orion-cutout-7e15864f53b4-1600.webp",
+        "width": 1600,
+        "bytes": 48924
+      }
+    ]
+  },
+  "assets/profile-photo-cutout.png": {
+    "width": 1365,
+    "height": 768,
+    "originalBytes": 1148048,
+    "variants": [
+      {
+        "src": "/images/optimized/profile-photo-cutout-05b25193d941-480.webp",
+        "width": 480,
+        "bytes": 20340
+      },
+      {
+        "src": "/images/optimized/profile-photo-cutout-05b25193d941-768.webp",
+        "width": 768,
+        "bytes": 30802
+      },
+      {
+        "src": "/images/optimized/profile-photo-cutout-05b25193d941-1200.webp",
+        "width": 1200,
+        "bytes": 50348
+      },
+      {
+        "src": "/images/optimized/profile-photo-cutout-05b25193d941-1365.webp",
+        "width": 1365,
+        "bytes": 57112
+      }
+    ]
+  },
+  "assets/profile-photo-new.png": {
+    "width": 1365,
+    "height": 768,
+    "originalBytes": 1242115,
+    "variants": [
+      {
+        "src": "/images/optimized/profile-photo-new-ef7f91c4c0b6-480.webp",
+        "width": 480,
+        "bytes": 7942
+      },
+      {
+        "src": "/images/optimized/profile-photo-new-ef7f91c4c0b6-768.webp",
+        "width": 768,
+        "bytes": 15026
+      },
+      {
+        "src": "/images/optimized/profile-photo-new-ef7f91c4c0b6-1200.webp",
+        "width": 1200,
+        "bytes": 28924
+      },
+      {
+        "src": "/images/optimized/profile-photo-new-ef7f91c4c0b6-1365.webp",
+        "width": 1365,
+        "bytes": 36104
+      }
+    ]
+  },
+  "assets/profile-photo.png": {
+    "width": 1920,
+    "height": 1048,
+    "originalBytes": 1016438,
+    "variants": [
+      {
+        "src": "/images/optimized/profile-photo-8f2a90c35e26-480.webp",
+        "width": 480,
+        "bytes": 11070
+      },
+      {
+        "src": "/images/optimized/profile-photo-8f2a90c35e26-768.webp",
+        "width": 768,
+        "bytes": 20068
+      },
+      {
+        "src": "/images/optimized/profile-photo-8f2a90c35e26-1200.webp",
+        "width": 1200,
+        "bytes": 37436
+      },
+      {
+        "src": "/images/optimized/profile-photo-8f2a90c35e26-1600.webp",
+        "width": 1600,
+        "bytes": 64010
+      }
+    ]
+  },
+  "assets/project-atelier-noir.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 123690,
+    "variants": [
+      {
+        "src": "/images/optimized/project-atelier-noir-0ee8a66cb0f6-480.webp",
+        "width": 480,
+        "bytes": 32554
+      },
+      {
+        "src": "/images/optimized/project-atelier-noir-0ee8a66cb0f6-768.webp",
+        "width": 768,
+        "bytes": 71664
+      },
+      {
+        "src": "/images/optimized/project-atelier-noir-0ee8a66cb0f6-1024.webp",
+        "width": 1024,
+        "bytes": 109204
+      }
+    ]
+  },
+  "assets/project-cafe-origina.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 38906,
+    "variants": [
+      {
+        "src": "/images/optimized/project-cafe-origina-09f497ef3322-480.webp",
+        "width": 480,
+        "bytes": 7098
+      },
+      {
+        "src": "/images/optimized/project-cafe-origina-09f497ef3322-768.webp",
+        "width": 768,
+        "bytes": 13144
+      },
+      {
+        "src": "/images/optimized/project-cafe-origina-09f497ef3322-1024.webp",
+        "width": 1024,
+        "bytes": 19630
+      }
+    ]
+  },
+  "assets/project-fitpulse.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 128780,
+    "variants": [
+      {
+        "src": "/images/optimized/project-fitpulse-2af0a306655f-480.webp",
+        "width": 480,
+        "bytes": 33268
+      },
+      {
+        "src": "/images/optimized/project-fitpulse-2af0a306655f-768.webp",
+        "width": 768,
+        "bytes": 67320
+      },
+      {
+        "src": "/images/optimized/project-fitpulse-2af0a306655f-1024.webp",
+        "width": 1024,
+        "bytes": 102560
+      }
+    ]
+  },
+  "assets/project-nextech.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 85654,
+    "variants": [
+      {
+        "src": "/images/optimized/project-nextech-c34f0c69405b-480.webp",
+        "width": 480,
+        "bytes": 20016
+      },
+      {
+        "src": "/images/optimized/project-nextech-c34f0c69405b-768.webp",
+        "width": 768,
+        "bytes": 42510
+      },
+      {
+        "src": "/images/optimized/project-nextech-c34f0c69405b-1024.webp",
+        "width": 1024,
+        "bytes": 69052
+      }
+    ]
+  },
+  "https://wuyspclsfofxxrbklgze.supabase.co/storage/v1/object/public/projects/migration-4aa65750cbeb47978e49b75e68eb5811/cafe/cover.jpg": {
+    "width": 1408,
+    "height": 768,
+    "originalBytes": 1418415,
+    "variants": [
+      {
+        "src": "/images/optimized/af78536f6b7833643b71f1b20c07eac358d6b99de0f71-1f400983fee0-480.webp",
+        "width": 480,
+        "bytes": 14952
+      },
+      {
+        "src": "/images/optimized/af78536f6b7833643b71f1b20c07eac358d6b99de0f71-1f400983fee0-768.webp",
+        "width": 768,
+        "bytes": 32238
+      },
+      {
+        "src": "/images/optimized/af78536f6b7833643b71f1b20c07eac358d6b99de0f71-1f400983fee0-1200.webp",
+        "width": 1200,
+        "bytes": 63300
+      },
+      {
+        "src": "/images/optimized/af78536f6b7833643b71f1b20c07eac358d6b99de0f71-1f400983fee0-1408.webp",
+        "width": 1408,
+        "bytes": 81052
+      }
+    ]
+  },
+  "https://wuyspclsfofxxrbklgze.supabase.co/storage/v1/object/public/projects/migration-4aa65750cbeb47978e49b75e68eb5811/fit/cover.jpg": {
+    "width": 1408,
+    "height": 768,
+    "originalBytes": 1547664,
+    "variants": [
+      {
+        "src": "/images/optimized/5c3a5e568ac930c853d05bc3c292415f2e92ae70539ba-3cee189d0f08-480.webp",
+        "width": 480,
+        "bytes": 16564
+      },
+      {
+        "src": "/images/optimized/5c3a5e568ac930c853d05bc3c292415f2e92ae70539ba-3cee189d0f08-768.webp",
+        "width": 768,
+        "bytes": 31846
+      },
+      {
+        "src": "/images/optimized/5c3a5e568ac930c853d05bc3c292415f2e92ae70539ba-3cee189d0f08-1200.webp",
+        "width": 1200,
+        "bytes": 58010
+      },
+      {
+        "src": "/images/optimized/5c3a5e568ac930c853d05bc3c292415f2e92ae70539ba-3cee189d0f08-1408.webp",
+        "width": 1408,
+        "bytes": 73520
+      }
+    ]
+  },
+  "https://wuyspclsfofxxrbklgze.supabase.co/storage/v1/object/public/projects/migration-4aa65750cbeb47978e49b75e68eb5811/nex/cover.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 58072,
+    "variants": [
+      {
+        "src": "/images/optimized/149e6af88e81f252538e9550e1027050ec3498ad38822-6b3cbeb1f8fe-480.webp",
+        "width": 480,
+        "bytes": 10238
+      },
+      {
+        "src": "/images/optimized/149e6af88e81f252538e9550e1027050ec3498ad38822-6b3cbeb1f8fe-768.webp",
+        "width": 768,
+        "bytes": 19750
+      },
+      {
+        "src": "/images/optimized/149e6af88e81f252538e9550e1027050ec3498ad38822-6b3cbeb1f8fe-1024.webp",
+        "width": 1024,
+        "bytes": 31100
+      }
+    ]
+  },
+  "https://wuyspclsfofxxrbklgze.supabase.co/storage/v1/object/public/projects/migration-4aa65750cbeb47978e49b75e68eb5811/noir/cover.jpg": {
+    "width": 1024,
+    "height": 1024,
+    "originalBytes": 36111,
+    "variants": [
+      {
+        "src": "/images/optimized/08f7d72745091966336edbcec385ce21cde5ac555a41e-bce1c2ab30a6-480.webp",
+        "width": 480,
+        "bytes": 7300
+      },
+      {
+        "src": "/images/optimized/08f7d72745091966336edbcec385ce21cde5ac555a41e-bce1c2ab30a6-768.webp",
+        "width": 768,
+        "bytes": 12546
+      },
+      {
+        "src": "/images/optimized/08f7d72745091966336edbcec385ce21cde5ac555a41e-bce1c2ab30a6-1024.webp",
+        "width": 1024,
+        "bytes": 19072
+      }
+    ]
+  }
+}

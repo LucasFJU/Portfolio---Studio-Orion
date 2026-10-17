@@ -1,3 +1,4 @@
+import ResponsiveImage from "@/components/ResponsiveImage";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -308,7 +309,7 @@ const ProjectDetail = () => {
                 aria-label={`Ampliar apresentação de ${cleanTitle}`}
               >
                 <div className="aspect-[16/10] sm:aspect-[16/9] w-full relative overflow-hidden bg-secondary/40">
-                  <img
+                  <ResponsiveImage
                     src={project.imagem_capa}
                     alt={`Apresentação principal do projeto ${cleanTitle}`}
                     width={1400}
@@ -408,7 +409,7 @@ const ProjectDetail = () => {
                       onClick={() => openLightboxForUrl(galleryBlocks.solo1!)}
                       className="group relative rounded-2xl overflow-hidden border border-border/80 bg-card cursor-zoom-in aspect-[16/10] shadow-lg"
                     >
-                      <img
+                      <ResponsiveImage
                         src={galleryBlocks.solo1}
                         alt={`${cleanTitle} — Aplicação principal`}
                         width={1240}
@@ -434,7 +435,7 @@ const ProjectDetail = () => {
                           onClick={() => openLightboxForUrl(imgUrl)}
                           className="group relative rounded-2xl overflow-hidden border border-border/80 bg-card cursor-zoom-in aspect-[16/10] shadow-md"
                         >
-                          <img
+                          <ResponsiveImage
                             src={imgUrl}
                             alt={`${cleanTitle} — Aplicação complementar ${idx + 1}`}
                             width={800}
@@ -504,7 +505,7 @@ const ProjectDetail = () => {
                                 : "w-[82vw] sm:w-[380px] aspect-[16/10]"
                             } rounded-xl overflow-hidden border border-border/80 bg-card cursor-zoom-in snap-start shadow-md`}
                           >
-                            <img
+                            <ResponsiveImage
                               src={imgUrl}
                               alt={`${cleanTitle} — Lâmina de série ${idx + 1}`}
                               width={600}
@@ -539,7 +540,7 @@ const ProjectDetail = () => {
                               isFullWidth ? "sm:col-span-2" : ""
                             }`}
                           >
-                            <img
+                            <ResponsiveImage
                               src={imgUrl}
                               alt={`${cleanTitle} — Aplicação ${idx + 1}`}
                               width={800}
@@ -689,7 +690,7 @@ const ProjectDetail = () => {
                   >
                     <div className="w-24 h-20 sm:w-32 sm:h-24 rounded-xl overflow-hidden bg-secondary border border-border shrink-0">
                       {prevProject.imagem_capa && (
-                        <img
+                        <ResponsiveImage
                           src={prevProject.imagem_capa}
                           alt={prevProject.titulo}
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -730,7 +731,7 @@ const ProjectDetail = () => {
                   </div>
                   <div className="w-24 h-20 sm:w-32 sm:h-24 rounded-xl overflow-hidden bg-secondary border border-border shrink-0">
                     {nextProject.imagem_capa && (
-                      <img
+                      <ResponsiveImage
                         src={nextProject.imagem_capa}
                         alt={nextProject.titulo}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"

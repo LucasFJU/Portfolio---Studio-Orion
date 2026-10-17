@@ -48,6 +48,7 @@ function heroConfigSyncPlugin() {
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  build: { manifest: true },
   server: {
     host: "0.0.0.0",
     port: 3000,

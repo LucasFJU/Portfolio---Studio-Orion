@@ -118,7 +118,7 @@ const Navbar = () => {
           <button
             type="button"
             onClick={() => openContactDrawer()}
-            className={`rounded-full bg-primary text-primary-foreground font-semibold transition-all duration-200 hover:bg-[#ff551a] hover:shadow-[0_0_24px_rgba(255,64,1,0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary inline-flex items-center gap-1.5 ${
+            className={`rounded-full bg-[#c93c0d] text-white font-semibold transition-all duration-200 hover:bg-[#b83408] hover:shadow-[0_0_24px_rgba(255,64,1,0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary inline-flex items-center gap-1.5 ${
               scrolled ? "px-4 py-1.5 text-[13px]" : "px-5 py-2 text-[13px]"
             }`}
           >

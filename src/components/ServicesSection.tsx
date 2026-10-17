@@ -1,3 +1,4 @@
+import ResponsiveImage from "@/components/ResponsiveImage";
 import { useLayoutEffect, useRef, useState, type FocusEvent } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
@@ -120,7 +121,7 @@ export default function ServicesSection({ theme = "dark", sectionNumber = "02.",
                       <div className="service-panel-media">
                         <figure>
                           <div className="service-panel-image">
-                            <img src={service.previewImage} alt={service.caption} loading="lazy" decoding="async"
+                            <ResponsiveImage src={service.previewImage} sizes="(min-width: 1280px) 600px, (min-width: 1024px) 50vw, 100vw" alt={service.caption} loading="lazy" decoding="async"
                               width={480} height={270} data-parallax="disabled" style={{ transform: "none" }} />
                             <span className="service-image-label">EXEMPLO VISUAL</span>
                           </div>

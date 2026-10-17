@@ -1,3 +1,4 @@
+import ResponsiveImage from "@/components/ResponsiveImage";
 import AboutPortrait from "@/components/AboutPortrait";
 import LogosSection from "@/components/LogosSection";
 import GradientBlinds from "@/components/ui/GradientBlinds";
@@ -20,7 +21,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { parseCaseStudy, isValidWhatsappNumber } from "@/lib/caseStudy";
-import { parseProposalProcessData } from "./AdminProposalForm";
+import { parseProposalProcessData } from "@/lib/proposal";
 import { getStoredHeroConfig, resolveHeroImage } from "@/config/heroConfig";
 
 function ProposalStack({ enabled, children }: { enabled: boolean; children: ReactNode }) {
@@ -429,8 +430,10 @@ const ProposalView = () => {
           {coverHeroConfig.media.glowEffect && <div className="orion-hero-light" />}
         </div>
         <div className="orion-hero-panels" aria-hidden="true" />
-        <img
+        <ResponsiveImage
           className="orion-proposal-cover-photo"
+          loading="eager"
+          sizes="(min-width: 1540px) 1540px, 100vw"
           src={resolveHeroImage(coverHeroConfig.media)}
           alt="Lucas Evangelista, à frente do Studio Orion"
           {...{ fetchpriority: "high" }}
@@ -487,7 +490,7 @@ const ProposalView = () => {
             <span className="label-num">{authorityNumber}.</span> Experiência &amp; Solidez de Entrega
           </div>
           <div className="orion-proposal-author">
-            <AboutPortrait loading="eager" className="orion-proposal-portrait" />
+            <AboutPortrait loading="lazy" className="orion-proposal-portrait" />
             <div className="orion-proposal-author-copy" data-orion-reveal>
               <h2>Prazer, sou o Lucas.</h2>
               <p>Sou designer e diretor criativo com mais de 13 anos de experiência ajudando empresas e profissionais a estruturarem sua presença visual com clareza, critério e consistência.</p>
@@ -696,7 +699,7 @@ const ProposalView = () => {
                     {/* Cover Frame */}
                     <div className="h-[270px] md:h-[380px] bg-secondary relative overflow-hidden">
                       {project.imagem_capa && (
-                        <img
+                        <ResponsiveImage
                           src={project.imagem_capa}
                           alt={project.titulo}
                           className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
@@ -993,7 +996,7 @@ const ProposalView = () => {
               <div className="p-6 md:p-8 space-y-8">
                 {selectedCaseModal.imagem_capa && (
                   <div className="rounded-xl overflow-hidden border border-border bg-secondary">
-                    <img
+                    <ResponsiveImage
                       src={selectedCaseModal.imagem_capa}
                       alt={selectedCaseModal.titulo}
                       className="w-full max-h-[460px] object-cover"
@@ -1058,7 +1061,7 @@ const ProposalView = () => {
                     </span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {selectedCaseModal.galeria.map((img: string, idx: number) => (
-                        <img
+                        <ResponsiveImage
                           key={idx}
                           src={img}
                           alt={`${selectedCaseModal.titulo} — Imagem ${idx + 1}`}

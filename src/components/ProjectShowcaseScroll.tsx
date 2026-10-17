@@ -1,3 +1,4 @@
+import ResponsiveImage from "@/components/ResponsiveImage";
 import { useRef, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -137,8 +138,9 @@ const DEFAULT_ROW_2: ShowcaseCardItem[] = [
 const ProjectImageCard = ({ item }: { item: ShowcaseCardItem }) => {
   const content = (
     <div className="group relative w-[320px] sm:w-[440px] md:w-[500px] lg:w-[560px] aspect-[16/10] shrink-0 overflow-hidden rounded-2xl border border-white/[0.08] hover:border-white/30 bg-[#0E1013] transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.85)] cursor-pointer">
-      <img
+      <ResponsiveImage
         src={item.image}
+        sizes="(min-width: 1024px) 560px, (min-width: 768px) 500px, (min-width: 640px) 440px, 320px"
         alt={item.alt}
         loading="lazy"
         className="w-full h-full object-cover transition-all duration-500 ease-out group-hover:scale-[1.035] group-hover:brightness-110 group-hover:contrast-[1.02]"
